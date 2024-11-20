@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "412620653223",
+    "firebase_url": "https://ooo-fit-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "ooo-fit",
+    "storage_bucket": "ooo-fit.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:412620653223:android:44297ad547f32c80c91182",
+        "android_client_info": {
+          "package_name": "com.example.ooo_fit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDk37j0AaFvmfOu7glaLNVD1PQZnBkfjtE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
