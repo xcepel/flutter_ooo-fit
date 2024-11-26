@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/page/outfit_detail.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/outfit_clothes/four_part_filter_bar.dart';
 import 'package:ooo_fit/widget/outfit_clothes/picture_item.dart';
@@ -33,22 +34,33 @@ class OutfitListPage extends StatelessWidget {
             Expanded(
               child: GridView.builder(
                 shrinkWrap: true,
-                physics: AlwaysScrollableScrollPhysics(), // Enable scrolling
+                physics:
+                    const AlwaysScrollableScrollPhysics(), // Enable scrolling
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: crossAxisCount,
                   childAspectRatio: outfitItemWidth / outfitItemHeight,
                 ),
                 itemCount: 8,
                 itemBuilder: (context, index) {
-                  return SizedBox(
-                    width: outfitItemWidth,
-                    height: outfitItemHeight,
-                    child: PictureItem(
-                      image: "assets/images/test_picture.jpg",
-                      title: "Outfit name $index",
-                      style:
-                          "A long description for the outfit that spans multiple lines.",
-                      lastWorn: "1. 1. 1999",
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OutfitDetail(),
+                        ),
+                      );
+                    },
+                    child: SizedBox(
+                      width: outfitItemWidth,
+                      height: outfitItemHeight,
+                      child: PictureItem(
+                        image: "assets/images/test_picture.jpg",
+                        title: "Outfit name $index",
+                        style:
+                            "A long description for the outfit that spans multiple lines.",
+                        lastWorn: "1. 1. 1999",
+                      ),
                     ),
                   );
                 },
@@ -59,7 +71,7 @@ class OutfitListPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
