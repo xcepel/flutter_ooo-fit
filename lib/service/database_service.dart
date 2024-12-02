@@ -28,6 +28,10 @@ class DatabaseService<T> {
     await _reference.doc(id).set(data);
   }
 
+  Future<void> delete(String id) async {
+    await _reference.doc(id).delete();
+  }
+
   /// Returns a stream of all documents in the collection
   Stream<List<T>> observeDocuments() {
     return _reference.snapshots().map(_mapQuerySnapshotToData);

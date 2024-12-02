@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:ooo_fit/model/style.dart';
+import 'package:ooo_fit/service/style_service.dart';
+import 'package:ooo_fit/widget/styles/style_dialog.dart';
 
 class StyleRow extends StatelessWidget {
-  final String label;
+  final Style style;
+  final StyleService _styleService = GetIt.instance.get<StyleService>();
 
-  const StyleRow({super.key, required this.label});
+  StyleRow({super.key, required this.style});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +19,7 @@ class StyleRow extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              label,
+              style.name,
               style: TextStyle(
                 fontSize: 18,
                 color: Colors.black,
@@ -23,12 +28,18 @@ class StyleRow extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(Icons.edit_rounded),
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => StyleDialog(
+                        style: style,
+                      ));
+            },
           ),
           SizedBox(width: 10),
           IconButton(
             icon: Icon(Icons.delete_rounded),
-            onPressed: () {},
+            onPressed: () => _styleService.delete(id: style.id),
           ),
         ],
       ),

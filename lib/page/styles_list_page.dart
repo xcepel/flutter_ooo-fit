@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:ooo_fit/model/style.dart';
+import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
+import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
+import 'package:ooo_fit/widget/styles/style_dialog.dart';
 import 'package:ooo_fit/widget/styles/style_row.dart';
 
 class StylesListPage extends StatelessWidget {
-  const StylesListPage({super.key});
+  final _styleService = GetIt.instance.get<StyleService>();
+
+  StylesListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +28,32 @@ class StylesListPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            Expanded(
-              child: ListView.separated(
-                itemCount: 10,
-                separatorBuilder: (_, __) => Divider(),
-                itemBuilder: (context, index) {
-                  return StyleRow(label: "Style $index");
-                },
-              ),
-            ),
+            _buildStyleList(),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => showDialog(
+            context: context,
+            builder: (context) => StyleDialog(
+                  style: null,
+                )),
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  Widget _buildStyleList() {
+    return Expanded(
+      child: LoadingStreamBuilder(
+        stream: _styleService.getAllStylesStream(),
+        builder: (context, stylesList) {
+          return ListView.separated(
+            itemBuilder: (context, index) => StyleRow(style: stylesList[index]),
+            separatorBuilder: (context, index) => Divider(),
+            itemCount: stylesList.length,
+          );
+        },
       ),
     );
   }
