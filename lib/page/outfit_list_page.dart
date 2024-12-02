@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/page/outfit_detail.dart';
+import 'package:ooo_fit/page/outfit_detail_page.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/outfit_clothes/four_part_filter_bar.dart';
 import 'package:ooo_fit/widget/outfit_clothes/picture_item.dart';
@@ -47,7 +47,7 @@ class OutfitListPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => OutfitDetail(),
+                          builder: (context) => OutfitDetailPage(),
                         ),
                       );
                     },

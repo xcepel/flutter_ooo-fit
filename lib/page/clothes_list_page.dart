@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/page/clothes_edit_page.dart';
 import 'package:ooo_fit/widget/clothes/clothes_items_list.dart';
 import 'package:ooo_fit/widget/clothes/placement_header.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
@@ -39,7 +40,10 @@ class ClothesListPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => ClothesEditPage()));
+        },
         child: const Icon(Icons.add),
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/page/clothes_detail.dart';
+import 'package:ooo_fit/page/clothes_detail_page.dart';
 import 'package:ooo_fit/widget/outfit_clothes/picture_item.dart';
 
 class ClothesItemsList extends StatelessWidget {
@@ -13,7 +13,7 @@ class ClothesItemsList extends StatelessWidget {
         (itemIndex) => GestureDetector(
           onTap: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ClothesDetail()));
+                MaterialPageRoute(builder: (context) => ClothesDetailPage()));
           },
           child: SizedBox(
             width: 150,

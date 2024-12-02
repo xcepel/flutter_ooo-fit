@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/page/outfit_edit_page.dart';
+import 'package:ooo_fit/widget/clothes/clothes_items_list.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
+import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_clothes/description_label.dart';
 import 'package:ooo_fit/widget/outfit_clothes/sized_picture.dart';
 
-class ClothesDetail extends StatelessWidget {
-  final String name = "Tie";
-  final String placement = "Neck";
+// TODO CHANGE PHOTO
+class OutfitDetailPage extends StatelessWidget {
+  final String name = "Ratio Sorcerer";
   final String style = "Formal";
-  final String last_worn = "1. 1. 1999";
+  final String temperature = "Warm";
+  final String lastWorn = "1. 1. 1999";
 
-  const ClothesDetail({
-    super.key,
-  });
+  const OutfitDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: name),
+      appBar: CustomAppBar(title: name, actionButton: _addEditButton(context)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
         child: Column(
@@ -26,32 +28,33 @@ class ClothesDetail extends StatelessWidget {
               builder: (context, constraints) {
                 double size = constraints.maxWidth;
                 return SizedPicture(
+                    // TODO probably change so it does not fill the whole page
                     sizeX: size,
-                    sizeY: size,
-                    image: "assets/images/test_clothes.jpg");
+                    sizeY: size * 1.3,
+                    image: "assets/images/test_picture.jpg");
               },
             ),
             SizedBox(height: 10),
-            DescriptionLabel(label: "Placement", value: placement),
-            SizedBox(height: 10),
             DescriptionLabel(label: "Style", value: style),
             SizedBox(height: 10),
-            DescriptionLabel(label: "Last worn", value: last_worn),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: Divider(color: Colors.deepPurple),
-            ),
-            DescriptionLabel(label: "In outfits", value: ""),
+            DescriptionLabel(label: "Temperature", value: temperature),
             SizedBox(height: 10),
+            DescriptionLabel(label: "Last worn", value: lastWorn),
+            PageDivider(),
+            DescriptionLabel(label: "Consists of", value: ""),
+            SizedBox(height: 10),
+            ClothesItemsList(),
+            PageDivider(),
+            DescriptionLabel(label: "Worn for", value: ""),
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: 10,
+              itemCount: 3,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
                   child: Text(
-                    "- outfit$index",
+                    "- event$index",
                     style: TextStyle(fontSize: 18),
                   ),
                 );
@@ -60,6 +63,17 @@ class ClothesDetail extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _addEditButton(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.edit_rounded),
+      color: Colors.white,
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => OutfitEditPage()));
+      },
     );
   }
 }

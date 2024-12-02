@@ -5,7 +5,7 @@ class FourPartFilterBar extends StatelessWidget {
   final String filter1;
   final String filter2;
   final String filter3;
-  static const double _filter_space = 10.0;
+  static const double _filterSpace = 10.0;
 
   const FourPartFilterBar(
       {super.key,
@@ -16,7 +16,7 @@ class FourPartFilterBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: _filter_space),
+      padding: const EdgeInsets.only(bottom: _filterSpace),
       child: Row(
         children: [
           // Filter TextField
@@ -32,11 +32,11 @@ class FourPartFilterBar extends StatelessWidget {
           ),
           // Filter Dropdowns
           Padding(
-            padding: const EdgeInsets.only(left: _filter_space),
+            padding: const EdgeInsets.only(left: _filterSpace),
             child: Expanded(
               flex: 1,
               child: Wrap(
-                spacing: _filter_space,
+                spacing: _filterSpace,
                 children: [
                   DropdownFilter(label: filter1),
                   DropdownFilter(label: filter2),
