@@ -22,5 +22,6 @@ class DescriptionLabel extends StatelessWidget {
         ),
       ],
     );
+    // TODO add sized box?
   }
 }
