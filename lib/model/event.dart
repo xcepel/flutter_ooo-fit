@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:ooo_fit/model/temperature.dart';
+import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/service/util/timestamp_converter.dart';
 
 part 'event.g.dart';
@@ -25,7 +25,7 @@ class Event {
   final List<String> styleIds;
 
   // temperature can be fetched later if event is too far in the future?
-  final Temperature? temperature;
+  final TemperatureType? temperature;
 
   const Event(
       {required this.id,
@@ -49,7 +49,7 @@ class Event {
     String? name,
     String? outfitId,
     List<String>? styleIds,
-    Temperature? temperature,
+    TemperatureType? temperature,
   }) {
     return Event(
       id: id ?? this.id,

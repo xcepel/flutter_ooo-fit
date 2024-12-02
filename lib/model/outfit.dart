@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:ooo_fit/model/temperature.dart';
+import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/service/util/timestamp_converter.dart';
 
 part 'outfit.g.dart';
@@ -20,7 +20,7 @@ class Outfit {
 
   final List<String> styleIds;
 
-  final Temperature temperature;
+  final TemperatureType temperature;
 
   final bool isFavourite;
 
@@ -49,7 +49,7 @@ class Outfit {
       String? imagePath,
       List<String>? pieceIds,
       List<String>? styleIds,
-      Temperature? temperature,
+      TemperatureType? temperature,
       bool? isFavourite,
       DateTime? lastWorn}) {
     return Outfit(

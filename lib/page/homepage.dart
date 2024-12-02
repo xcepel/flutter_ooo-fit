@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/ioc/ioc_container.dart';
 import 'package:ooo_fit/page/clothes_list_page.dart';
+import 'package:ooo_fit/widget/homepage/homepage_daily_info.dart';
 import 'package:ooo_fit/page/outfit_list_page.dart';
 import 'package:ooo_fit/page/styles_list_page.dart';
+import 'package:ooo_fit/service/weather_service.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/homepage/homepage_navigation_button.dart';
 
 class Homepage extends StatelessWidget {
-  const Homepage({super.key});
+  final WeatherService _weatherService = get<WeatherService>();
+
+  Homepage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +26,9 @@ class Homepage extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // TODO when have data - transfer into widgets
-                    _buildStyledText(
-                        "Your city", 30, FontWeight.bold, Colors.purple),
-                    SizedBox(height: 10),
-                    _buildStyledText("Po 13. December ♀ 13°C", 24,
-                        FontWeight.w600, Colors.grey[700]!),
+                    HomepageDailyInfo(),
                     SizedBox(height: 40),
+                    // TODO when have data - transfer into widgets
                     _buildStyledText(
                         "Planned events:", 24, FontWeight.bold, Colors.black87),
                     SizedBox(height: 10),

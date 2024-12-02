@@ -1,7 +1,7 @@
 import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
-import 'package:ooo_fit/model/temperature.dart';
+import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/service/database_service.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
@@ -19,7 +19,7 @@ class OutfitService {
       {required String? name,
       required List<String>? pieceIds,
       required List<String>? styleIds,
-      required Temperature? temperature}) async {
+      required TemperatureType? temperature}) async {
     if (name == null ||
         (pieceIds == null || pieceIds.isEmpty) ||
         (styleIds == null || styleIds.isEmpty) ||

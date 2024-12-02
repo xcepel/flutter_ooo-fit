@@ -1,5 +1,5 @@
 import 'package:ooo_fit/model/event.dart';
-import 'package:ooo_fit/model/temperature.dart';
+import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/service/database_service.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
@@ -18,7 +18,7 @@ class EventService {
       required String? place,
       required String? outfitId,
       required List<String>? styleIds,
-      required Temperature? temperature}) async {
+      required TemperatureType? temperature}) async {
     if (name == null ||
         eventDatetime == null ||
         place == null ||

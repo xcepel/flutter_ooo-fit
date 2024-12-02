@@ -40,6 +40,8 @@ dependencies:
   cloud_firestore: ^5.5.0
   get_it: ^8.0.2
   rxdart: ^0.28.0
+  weather: ^3.1.1
+  intl: ^0.20.1
 
 dev_dependencies:
   flutter_test:

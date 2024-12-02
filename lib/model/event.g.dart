@@ -44,10 +44,10 @@ Value? _$JsonConverterFromJson<Json, Value>(
     json == null ? null : fromJson(json as Json);
 
 const _$TemperatureEnumMap = {
-  Temperature.cold: 'cold',
-  Temperature.chilly: 'chilly',
-  Temperature.warm: 'warm',
-  Temperature.hot: 'hot',
+  TemperatureType.cold: 'cold',
+  TemperatureType.chilly: 'chilly',
+  TemperatureType.warm: 'warm',
+  TemperatureType.hot: 'hot',
 };
 
 Json? _$JsonConverterToJson<Json, Value>(

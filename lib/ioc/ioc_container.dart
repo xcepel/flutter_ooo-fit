@@ -8,6 +8,8 @@ import 'package:ooo_fit/service/event_service.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
+import 'package:ooo_fit/service/weather_service.dart';
+import 'package:weather/weather.dart';
 
 final get = GetIt.instance;
 
@@ -31,6 +33,7 @@ class IocContainer {
           fromJson: Event.fromJson, toJson: (event) => event.toJson()),
     );
 
+    // Register all Services
     get.registerSingleton(StyleService(get<DatabaseService<Style>>()));
 
     get.registerSingleton(
@@ -41,5 +44,9 @@ class IocContainer {
 
     get.registerSingleton(EventService(get<DatabaseService<Event>>(),
         get<StyleService>(), get<OutfitService>()));
+
+    // Register WeatherService
+    get.registerSingleton(
+        WeatherService(WeatherFactory("1b411c1aff701ce828b36648cfb513d4")));
   }
 }
