@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:ooo_fit/ioc/ioc_container.dart';
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/page/homepage.dart';
 
@@ -7,6 +8,8 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  IocContainer.setup();
 
   runApp(MyApp());
 }
@@ -19,7 +22,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "OOO-FIT",
       home: Homepage(),
-      //home: OutfitEdit(),
     );
   }
 }

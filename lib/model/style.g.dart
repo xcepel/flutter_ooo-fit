@@ -8,17 +8,28 @@ part of 'style.dart';
 
 Style _$StyleFromJson(Map<String, dynamic> json) => Style(
       id: json['id'] as String,
-      createdAt: json['createdAt'] == null
-          ? null
-          : DateTime.parse(json['createdAt'] as String),
+      createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['createdAt'], const TimestampConverter().fromJson),
       name: json['name'] as String,
-      userId: json['userId'] as String,
     );
 
 Map<String, dynamic> _$StyleToJson(Style instance) => <String, dynamic>{
       'id': instance.id,
-      if (instance.createdAt?.toIso8601String() case final value?)
+      if (_$JsonConverterToJson<Timestamp, DateTime>(
+              instance.createdAt, const TimestampConverter().toJson)
+          case final value?)
         'createdAt': value,
       'name': instance.name,
-      'userId': instance.userId,
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

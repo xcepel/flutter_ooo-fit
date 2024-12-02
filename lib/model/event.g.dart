@@ -8,29 +8,40 @@ part of 'event.dart';
 
 Event _$EventFromJson(Map<String, dynamic> json) => Event(
       id: json['id'] as String,
-      createdAt: json['createdAt'] == null
-          ? null
-          : DateTime.parse(json['createdAt'] as String),
+      createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['createdAt'], const TimestampConverter().fromJson),
       name: json['name'] as String,
-      eventDatetime: DateTime.parse(json['eventDatetime'] as String),
+      eventDatetime: const TimestampConverter()
+          .fromJson(json['eventDatetime'] as Timestamp),
+      place: json['place'] as String,
       outfitId: json['outfitId'] as String?,
       styleIds:
           (json['styleIds'] as List<dynamic>).map((e) => e as String).toList(),
-      temperature: $enumDecode(_$TemperatureEnumMap, json['temperature']),
-      userId: json['userId'] as String,
+      temperature:
+          $enumDecodeNullable(_$TemperatureEnumMap, json['temperature']),
     );
 
 Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
       'id': instance.id,
-      if (instance.createdAt?.toIso8601String() case final value?)
+      if (_$JsonConverterToJson<Timestamp, DateTime>(
+              instance.createdAt, const TimestampConverter().toJson)
+          case final value?)
         'createdAt': value,
-      'eventDatetime': instance.eventDatetime.toIso8601String(),
+      'eventDatetime':
+          const TimestampConverter().toJson(instance.eventDatetime),
+      'place': instance.place,
       'name': instance.name,
       if (instance.outfitId case final value?) 'outfitId': value,
       'styleIds': instance.styleIds,
-      'temperature': _$TemperatureEnumMap[instance.temperature]!,
-      'userId': instance.userId,
+      if (_$TemperatureEnumMap[instance.temperature] case final value?)
+        'temperature': value,
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
 
 const _$TemperatureEnumMap = {
   Temperature.cold: 'cold',
@@ -38,3 +49,9 @@ const _$TemperatureEnumMap = {
   Temperature.warm: 'warm',
   Temperature.hot: 'hot',
 };
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);
