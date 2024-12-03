@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/constants.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
+import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/custom_search_bar.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/styles/style_dialog.dart';
@@ -35,6 +36,7 @@ class StylesListPage extends StatelessWidget {
                 )),
         child: const Icon(Icons.add),
       ),
+      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 3),
     );
   }
 

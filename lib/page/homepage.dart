@@ -43,6 +43,7 @@ class Homepage extends StatelessWidget {
               ),
             ),
             // Buttons at the bottom
+            // TODO will we keep them or switch out for CustomBottomNavigationBar ?
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

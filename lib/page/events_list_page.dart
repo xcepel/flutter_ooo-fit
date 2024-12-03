@@ -6,6 +6,7 @@ import 'package:ooo_fit/model/event.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/page/event_edit_page.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
+import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/events/event_item.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -107,6 +108,7 @@ class _EventsListPageState extends State<EventsListPage> {
         },
         child: const Icon(Icons.add),
       ),
+      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 4),
     );
   }
 

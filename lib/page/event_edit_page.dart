@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
+import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/page_content_frame.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_clothes/label_button.dart';
@@ -49,6 +50,7 @@ class EventEditPage extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 4),
     );
   }
 }
