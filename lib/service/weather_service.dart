@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weather/weather.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
+import 'package:weather/weather.dart';
 
 class WeatherService {
   final WeatherFactory _weatherFactory;
@@ -12,10 +12,26 @@ class WeatherService {
   }
 
   Image getWeatherIcon(Weather weather) {
-    //TODO: null handling
+    final Image weatherUnknownImage = Image.asset(
+      "assets/images/weather-unknown.png",
+      width: 40,
+      height: 40,
+    );
+
+    if (weather.weatherIcon == null) {
+      return weatherUnknownImage;
+    }
+
     final String weatherIconName = weather.weatherIcon!;
+    final String url = 'http://openweathermap.org/img/wn/$weatherIconName.png';
+
     return Image.network(
-        'http://openweathermap.org/img/wn/$weatherIconName.png');
+      url,
+      errorBuilder:
+          (BuildContext context, Object error, StackTrace? stackTrace) {
+        return weatherUnknownImage;
+      },
+    );
   }
 
   static TemperatureType getTemperatureTypeFromWeather(Weather weather) {
