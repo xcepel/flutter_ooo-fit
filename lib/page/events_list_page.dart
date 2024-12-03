@@ -1,10 +1,12 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/constants.dart';
 import 'package:ooo_fit/model/event.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
-import 'package:ooo_fit/page/event_detail_page.dart';
+import 'package:ooo_fit/page/event_edit_page.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
+import 'package:ooo_fit/widget/events/event_item.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 //TODO: refactor and break into widgets
@@ -98,6 +100,13 @@ class _EventsListPageState extends State<EventsListPage> {
           _buildEventListView(),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => EventEditPage()));
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 
@@ -135,21 +144,14 @@ class _EventsListPageState extends State<EventsListPage> {
   Widget _buildEventListView() {
     return Expanded(
       child: ListView.builder(
+        padding: pagePadding,
         itemCount: widget
             ._getEventsForDay(_selectedDay ?? EventsListPage.kToday)
             .length,
         itemBuilder: (context, index) {
           final event = widget
               ._getEventsForDay(_selectedDay ?? EventsListPage.kToday)[index];
-          return ListTile(
-            title: Text(event.name),
-            subtitle: Text(
-                'Place: ${event.place}\nTemperature: ${event.temperature?.label}\nStyle: Formal'),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EventDetailPage()));
-            },
-          );
+          return EventInfo(event: event);
         },
       ),
     );

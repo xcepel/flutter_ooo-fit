@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/constants.dart';
 import 'package:ooo_fit/page/clothes_edit_page.dart';
 import 'package:ooo_fit/widget/clothes/clothes_items_list.dart';
 import 'package:ooo_fit/widget/clothes/placement_header.dart';
@@ -13,7 +14,7 @@ class ClothesListPage extends StatelessWidget {
     return Scaffold(
       appBar: const CustomAppBar(title: "Clothes list"),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: pagePadding,
         child: Column(
           children: [
             FourPartFilterBar(

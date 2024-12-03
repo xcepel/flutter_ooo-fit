@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/constants.dart';
 import 'package:ooo_fit/ioc/ioc_container.dart';
 import 'package:ooo_fit/page/clothes_list_page.dart';
 import 'package:ooo_fit/page/events_list_page.dart';
-import 'package:ooo_fit/widget/homepage/homepage_daily_info.dart';
 import 'package:ooo_fit/page/outfit_list_page.dart';
 import 'package:ooo_fit/page/styles_list_page.dart';
 import 'package:ooo_fit/service/weather_service.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
+import 'package:ooo_fit/widget/homepage/homepage_daily_info.dart';
 import 'package:ooo_fit/widget/homepage/homepage_navigation_button.dart';
 
 class Homepage extends StatelessWidget {
@@ -19,7 +20,7 @@ class Homepage extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(title: "OOO-FIT"),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
+        padding: pagePadding,
         child: Column(
           children: [
             Expanded(
@@ -94,11 +95,11 @@ class Homepage extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: fontSize, // Font size
-        fontWeight: fontWeight, // Font weight
-        color: color, // Text color
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        color: color,
       ),
-      textAlign: TextAlign.center, // Optional: center-align text
+      textAlign: TextAlign.center,
     );
   }
 }

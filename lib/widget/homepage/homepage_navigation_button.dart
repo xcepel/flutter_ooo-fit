@@ -15,7 +15,7 @@ class HomepageNavigationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 100,
+      width: 90,
       height: 140,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(

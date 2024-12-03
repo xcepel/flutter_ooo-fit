@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/widget/common/page_content_frame.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_clothes/description_label.dart';
 import 'package:ooo_fit/widget/outfit_clothes/label_button.dart';
-import 'package:ooo_fit/widget/outfit_clothes/sized_picture.dart';
+import 'package:ooo_fit/widget/outfit_clothes/picture_changer.dart';
 import 'package:ooo_fit/widget/outfit_clothes/text_edit_label.dart';
 import 'package:ooo_fit/widget/outfits/carousel.dart';
 import 'package:ooo_fit/widget/outfits/placement_header_filter.dart';
@@ -11,6 +12,7 @@ class OutfitEditPage extends StatelessWidget {
   final String name = "Ratio Sorcerer";
   final String style = "Formal";
   final String temperature = "warm";
+  final String image = "assets/images/test_picture.jpg";
 
   const OutfitEditPage({super.key});
 
@@ -57,64 +59,31 @@ class OutfitEditPage extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            LayoutBuilder(
-              builder: (context, constraints) {
-                double size = constraints.maxWidth;
-                return Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    ColorFiltered(
-                      // Grayscale picture
-                      colorFilter: const ColorFilter.mode(
-                        Colors.grey,
-                        BlendMode.saturation,
-                      ),
-                      child: SizedPicture(
-                        sizeX: size,
-                        sizeY: size * 1.3,
-                        image: "assets/images/test_picture.jpg",
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black54,
-                        foregroundColor: Colors.white,
-                      ),
-                      child: const Text("Click to Change Picture"),
-                    ),
-                  ],
-                );
-              },
-            ),
-            SizedBox(height: 10),
-            TextEditLabel(label: "Style"), // TODO Naseptavani?
-            SizedBox(height: 10),
-            TextEditLabel(label: "Temperature"),
-            PageDivider(),
-            DescriptionLabel(label: "Consist of", value: ""),
-            SizedBox(height: 10),
-            PlacementHeaderFilter(label: "Head"),
-            Carousel(pictureItemsData: pictureItemsData),
-            PageDivider(),
-            LabelButton(
-              label: "Create/Edit",
-              backgroundColor: Colors.transparent,
-              textColor: Colors.deepPurple,
-            ),
-            SizedBox(height: 20),
-            LabelButton(
-              label: "Delete",
-              backgroundColor: Colors.transparent,
-              textColor: Colors.redAccent,
-            ),
-          ],
-        ),
+      body: PageContentFrame(
+        children: [
+          PictureChanger(image: image),
+          SizedBox(height: 10),
+          TextEditLabel(label: "Style"), // TODO Naseptavani/dropdown?
+          SizedBox(height: 10),
+          TextEditLabel(label: "Temperature"),
+          PageDivider(),
+          DescriptionLabel(label: "Consist of", value: ""),
+          SizedBox(height: 10),
+          PlacementHeaderFilter(label: "Head"),
+          Carousel(pictureItemsData: pictureItemsData),
+          PageDivider(),
+          LabelButton(
+            label: "Create/Edit",
+            backgroundColor: Colors.transparent,
+            textColor: Colors.deepPurple,
+          ),
+          SizedBox(height: 20),
+          LabelButton(
+            label: "Delete",
+            backgroundColor: Colors.transparent,
+            textColor: Colors.redAccent,
+          ),
+        ],
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/widget/common/custom_search_bar.dart';
 import 'package:ooo_fit/widget/common/dropdown_filter.dart';
 
 class PlacementHeaderFilter extends StatelessWidget {
@@ -27,24 +28,19 @@ class PlacementHeaderFilter extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          Spacer(), // This pushes the buttons to the right
+          Spacer(), // push the buttons to the right
           Expanded(
-            // Ensure the TextField takes up available space
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search...',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.search),
-                filled: true,
-                fillColor: Colors.white,
-              ),
-            ),
+            child: CustomSearchBar(whiteStyle: true),
           ),
           SizedBox(width: 10),
-          DropdownFilter(label: "Style"),
+          DropdownFilter(label: "Style", whiteStyle: true),
           SizedBox(width: 10),
           TextButton(
             onPressed: () {},
+            style: ButtonStyle(
+              side: WidgetStateProperty.all(
+                  BorderSide(color: Colors.white, width: 2)),
+            ),
             child: const Text(
               'Random',
               style: TextStyle(color: Colors.white),

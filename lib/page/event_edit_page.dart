@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
+import 'package:ooo_fit/widget/common/page_content_frame.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_clothes/label_button.dart';
 import 'package:ooo_fit/widget/outfit_clothes/picture_changer.dart';
@@ -20,37 +21,33 @@ class EventEditPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: name),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextEditLabel(label: "Date"),
-            SizedBox(height: 10),
-            TextEditLabel(label: "Place"),
-            SizedBox(height: 10),
-            TextEditLabel(label: "Style"),
-            SizedBox(height: 10),
-            TextEditLabel(label: "Temperature"),
-            PageDivider(),
-            // TODO dropdown/vyber ze strany/naseptavac?
-            TextEditLabel(label: "Outfit"),
-            SizedBox(height: 10),
-            PictureChanger(image: outfitPhoto),
-            PageDivider(),
-            LabelButton(
-              label: "Create/Edit",
-              backgroundColor: Colors.transparent,
-              textColor: Colors.deepPurple,
-            ),
-            SizedBox(height: 20),
-            LabelButton(
-              label: "Delete",
-              backgroundColor: Colors.transparent,
-              textColor: Colors.redAccent,
-            ),
-          ],
-        ),
+      body: PageContentFrame(
+        children: [
+          TextEditLabel(label: "Date"),
+          SizedBox(height: 10),
+          TextEditLabel(label: "Place"),
+          SizedBox(height: 10),
+          TextEditLabel(label: "Style"),
+          SizedBox(height: 10),
+          TextEditLabel(label: "Temperature"),
+          PageDivider(),
+          // TODO dropdown/vyber ze strany/naseptavac?
+          TextEditLabel(label: "Outfit"),
+          SizedBox(height: 10),
+          PictureChanger(image: outfitPhoto),
+          PageDivider(),
+          LabelButton(
+            label: "Create/Edit",
+            backgroundColor: Colors.transparent,
+            textColor: Colors.deepPurple,
+          ),
+          SizedBox(height: 20),
+          LabelButton(
+            label: "Delete",
+            backgroundColor: Colors.transparent,
+            textColor: Colors.redAccent,
+          ),
+        ],
       ),
     );
   }

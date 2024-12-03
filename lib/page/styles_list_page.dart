@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:ooo_fit/model/style.dart';
+import 'package:ooo_fit/constants.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
+import 'package:ooo_fit/widget/common/custom_search_bar.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/styles/style_dialog.dart';
 import 'package:ooo_fit/widget/styles/style_row.dart';
@@ -17,16 +18,10 @@ class StylesListPage extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(title: "Styles list"),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
+        padding: pagePadding,
         child: Column(
           children: [
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Search...',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.search),
-              ),
-            ),
+            CustomSearchBar(),
             SizedBox(height: 20),
             _buildStyleList(),
           ],

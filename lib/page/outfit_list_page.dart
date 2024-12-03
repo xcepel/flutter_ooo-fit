@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/constants.dart';
 import 'package:ooo_fit/page/outfit_detail_page.dart';
+import 'package:ooo_fit/page/outfit_edit_page.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/outfit_clothes/four_part_filter_bar.dart';
 import 'package:ooo_fit/widget/outfit_clothes/picture_item.dart';
@@ -21,12 +23,12 @@ class OutfitListPage extends StatelessWidget {
 
     // Dynamically adjust outfit item width and height
     double outfitItemWidth = screenWidth / crossAxisCount - 16;
-    double outfitItemHeight = outfitItemWidth * 1.65;
+    double outfitItemHeight = outfitItemWidth * 1.68;
 
     return Scaffold(
       appBar: CustomAppBar(title: "Outfit list"),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: pagePadding,
         child: Column(
           children: [
             FourPartFilterBar(
@@ -57,8 +59,7 @@ class OutfitListPage extends StatelessWidget {
                       child: PictureItem(
                         image: "assets/images/test_picture.jpg",
                         title: "Outfit name $index",
-                        style:
-                            "A long description for the outfit that spans multiple lines.",
+                        style: "Style1",
                         lastWorn: "1. 1. 1999",
                       ),
                     ),
@@ -70,7 +71,10 @@ class OutfitListPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => OutfitEditPage()));
+        },
         child: const Icon(Icons.add),
       ),
     );

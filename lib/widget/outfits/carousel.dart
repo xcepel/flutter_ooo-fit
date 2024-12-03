@@ -5,9 +5,9 @@ import 'package:ooo_fit/widget/outfit_clothes/picture_item.dart';
 class Carousel extends StatelessWidget {
   final List<Map<String, String>> pictureItemsData;
 
-  // Constructor to accept a list of data for PictureItems
   const Carousel({super.key, required this.pictureItemsData});
 
+  // TODO the chosen one/s should be displayed differently
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
@@ -17,7 +17,7 @@ class Carousel extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
           child: SizedBox(
-            width: 150,
+            width: 200, // Increased width here
             child: PictureItem(
               image: data['image']!,
               title: data['title']!,
@@ -30,12 +30,13 @@ class Carousel extends StatelessWidget {
       options: CarouselOptions(
         height: 270.0,
         enlargeCenterPage: false,
-        autoPlay: true,
+        autoPlay: false,
         aspectRatio: 16 / 9,
         autoPlayCurve: Curves.fastOutSlowIn,
         enableInfiniteScroll: true,
         autoPlayAnimationDuration: Duration(milliseconds: 800),
-        viewportFraction: 0.25,
+        viewportFraction: 0.3,
+        initialPage: 1, // TODO show the chosen clothing item by index
       ),
     );
   }
