@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/ioc/ioc_container.dart';
 import 'package:ooo_fit/page/clothes_list_page.dart';
+import 'package:ooo_fit/page/events_list_page.dart';
 import 'package:ooo_fit/widget/homepage/homepage_daily_info.dart';
 import 'package:ooo_fit/page/outfit_list_page.dart';
 import 'package:ooo_fit/page/styles_list_page.dart';
@@ -74,7 +75,12 @@ class Homepage extends StatelessWidget {
                 HomepageNavigationButton(
                     icon: Icons.calendar_month_rounded,
                     label: "Events",
-                    onPressed: () {}),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EventsListPage()));
+                    }),
               ],
             ),
           ],
