@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:ooo_fit/ioc/ioc_container.dart';
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/page/homepage.dart';
+import 'package:ooo_fit/page/outfit_list_page.dart';
 
 import 'firebase_options.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "OOO-FIT",
-      home: Homepage(),
+      home: OutfitListPage(),
     );
   }
 }

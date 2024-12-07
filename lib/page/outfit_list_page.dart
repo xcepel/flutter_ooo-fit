@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/constants.dart';
+import 'package:ooo_fit/utils/constants.dart';
 import 'package:ooo_fit/page/outfit_detail_page.dart';
 import 'package:ooo_fit/page/outfit_edit_page.dart';
+import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/outfit_clothes/four_part_filter_bar.dart';
@@ -78,7 +79,8 @@ class OutfitListPage extends StatelessWidget {
         },
         child: const Icon(Icons.add),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 1),
+      bottomNavigationBar:
+          CustomBottomNavigationBar(currentPage: PageTypes.outfits),
     );
   }
 }

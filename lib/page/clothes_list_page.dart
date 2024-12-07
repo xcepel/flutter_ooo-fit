@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/constants.dart';
+import 'package:ooo_fit/utils/constants.dart';
 import 'package:ooo_fit/page/clothes_edit_page.dart';
+import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/clothes/clothes_items_list.dart';
 import 'package:ooo_fit/widget/clothes/placement_header.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
@@ -48,7 +49,8 @@ class ClothesListPage extends StatelessWidget {
         },
         child: const Icon(Icons.add),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 2),
+      bottomNavigationBar:
+          CustomBottomNavigationBar(currentPage: PageTypes.clothes),
     );
   }
 }

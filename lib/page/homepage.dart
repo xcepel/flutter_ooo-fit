@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/constants.dart';
+import 'package:ooo_fit/utils/constants.dart';
 import 'package:ooo_fit/ioc/ioc_container.dart';
 import 'package:ooo_fit/page/clothes_list_page.dart';
 import 'package:ooo_fit/page/events_list_page.dart';

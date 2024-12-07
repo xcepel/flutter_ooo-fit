@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/constants.dart';
+import 'package:ooo_fit/utils/constants.dart';
 
 class PageContentFrame extends StatelessWidget {
   final List<Widget> children;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/page/event_edit_page.dart';
+import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/edit_button.dart';
@@ -48,7 +49,8 @@ class EventDetailPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 4),
+      bottomNavigationBar:
+          CustomBottomNavigationBar(currentPage: PageTypes.events),
     );
   }
 }

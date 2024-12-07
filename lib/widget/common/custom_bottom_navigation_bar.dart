@@ -1,31 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/page/clothes_list_page.dart';
 import 'package:ooo_fit/page/events_list_page.dart';
-import 'package:ooo_fit/page/homepage.dart';
 import 'package:ooo_fit/page/outfit_list_page.dart';
 import 'package:ooo_fit/page/styles_list_page.dart';
+import 'package:ooo_fit/utils/page_types.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
-  final int currentIndex;
-  const CustomBottomNavigationBar({super.key, required this.currentIndex});
+  final PageTypes currentPage;
 
-  void _navigate(BuildContext context, int index) {
-    switch (index) {
-      case 0:
-        _navigateToPage(context, Homepage());
-        break;
-      case 1:
+  const CustomBottomNavigationBar({super.key, required this.currentPage});
+
+  void _navigate(BuildContext context, PageTypes page) {
+    switch (page) {
+      case PageTypes.outfits:
         _navigateToPage(context, OutfitListPage());
         break;
-      case 2:
+      case PageTypes.clothes:
         _navigateToPage(context, ClothesListPage());
         break;
-      case 3:
-        _navigateToPage(context, StylesListPage());
-        break;
-      case 4:
+      case PageTypes.events:
         _navigateToPage(context, EventsListPage());
+        break;
+      case PageTypes.styles:
+        _navigateToPage(context, StylesListPage());
         break;
     }
   }
@@ -41,43 +39,47 @@ class CustomBottomNavigationBar extends StatelessWidget {
       ),
       items: [
         BottomBarItem(
-          icon: const Icon(Icons.home_rounded),
-          title: const Text("Home"),
-          backgroundColor: Colors.deepPurple,
-        ),
-        BottomBarItem(
           icon: const Icon(Icons.accessibility_rounded),
           title: const Text("Outfits"),
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: currentPage == PageTypes.outfits
+              ? Colors.deepPurple
+              : Colors.grey,
         ),
         BottomBarItem(
           icon: const Icon(Icons.checkroom_rounded),
           title: const Text("Clothes"),
-          backgroundColor: Colors.deepPurple,
-        ),
-        BottomBarItem(
-          icon: const Icon(Icons.auto_awesome_rounded),
-          title: const Text("Styles"),
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: currentPage == PageTypes.clothes
+              ? Colors.deepPurple
+              : Colors.grey,
         ),
         BottomBarItem(
           icon: const Icon(Icons.calendar_month_rounded),
           title: const Text("Events"),
-          backgroundColor: Colors.deepPurple,
+          backgroundColor:
+              currentPage == PageTypes.events ? Colors.deepPurple : Colors.grey,
+        ),
+        BottomBarItem(
+          icon: const Icon(Icons.auto_awesome_rounded),
+          title: const Text("Styles"),
+          backgroundColor:
+              currentPage == PageTypes.styles ? Colors.deepPurple : Colors.grey,
         ),
       ],
       fabLocation: StylishBarFabLocation.center,
       hasNotch: true,
-      currentIndex: currentIndex,
-      onTap: (index) => _navigate(context, index),
+      currentIndex: currentPage.index,
+      onTap: (int index) {
+        final PageTypes page = PageTypes.values[index];
+        _navigate(context, page);
+      },
     );
   }
 
   void _navigateToPage(BuildContext context, Widget page) {
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => page),
-      (route) => false, // removes all previous routes from the stack
+      MaterialPageRoute(builder: (BuildContext context) => page),
+      (route) => false,
     );
   }
 }
