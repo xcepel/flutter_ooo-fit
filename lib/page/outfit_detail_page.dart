@@ -5,7 +5,7 @@ import 'package:ooo_fit/widget/clothes/clothes_items_list.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/edit_button.dart';
-import 'package:ooo_fit/widget/common/page_content_frame.dart';
+import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_clothes/description_label.dart';
 import 'package:ooo_fit/widget/outfit_clothes/list_item.dart';
@@ -26,7 +26,7 @@ class OutfitDetailPage extends StatelessWidget {
         title: name,
         actionButton: EditButton(editPage: OutfitEditPage()),
       ),
-      body: PageContentFrame(
+      body: ContentFrameDetail(
         children: [
           LayoutBuilder(
             builder: (context, constraints) {

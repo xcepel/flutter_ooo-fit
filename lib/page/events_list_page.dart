@@ -8,6 +8,7 @@ import 'package:ooo_fit/page/event_edit_page.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
+import 'package:ooo_fit/widget/common/custom_floating_action_button.dart';
 import 'package:ooo_fit/widget/events/event_item.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -95,19 +96,18 @@ class _EventsListPageState extends State<EventsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Events list'),
+      appBar: CustomAppBar(title: 'Events list', weather_info: true),
       body: Column(
         children: [
           _buildEventCalendar(),
           _buildEventListView(),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: CustomFloatingActionButton(
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => EventEditPage()));
         },
-        child: const Icon(Icons.add),
       ),
       bottomNavigationBar:
           CustomBottomNavigationBar(currentPage: PageTypes.events),

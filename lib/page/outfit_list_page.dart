@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/utils/constants.dart';
 import 'package:ooo_fit/page/outfit_detail_page.dart';
 import 'package:ooo_fit/page/outfit_edit_page.dart';
 import 'package:ooo_fit/utils/page_types.dart';
+import 'package:ooo_fit/widget/common/content_frame_list.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
+import 'package:ooo_fit/widget/common/custom_floating_action_button.dart';
 import 'package:ooo_fit/widget/outfit_clothes/four_part_filter_bar.dart';
 import 'package:ooo_fit/widget/outfit_clothes/picture_item.dart';
 
@@ -28,56 +29,52 @@ class OutfitListPage extends StatelessWidget {
     double outfitItemHeight = outfitItemWidth * 1.68;
 
     return Scaffold(
-      appBar: CustomAppBar(title: "Outfit list"),
-      body: Padding(
-        padding: pagePadding,
-        child: Column(
-          children: [
-            FourPartFilterBar(
-                filter1: "Style", filter2: "Weather", filter3: "Sort by"),
-            Expanded(
-              child: GridView.builder(
-                shrinkWrap: true,
-                physics:
-                    const AlwaysScrollableScrollPhysics(), // Enable scrolling
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: crossAxisCount,
-                  childAspectRatio: outfitItemWidth / outfitItemHeight,
-                ),
-                itemCount: 8,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OutfitDetailPage(),
-                        ),
-                      );
-                    },
-                    child: SizedBox(
-                      width: outfitItemWidth,
-                      height: outfitItemHeight,
-                      child: PictureItem(
-                        image: "assets/images/test_picture.jpg",
-                        title: "Outfit name $index",
-                        style: "Style1",
-                        lastWorn: "1. 1. 1999",
-                      ),
-                    ),
-                  );
-                },
+      appBar: CustomAppBar(title: "Outfit list", weather_info: true),
+      body: ContentFrameList(
+        children: [
+          FourPartFilterBar(
+              filter1: "Style", filter2: "Weather", filter3: "Sort by"),
+          Expanded(
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics:
+                  const AlwaysScrollableScrollPhysics(), // Enable scrolling
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                childAspectRatio: outfitItemWidth / outfitItemHeight,
               ),
+              itemCount: 8,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OutfitDetailPage(),
+                      ),
+                    );
+                  },
+                  child: SizedBox(
+                    width: outfitItemWidth,
+                    height: outfitItemHeight,
+                    child: PictureItem(
+                      image: "assets/images/test_picture.jpg",
+                      title: "Outfit name $index",
+                      style: "Style1",
+                      lastWorn: "1. 1. 1999",
+                    ),
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: CustomFloatingActionButton(
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => OutfitEditPage()));
         },
-        child: const Icon(Icons.add),
       ),
       bottomNavigationBar:
           CustomBottomNavigationBar(currentPage: PageTypes.outfits),

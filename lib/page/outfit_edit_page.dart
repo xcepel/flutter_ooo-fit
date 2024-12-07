@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
-import 'package:ooo_fit/widget/common/page_content_frame.dart';
+import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_clothes/description_label.dart';
 import 'package:ooo_fit/widget/outfit_clothes/label_button.dart';
@@ -61,7 +61,7 @@ class OutfitEditPage extends StatelessWidget {
           ),
         ),
       ),
-      body: PageContentFrame(
+      body: ContentFrameDetail(
         children: [
           PictureChanger(image: image),
           SizedBox(height: 10),

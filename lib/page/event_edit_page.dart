@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
-import 'package:ooo_fit/widget/common/page_content_frame.dart';
+import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_clothes/label_button.dart';
 import 'package:ooo_fit/widget/outfit_clothes/picture_changer.dart';
@@ -23,7 +23,7 @@ class EventEditPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: name),
-      body: PageContentFrame(
+      body: ContentFrameDetail(
         children: [
           TextEditLabel(label: "Date"),
           SizedBox(height: 10),

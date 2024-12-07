@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/widget/homepage/homepage_daily_info.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final bool weather_info;
   final Widget? actionButton;
-  const CustomAppBar({super.key, required this.title, this.actionButton});
+
+  const CustomAppBar({
+    super.key,
+    required this.title,
+    this.weather_info = false,
+    this.actionButton,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +22,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         style: const TextStyle(color: Colors.white),
       ),
-      actions: actionButton != null ? [actionButton!] : null,
+      actions: [
+        if (weather_info)
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: HomepageDailyInfo(),
+          ),
+        if (actionButton != null) actionButton!,
+      ],
     );
   }
 
