@@ -17,6 +17,15 @@ class StyleRow extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+          Container(
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(
+              color: Colors.deepPurple, //todo get from database
+              shape: BoxShape.circle,
+            ),
+          ),
+          SizedBox(width: 10),
           Expanded(
             child: Text(
               style.name,

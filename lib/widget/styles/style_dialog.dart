@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/service/style_service.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart'; // Import the color picker package
 
 class StyleDialog extends StatefulWidget {
   final Style? style;
@@ -42,10 +43,28 @@ class _StyleDialogState extends State<StyleDialog> {
           child: Column(
             children: [
               _buildNameFormField(),
+              _buildColorPicker(),
               _buildFormButtons(context),
             ],
           ),
         )
+      ],
+    );
+  }
+
+  Widget _buildColorPicker() {
+    return Column(
+      children: [
+        Text("Select Color", style: TextStyle(fontSize: 16)),
+        ColorPicker(
+          pickerColor: Colors.blue,
+          enableAlpha: false,
+          labelTypes: [],
+          onColorChanged: (color) {
+            // todo
+          },
+          pickerAreaHeightPercent: 0.5,
+        ),
       ],
     );
   }

@@ -38,6 +38,7 @@ class StylesListPage extends StatelessWidget {
       child: LoadingStreamBuilder(
         stream: _styleService.getAllStylesStream(),
         builder: (context, stylesList) {
+          // TODO sorth aphabetically
           return ListView.separated(
             itemBuilder: (context, index) => StyleRow(style: stylesList[index]),
             separatorBuilder: (context, index) => Divider(),
