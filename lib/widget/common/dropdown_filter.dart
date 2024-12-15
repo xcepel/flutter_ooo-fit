@@ -9,20 +9,28 @@ class DropdownFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      hint: Text(
-        label,
-        style: TextStyle(
-          color: whiteStyle ? Colors.white : Colors.black,
-        ),
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: Colors.deepPurple.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(4),
       ),
-      items: const [
-        DropdownMenuItem(
-          value: 'type1',
-          child: Text('type1'),
+      child: DropdownButton<String>(
+        hint: Text(
+          label,
+          style: TextStyle(
+            color: whiteStyle ? Colors.white : Colors.black,
+          ),
         ),
-      ],
-      onChanged: (_) {},
+        items: const [
+          DropdownMenuItem(
+            value: 'type1',
+            child: Text('type1'),
+          ),
+        ],
+        onChanged: (_) {},
+        underline: Container(),
+      ),
     );
   }
 }

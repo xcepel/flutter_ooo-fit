@@ -6,7 +6,7 @@ import 'package:ooo_fit/widget/common/content_frame_list.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/custom_floating_action_button.dart';
-import 'package:ooo_fit/widget/outfit_clothes/four_part_filter_bar.dart';
+import 'package:ooo_fit/widget/outfit_clothes/three_part_filter_bar.dart';
 import 'package:ooo_fit/widget/outfit_clothes/picture_item.dart';
 
 class OutfitListPage extends StatelessWidget {
@@ -32,7 +32,7 @@ class OutfitListPage extends StatelessWidget {
       appBar: CustomAppBar(title: "Outfit list", weather_info: true),
       body: ContentFrameList(
         children: [
-          FourPartFilterBar(
+          ThreePartFilterBar(
               filter1: "Style", filter2: "Weather", filter3: "Sort by"),
           Expanded(
             child: GridView.builder(

@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(Colors.white.value);
     return MaterialApp(
       title: "OOO-FIT",
       home: OutfitListPage(),
