@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ooo_fit/page/clothes_edit_page.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/clothes/clothes_items_list.dart';
-import 'package:ooo_fit/widget/clothes/placement_header.dart';
 import 'package:ooo_fit/widget/common/content_frame_list.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
@@ -19,9 +18,9 @@ class ClothesListPage extends StatelessWidget {
       body: ContentFrameList(
         children: [
           ThreePartFilterBar(
-            filter1: "Style",
-            filter2: "Placement",
-            filter3: "Sort by",
+            filter1Name: "Style",
+            filter2Name: "Placement",
+            filter3Name: "Wear History",
           ),
           ClothesItemsList(),
         ],

@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:ooo_fit/ioc/ioc_container.dart';
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/ioc/ioc_container.dart';
 import 'package:ooo_fit/page/outfit_list_page.dart';
 
 import 'firebase_options.dart';

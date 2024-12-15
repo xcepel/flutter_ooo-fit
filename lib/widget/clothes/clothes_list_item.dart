@@ -21,7 +21,7 @@ class ClothesListItem extends StatelessWidget {
         Stack(
           children: [
             AspectRatio(
-              aspectRatio: 3 / 2,
+              aspectRatio: 1 / 1,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
                 child: Image.network(
