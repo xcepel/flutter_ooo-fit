@@ -12,12 +12,10 @@ class DescriptionLabel extends StatelessWidget {
       children: [
         Text(
           "$label: ",
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         Expanded(
           child: Text(
             value,
-            style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
           ),
         ),
       ],

@@ -14,7 +14,6 @@ class ListItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Text(
         "- $text",
-        style: TextStyle(fontSize: 18),
       ),
     );
   }

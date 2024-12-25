@@ -10,27 +10,25 @@ class ClothesItemsList extends StatelessWidget {
     final double itemWidth =
         MediaQuery.of(context).size.width / 2 - 16; // 2 items per row
 
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: List.generate(
-            9,
-            (itemIndex) => GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ClothesDetailPage()),
-                );
-              },
-              child: SizedBox(
-                width: itemWidth,
-                child: ClothesListItem(
-                  image: "assets/images/purple_solid.png",
-                  title: "Clothes $itemIndex",
-                  styleColors: [Colors.deepPurple, Colors.pinkAccent],
-                ),
+    return SingleChildScrollView(
+      child: Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        children: List.generate(
+          9,
+          (itemIndex) => GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ClothesDetailPage()),
+              );
+            },
+            child: SizedBox(
+              width: itemWidth,
+              child: ClothesListItem(
+                image: "assets/images/purple_solid.png",
+                title: "Clothes $itemIndex",
+                styleColors: [Colors.deepPurple, Colors.pinkAccent],
               ),
             ),
           ),

@@ -22,7 +22,7 @@ class ClothesListPage extends StatelessWidget {
             filter2Name: "Placement",
             filter3Name: "Wear History",
           ),
-          ClothesItemsList(),
+          Expanded(child: ClothesItemsList()),
         ],
       ),
       floatingActionButton: CustomFloatingActionButton(
