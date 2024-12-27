@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/widget/common/dropdown_filter.dart';
 
 class TextEditLabel extends StatelessWidget {
   final String label;
@@ -10,18 +11,10 @@ class TextEditLabel extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Flexible(
-          child: Text(
-            "$label: ",
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          ),
+          child: Text("$label: "),
         ),
-        SizedBox(width: 8), // Space between label and TextField
-        Expanded(
-          child: TextField(
-            style: const TextStyle(fontSize: 18),
-            decoration: InputDecoration(hintText: "Enter $label"),
-          ),
-        ),
+        SizedBox(width: 8),
+        DropdownFilter(label: label),
       ],
     );
   }

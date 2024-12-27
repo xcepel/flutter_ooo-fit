@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/utils/page_types.dart';
-import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/content_frame_detail.dart';
+import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_clothes/label_button.dart';
 import 'package:ooo_fit/widget/outfit_clothes/picture_changer.dart';
@@ -10,10 +10,13 @@ import 'package:ooo_fit/widget/outfit_clothes/text_edit_label.dart';
 class ClothesEditPage extends StatelessWidget {
   final String name = "Tie";
   final String placement = "Neck";
-  final String style = "Formal";
-  final String picture = "assets/images/test_clothes.jpg";
+  final List<String> styles = [
+    "Casual",
+    "Vintage",
+  ];
+  final String picture = "assets/images/purple_solid.png";
 
-  const ClothesEditPage({
+  ClothesEditPage({
     super.key,
   });
 
@@ -40,14 +43,14 @@ class ClothesEditPage extends StatelessWidget {
       ),
       body: ContentFrameDetail(
         children: [
-          PictureChanger(image: picture),
+          TextEditLabel(label: "Style"),
           SizedBox(height: 10),
           TextEditLabel(label: "Placement"),
           SizedBox(height: 10),
-          TextEditLabel(label: "Style"), // TODO Naseptavani?
+          PictureChanger(image: picture),
           PageDivider(),
           LabelButton(
-            label: "Create/Edit",
+            label: "Save",
             backgroundColor: Colors.transparent,
             textColor: Colors.deepPurple,
           ),
@@ -55,7 +58,7 @@ class ClothesEditPage extends StatelessWidget {
           LabelButton(
             label: "Delete",
             backgroundColor: Colors.transparent,
-            textColor: Colors.redAccent,
+            textColor: Colors.grey,
           ),
         ],
       ),

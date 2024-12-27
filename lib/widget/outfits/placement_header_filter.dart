@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/widget/common/custom_search_bar.dart';
 import 'package:ooo_fit/widget/common/dropdown_filter.dart';
 
 class PlacementHeaderFilter extends StatelessWidget {
   final String label;
+  final IconData iconType;
 
-  const PlacementHeaderFilter({required this.label, super.key});
+  const PlacementHeaderFilter(
+      {required this.label, super.key, required this.iconType});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class PlacementHeaderFilter extends StatelessWidget {
       child: Row(
         children: [
           Icon(
-            Icons.view_headline, // TODO change for each
+            iconType,
             color: Colors.white,
           ),
           SizedBox(width: 5),
@@ -29,23 +30,25 @@ class PlacementHeaderFilter extends StatelessWidget {
             ),
           ),
           Spacer(), // push the buttons to the right
-          Expanded(
-            child: CustomSearchBar(whiteStyle: true),
-          ),
-          SizedBox(width: 10),
           DropdownFilter(label: "Style", whiteStyle: true),
-          SizedBox(width: 10),
-          TextButton(
+          IconButton(
+            // adds one carousel
+            icon: const Icon(
+              Icons.add_circle_outline_rounded,
+              color: Colors.white,
+              size: 20.0,
+            ),
             onPressed: () {},
-            style: ButtonStyle(
-              side: WidgetStateProperty.all(
-                  BorderSide(color: Colors.white, width: 2)),
-            ),
-            child: const Text(
-              'Random',
-              style: TextStyle(color: Colors.white),
-            ),
           ),
+          IconButton(
+            // removes one carousel
+            icon: const Icon(
+              Icons.remove_circle_outline,
+              color: Colors.white,
+              size: 20.0,
+            ),
+            onPressed: () {},
+          )
         ],
       ),
     );
