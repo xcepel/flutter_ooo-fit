@@ -13,7 +13,7 @@ class WeatherService {
 
   Image getWeatherIcon(Weather weather) {
     final Image weatherUnknownImage = Image.asset(
-      "assets/images/weather-unknown.png",
+      "assets/icons/weather-unknown.png",
       width: 40,
       height: 40,
     );

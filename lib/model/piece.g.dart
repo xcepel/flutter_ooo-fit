@@ -48,9 +48,10 @@ const _$PiecePlacementEnumMap = {
   PiecePlacement.bottom: 'bottom',
   PiecePlacement.feet: 'feet',
   PiecePlacement.head: 'head',
-  PiecePlacement.arms: 'arms',
+  PiecePlacement.hands: 'hands',
   PiecePlacement.neck: 'neck',
-  PiecePlacement.hair: 'hair',
+  PiecePlacement.waist: 'waist',
+  PiecePlacement.other: 'other',
 };
 
 Json? _$JsonConverterToJson<Json, Value>(

@@ -4,7 +4,8 @@ enum PiecePlacement {
   bottom,
   feet,
   head,
-  arms,
+  hands,
   neck,
-  hair,
+  waist,
+  other,
 }

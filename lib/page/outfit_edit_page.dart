@@ -7,8 +7,7 @@ import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_clothes/label_button.dart';
 import 'package:ooo_fit/widget/outfit_clothes/picture_changer.dart';
 import 'package:ooo_fit/widget/outfit_clothes/text_edit_label.dart';
-import 'package:ooo_fit/widget/outfits/carousel.dart';
-import 'package:ooo_fit/widget/outfits/placement_header_filter.dart';
+import 'package:ooo_fit/widget/outfits/placement_clothes_chooser.dart';
 
 class OutfitEditPage extends StatelessWidget {
   final String name = "Ratio Sorcerer";
@@ -67,17 +66,43 @@ class OutfitEditPage extends StatelessWidget {
           ),
           SizedBox(height: 10),
           TextEditLabel(label: "Temperature"),
-          SizedBox(height: 10),
-          PictureChanger(image: image), // todo if no picture just button
           PageDivider(),
-          PlacementHeaderFilter(
-              label: "Head", iconType: Icons.headphones_sharp),
-          Carousel(pictureItemsData: pictureItemsData),
-          Carousel(pictureItemsData: pictureItemsData),
-          SizedBox(height: 10),
-          PlacementHeaderFilter(
-              label: "Shoes", iconType: Icons.ice_skating_rounded),
-          Carousel(pictureItemsData: pictureItemsData),
+
+          PlacementClothesChooser(
+              label: "Head",
+              icon: "assets/icons/placements/head.png",
+              clothesList: pictureItemsData),
+          PlacementClothesChooser(
+              label: "Neck",
+              icon: "assets/icons/placements/neck.png",
+              clothesList: pictureItemsData),
+          PlacementClothesChooser(
+              label: "Body",
+              icon: "assets/icons/placements/body.png",
+              clothesList: pictureItemsData),
+          PlacementClothesChooser(
+              label: "Top",
+              icon: "assets/icons/placements/top.png",
+              clothesList: pictureItemsData),
+          PlacementClothesChooser(
+              label: "Waist",
+              icon: "assets/icons/placements/waist.png",
+              clothesList: pictureItemsData),
+          PlacementClothesChooser(
+              label: "Bottom",
+              icon: "assets/icons/placements/bottom.png",
+              clothesList: pictureItemsData),
+          PlacementClothesChooser(
+              label: "Feet",
+              icon: "assets/icons/placements/feet.png",
+              clothesList: pictureItemsData),
+          PlacementClothesChooser(
+              label: "Other",
+              icon: "assets/icons/placements/other.png",
+              clothesList: pictureItemsData),
+
+          PageDivider(),
+          PictureChanger(image: image), // todo if no picture just button
           PageDivider(),
           LabelButton(
             label: "Save",
