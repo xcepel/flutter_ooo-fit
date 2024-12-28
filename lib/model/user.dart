@@ -10,7 +10,11 @@ class User {
 
   final String? profilePhotoPath;
 
-  const User({required this.id, required this.name, this.profilePhotoPath});
+  const User({
+    required this.id,
+    required this.name,
+    this.profilePhotoPath,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

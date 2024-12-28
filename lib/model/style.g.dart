@@ -11,6 +11,7 @@ Style _$StyleFromJson(Map<String, dynamic> json) => Style(
       createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['createdAt'], const TimestampConverter().fromJson),
       name: json['name'] as String,
+      color: (json['color'] as num).toInt(),
     );
 
 Map<String, dynamic> _$StyleToJson(Style instance) => <String, dynamic>{
@@ -20,6 +21,7 @@ Map<String, dynamic> _$StyleToJson(Style instance) => <String, dynamic>{
           case final value?)
         'createdAt': value,
       'name': instance.name,
+      'color': instance.color,
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(

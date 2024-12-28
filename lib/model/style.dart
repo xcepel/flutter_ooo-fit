@@ -13,7 +13,14 @@ class Style {
 
   final String name;
 
-  const Style({required this.id, this.createdAt, required this.name});
+  final int color;
+
+  Style({
+    required this.id,
+    this.createdAt,
+    required this.name,
+    required this.color,
+  });
 
   factory Style.fromJson(Map<String, dynamic> json) => _$StyleFromJson(json);
 
@@ -23,11 +30,13 @@ class Style {
     String? id,
     DateTime? createdAt,
     String? name,
+    int? color,
   }) {
     return Style(
       id: id ?? this.id,
       createdAt: createdAt ?? this.createdAt,
       name: name ?? this.name,
+      color: color ?? this.color,
     );
   }
 }

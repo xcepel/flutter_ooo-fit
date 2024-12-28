@@ -6,29 +6,48 @@ class StyleService {
 
   const StyleService(this._styleRepository);
 
-  Future<String?> saveStyle({required String? name}) async {
-    if (name == null) {
-      return 'All cells must contain a value';
+  Future<String?> saveStyle({
+    required String? name,
+    required int? color,
+  }) async {
+    String? error = validate(name: name, color: color);
+    if (error != null) {
+      return error;
     }
 
     final style = Style(
       id: '',
-      name: name,
+      name: name!,
+      color: color!,
     );
 
     await _styleRepository.add(style);
     return null;
   }
 
-  Future<String?> updateStyle(
-      {required Style style, required String? name}) async {
-    if (name == null) {
-      return "All cells must contain a value";
+  Future<String?> updateStyle({
+    required Style style,
+    required String? name,
+    required int? color,
+  }) async {
+    String? error = validate(name: name, color: color);
+    if (error != null) {
+      return error;
     }
 
     final newStyle = style.copyWith(name: name);
     //TODO: implement and use update
     await _styleRepository.setOrAdd(style.id, newStyle);
+    return null;
+  }
+
+  String? validate({
+    required String? name,
+    required int? color,
+  }) {
+    if (name == null || color == null) {
+      return 'All cells must contain a value';
+    }
     return null;
   }
 

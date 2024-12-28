@@ -12,7 +12,7 @@ class Outfit {
   @TimestampConverter()
   final DateTime? createdAt;
 
-  final String name;
+  final String? name;
 
   final String? imagePath;
 
@@ -22,45 +22,44 @@ class Outfit {
 
   final TemperatureType temperature;
 
-  final bool isFavourite;
-
   @TimestampConverter()
   final DateTime? lastWorn;
 
-  const Outfit(
-      {required this.id,
-      this.createdAt,
-      required this.name,
-      this.imagePath,
-      required this.pieceIds,
-      required this.styleIds,
-      required this.temperature,
-      required this.isFavourite,
-      this.lastWorn});
+  const Outfit({
+    required this.id,
+    this.createdAt,
+    this.name,
+    this.imagePath,
+    required this.pieceIds,
+    required this.styleIds,
+    required this.temperature,
+    this.lastWorn,
+  });
 
   factory Outfit.fromJson(Map<String, dynamic> json) => _$OutfitFromJson(json);
 
   Map<String, dynamic> toJson() => _$OutfitToJson(this);
 
-  Outfit copyWith(
-      {String? id,
-      DateTime? createdAt,
-      String? name,
-      String? imagePath,
-      List<String>? pieceIds,
-      List<String>? styleIds,
-      TemperatureType? temperature,
-      bool? isFavourite,
-      DateTime? lastWorn}) {
+  Outfit copyWith({
+    String? id,
+    DateTime? createdAt,
+    String? name,
+    String? imagePath,
+    List<String>? pieceIds,
+    List<String>? styleIds,
+    TemperatureType? temperature,
+    bool? isFavourite,
+    DateTime? lastWorn,
+  }) {
     return Outfit(
-        id: id ?? this.id,
-        createdAt: createdAt ?? this.createdAt,
-        name: name ?? this.name,
-        imagePath: imagePath ?? this.imagePath,
-        pieceIds: pieceIds ?? this.pieceIds,
-        styleIds: styleIds ?? this.styleIds,
-        temperature: temperature ?? this.temperature,
-        isFavourite: isFavourite ?? this.isFavourite,
-        lastWorn: lastWorn ?? this.lastWorn);
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      name: name ?? this.name,
+      imagePath: imagePath ?? this.imagePath,
+      pieceIds: pieceIds ?? this.pieceIds,
+      styleIds: styleIds ?? this.styleIds,
+      temperature: temperature ?? this.temperature,
+      lastWorn: lastWorn ?? this.lastWorn,
+    );
   }
 }

@@ -27,15 +27,16 @@ class Event {
   // temperature can be fetched later if event is too far in the future?
   final TemperatureType? temperature;
 
-  const Event(
-      {required this.id,
-      this.createdAt,
-      required this.name,
-      required this.eventDatetime,
-      required this.place,
-      required this.outfitId,
-      required this.styleIds,
-      required this.temperature});
+  const Event({
+    required this.id,
+    this.createdAt,
+    required this.name,
+    required this.eventDatetime,
+    required this.place,
+    required this.outfitId,
+    required this.styleIds,
+    required this.temperature,
+  });
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
 

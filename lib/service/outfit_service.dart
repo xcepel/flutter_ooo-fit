@@ -13,13 +13,66 @@ class OutfitService {
   final PieceService _pieceService;
 
   const OutfitService(
-      this._outfitRepository, this._styleService, this._pieceService);
+    this._outfitRepository,
+    this._styleService,
+    this._pieceService,
+  );
 
-  Future<String?> saveOutfit(
-      {required String? name,
-      required List<String>? pieceIds,
-      required List<String>? styleIds,
-      required TemperatureType? temperature}) async {
+  Future<String?> saveOutfit({
+    required String? name,
+    required List<String>? pieceIds,
+    required List<String>? styleIds,
+    required TemperatureType? temperature,
+  }) async {
+    String? error = validate(
+        name: name,
+        pieceIds: pieceIds,
+        styleIds: styleIds,
+        temperature: temperature);
+    if (error != null) {
+      return error;
+    }
+
+    final piece = Outfit(
+      id: '',
+      name: name,
+      pieceIds: pieceIds!,
+      styleIds: styleIds!,
+      temperature: temperature!,
+    );
+
+    await _outfitRepository.add(piece);
+    return null;
+  }
+
+  Future<String?> updateOutfit({
+    required Outfit outfit,
+    required String? name,
+    required List<String>? pieceIds,
+    required List<String>? styleIds,
+    required TemperatureType? temperature,
+  }) async {
+    String? error = validate(
+        name: name,
+        pieceIds: pieceIds,
+        styleIds: styleIds,
+        temperature: temperature);
+    if (error != null) {
+      return error;
+    }
+
+    final newPiece = outfit.copyWith(name: name);
+    //TODO: implement and use update
+    await _outfitRepository.setOrAdd(outfit.id, newPiece);
+    return null;
+  }
+
+  String? validate({
+    required String? name,
+    required List<String>? pieceIds,
+    required List<String>? styleIds,
+    required TemperatureType? temperature,
+  }) {
     if (name == null ||
         (pieceIds == null || pieceIds.isEmpty) ||
         (styleIds == null || styleIds.isEmpty) ||
@@ -27,15 +80,6 @@ class OutfitService {
       return 'All cells must contain a value';
     }
 
-    final piece = Outfit(
-        id: '',
-        name: name,
-        pieceIds: pieceIds,
-        styleIds: styleIds,
-        temperature: temperature,
-        isFavourite: false);
-
-    await _outfitRepository.add(piece);
     return null;
   }
 

@@ -18,7 +18,7 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
       styleIds:
           (json['styleIds'] as List<dynamic>).map((e) => e as String).toList(),
       temperature:
-          $enumDecodeNullable(_$TemperatureEnumMap, json['temperature']),
+          $enumDecodeNullable(_$TemperatureTypeEnumMap, json['temperature']),
     );
 
 Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
@@ -33,7 +33,7 @@ Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
       'name': instance.name,
       if (instance.outfitId case final value?) 'outfitId': value,
       'styleIds': instance.styleIds,
-      if (_$TemperatureEnumMap[instance.temperature] case final value?)
+      if (_$TemperatureTypeEnumMap[instance.temperature] case final value?)
         'temperature': value,
     };
 
@@ -43,7 +43,7 @@ Value? _$JsonConverterFromJson<Json, Value>(
 ) =>
     json == null ? null : fromJson(json as Json);
 
-const _$TemperatureEnumMap = {
+const _$TemperatureTypeEnumMap = {
   TemperatureType.cold: 'cold',
   TemperatureType.chilly: 'chilly',
   TemperatureType.warm: 'warm',

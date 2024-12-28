@@ -21,42 +21,41 @@ class Piece {
 
   final List<String> styleIds;
 
-  final bool isFavourite;
-
   @TimestampConverter()
   final DateTime? lastWorn;
 
-  const Piece(
-      {required this.id,
-      this.createdAt,
-      required this.name,
-      this.imagePath,
-      required this.piecePlacement,
-      required this.styleIds,
-      required this.isFavourite,
-      this.lastWorn});
+  const Piece({
+    required this.id,
+    this.createdAt,
+    required this.name,
+    this.imagePath,
+    required this.piecePlacement,
+    required this.styleIds,
+    this.lastWorn,
+  });
 
   factory Piece.fromJson(Map<String, dynamic> json) => _$PieceFromJson(json);
 
   Map<String, dynamic> toJson() => _$PieceToJson(this);
 
-  Piece copyWith(
-      {String? id,
-      DateTime? createdAt,
-      String? name,
-      String? imagePath,
-      PiecePlacement? piecePlacement,
-      List<String>? styleIds,
-      bool? isFavourite,
-      DateTime? lastWorn}) {
+  Piece copyWith({
+    String? id,
+    DateTime? createdAt,
+    String? name,
+    String? imagePath,
+    PiecePlacement? piecePlacement,
+    List<String>? styleIds,
+    bool? isFavourite,
+    DateTime? lastWorn,
+  }) {
     return Piece(
-        id: id ?? this.id,
-        createdAt: createdAt ?? this.createdAt,
-        name: name ?? this.name,
-        imagePath: imagePath ?? this.imagePath,
-        piecePlacement: piecePlacement ?? this.piecePlacement,
-        styleIds: styleIds ?? this.styleIds,
-        isFavourite: isFavourite ?? this.isFavourite,
-        lastWorn: lastWorn ?? this.lastWorn);
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      name: name ?? this.name,
+      imagePath: imagePath ?? this.imagePath,
+      piecePlacement: piecePlacement ?? this.piecePlacement,
+      styleIds: styleIds ?? this.styleIds,
+      lastWorn: lastWorn ?? this.lastWorn,
+    );
   }
 }

@@ -82,10 +82,18 @@ class _StyleDialogState extends State<StyleDialog> {
           onPressed: () {
             String newName = _styleNameController.text;
             if (widget.style == null) {
-              widget._styleService.saveStyle(name: newName);
+              //TODO: set color from color picker
+              widget._styleService.saveStyle(
+                name: newName,
+                color: 0,
+              );
             } else {
-              widget._styleService
-                  .updateStyle(style: widget.style!, name: newName);
+              //TODO: set color from color picker
+              widget._styleService.updateStyle(
+                style: widget.style!,
+                name: newName,
+                color: 0,
+              );
             }
 
             Navigator.pop(context);

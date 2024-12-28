@@ -9,34 +9,69 @@ class PieceService {
   final DatabaseService<Piece> _pieceRepository;
   final StyleService _styleService;
 
-  const PieceService(this._pieceRepository, this._styleService);
+  const PieceService(
+    this._pieceRepository,
+    this._styleService,
+  );
 
-  Future<String?> savePiece(
-      {required String? name,
-      required String? piecePlacement,
-      required List<String>? styleIds}) async {
+  Future<String?> savePiece({
+    required String? name,
+    required PiecePlacement? piecePlacement,
+    required List<String>? styleIds,
+  }) async {
+    String? error = validate(
+        name: name, piecePlacement: piecePlacement, styleIds: styleIds);
+    if (error != null) {
+      return error;
+    }
+
+    final piece = Piece(
+      id: '',
+      name: name!,
+      piecePlacement: piecePlacement!,
+      styleIds: styleIds!,
+    );
+
+    await _pieceRepository.add(piece);
+    return null;
+  }
+
+  Future<String?> updatePiece({
+    required Piece piece,
+    required String? name,
+    required PiecePlacement? piecePlacement,
+    required List<String>? styleIds,
+  }) async {
+    String? error = validate(
+        name: name, piecePlacement: piecePlacement, styleIds: styleIds);
+    if (error != null) {
+      return error;
+    }
+
+    final newPiece = piece.copyWith(name: name);
+    //TODO: implement and use update
+    await _pieceRepository.setOrAdd(piece.id, newPiece);
+    return null;
+  }
+
+  String? validate({
+    required String? name,
+    required PiecePlacement? piecePlacement,
+    required List<String>? styleIds,
+  }) {
     if (name == null ||
         piecePlacement == null ||
         (styleIds == null || styleIds.isEmpty)) {
       return 'All cells must contain a value';
     }
 
-    PiecePlacement? piecePlacementValue;
-    // check of piecePlacement value is part of the enum
-    try {
-      piecePlacementValue = PiecePlacement.values.byName(piecePlacement);
-    } catch (e) {
-      return 'Invalid piece placement value';
-    }
+    // // check if piecePlacement value is part of the enum
+    // try {
+    //   PiecePlacement.values.byName(piecePlacement);
+    // } catch (e) {
+    //   return 'Invalid piece placement value';
+    // }
 
-    final piece = Piece(
-        id: '',
-        name: name,
-        piecePlacement: piecePlacementValue,
-        styleIds: styleIds!,
-        isFavourite: false);
-
-    await _pieceRepository.add(piece);
     return null;
   }
 
