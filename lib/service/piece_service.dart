@@ -3,6 +3,7 @@ import 'package:ooo_fit/model/piece_placement.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/service/database_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
+import 'package:ooo_fit/service/util/helper_functions.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PieceService {
@@ -14,22 +15,29 @@ class PieceService {
     this._styleService,
   );
 
-  Future<String?> savePiece({
-    required String? name,
-    required PiecePlacement? piecePlacement,
-    required List<String>? styleIds,
-  }) async {
+  Future<String?> savePiece(
+      {required String? name,
+      required PiecePlacement? piecePlacement,
+      required List<String>? styleIds,
+      required String imagePath}) async {
     String? error = validate(
-        name: name, piecePlacement: piecePlacement, styleIds: styleIds);
+        name: name,
+        piecePlacement: piecePlacement,
+        styleIds: styleIds,
+        imagePath: imagePath);
+
     if (error != null) {
       return error;
     }
+
+    String? downloadLink = await uploadImage(imagePath);
 
     final piece = Piece(
       id: '',
       name: name!,
       piecePlacement: piecePlacement!,
       styleIds: styleIds!,
+      imagePath: downloadLink!,
     );
 
     await _pieceRepository.add(piece);
@@ -41,36 +49,37 @@ class PieceService {
     required String? name,
     required PiecePlacement? piecePlacement,
     required List<String>? styleIds,
+    required String imagePath,
   }) async {
     String? error = validate(
-        name: name, piecePlacement: piecePlacement, styleIds: styleIds);
+      name: name,
+      piecePlacement: piecePlacement,
+      styleIds: styleIds,
+      imagePath: imagePath,
+    );
     if (error != null) {
       return error;
     }
 
+    String? downloadLink = await uploadImage(imagePath);
+
+    //TODO: implement updating images
     final newPiece = piece.copyWith(name: name);
     //TODO: implement and use update
     await _pieceRepository.setOrAdd(piece.id, newPiece);
     return null;
   }
 
-  String? validate({
-    required String? name,
-    required PiecePlacement? piecePlacement,
-    required List<String>? styleIds,
-  }) {
+  String? validate(
+      {required String? name,
+      required PiecePlacement? piecePlacement,
+      required List<String>? styleIds,
+      required String imagePath}) {
     if (name == null ||
         piecePlacement == null ||
         (styleIds == null || styleIds.isEmpty)) {
       return 'All cells must contain a value';
     }
-
-    // // check if piecePlacement value is part of the enum
-    // try {
-    //   PiecePlacement.values.byName(piecePlacement);
-    // } catch (e) {
-    //   return 'Invalid piece placement value';
-    // }
 
     return null;
   }

@@ -4,12 +4,14 @@ class LabelButton extends StatelessWidget {
   final String label;
   final Color backgroundColor;
   final Color textColor;
+  final VoidCallback? onPressed;
 
   const LabelButton(
       {super.key,
       required this.label,
       required this.backgroundColor,
-      required this.textColor});
+      required this.textColor,
+      this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class LabelButton extends StatelessWidget {
             ),
             backgroundColor: backgroundColor,
           ),
-          onPressed: () {},
+          onPressed: onPressed,
           child: Text(
             label,
             style: TextStyle(
