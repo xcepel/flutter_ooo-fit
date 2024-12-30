@@ -18,10 +18,10 @@ class StyleRow extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 10,
-            height: 10,
+            width: 20,
+            height: 20,
             decoration: BoxDecoration(
-              color: Colors.deepPurple, //todo get from database
+              color: Color(style.color),
               shape: BoxShape.circle,
             ),
           ),

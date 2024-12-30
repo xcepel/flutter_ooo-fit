@@ -16,11 +16,14 @@ class StyleDialog extends StatefulWidget {
 
 class _StyleDialogState extends State<StyleDialog> {
   final TextEditingController _styleNameController = TextEditingController();
+  Color _chosenColor = Colors.white;
 
   @override
   void initState() {
     super.initState();
     _styleNameController.text = widget.style?.name ?? '';
+    _chosenColor =
+        widget.style != null ? Color(widget.style!.color) : Colors.white;
   }
 
   @override
@@ -29,6 +32,8 @@ class _StyleDialogState extends State<StyleDialog> {
 
     if (oldWidget.style != widget.style) {
       _styleNameController.text = widget.style?.name ?? '';
+      _chosenColor =
+          widget.style != null ? Color(widget.style!.color) : Colors.white;
     }
   }
 
@@ -52,16 +57,27 @@ class _StyleDialogState extends State<StyleDialog> {
     );
   }
 
+  TextFormField _buildNameFormField() {
+    return TextFormField(
+      controller: _styleNameController,
+      decoration: InputDecoration(
+        labelText: 'Name',
+      ),
+    );
+  }
+
   Widget _buildColorPicker() {
     return Column(
       children: [
         Text("Select Color", style: TextStyle(fontSize: 16)),
         ColorPicker(
-          pickerColor: Colors.blue,
+          pickerColor: _chosenColor,
           enableAlpha: false,
           labelTypes: [],
-          onColorChanged: (color) {
-            // todo
+          onColorChanged: (Color color) {
+            setState(() {
+              _chosenColor = color;
+            });
           },
           pickerAreaHeightPercent: 0.5,
         ),
@@ -82,17 +98,15 @@ class _StyleDialogState extends State<StyleDialog> {
           onPressed: () {
             String newName = _styleNameController.text;
             if (widget.style == null) {
-              //TODO: set color from color picker
               widget._styleService.saveStyle(
                 name: newName,
-                color: 0,
+                color: _chosenColor.value,
               );
             } else {
-              //TODO: set color from color picker
               widget._styleService.updateStyle(
                 style: widget.style!,
                 name: newName,
-                color: 0,
+                color: _chosenColor.value,
               );
             }
 
@@ -101,15 +115,6 @@ class _StyleDialogState extends State<StyleDialog> {
           child: const Text('Save'),
         ),
       ],
-    );
-  }
-
-  TextFormField _buildNameFormField() {
-    return TextFormField(
-      controller: _styleNameController,
-      decoration: InputDecoration(
-        labelText: 'Name',
-      ),
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:ooo_fit/utils/constants.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/content_frame_list.dart';
@@ -12,7 +11,7 @@ import 'package:ooo_fit/widget/styles/style_dialog.dart';
 import 'package:ooo_fit/widget/styles/style_row.dart';
 
 class StylesListPage extends StatelessWidget {
-  final _styleService = GetIt.instance.get<StyleService>();
+  final StyleService _styleService = GetIt.instance.get<StyleService>();
 
   StylesListPage({super.key});
 
@@ -38,7 +37,6 @@ class StylesListPage extends StatelessWidget {
       child: LoadingStreamBuilder(
         stream: _styleService.getAllStylesStream(),
         builder: (context, stylesList) {
-          // TODO sorth aphabetically
           return ListView.separated(
             itemBuilder: (context, index) => StyleRow(style: stylesList[index]),
             separatorBuilder: (context, index) => Divider(),

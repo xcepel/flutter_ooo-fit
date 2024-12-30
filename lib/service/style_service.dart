@@ -35,7 +35,7 @@ class StyleService {
       return error;
     }
 
-    final newStyle = style.copyWith(name: name);
+    final newStyle = style.copyWith(name: name, color: color);
     //TODO: implement and use update
     await _styleRepository.setOrAdd(style.id, newStyle);
     return null;
@@ -56,8 +56,12 @@ class StyleService {
     return null;
   }
 
+  // Return stream of alphabetically sorted styles
   Stream<List<Style>> getAllStylesStream() {
-    return _styleRepository.observeDocuments();
+    return _styleRepository.observeDocuments().map((styles) {
+      styles.sort((a, b) => a.name.compareTo(b.name));
+      return styles;
+    });
   }
 
   Stream<Map<String, Style>> getStylesByIdsStream(Set<String> styleIds) {
