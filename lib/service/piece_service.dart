@@ -32,7 +32,7 @@ class PieceService {
 
     String? downloadLink = await uploadImage(imagePath);
 
-    final piece = Piece(
+    final Piece piece = Piece(
       id: '',
       name: name!,
       piecePlacement: piecePlacement!,
@@ -86,6 +86,10 @@ class PieceService {
 
   Stream<List<Piece>> getAllPiecesStream() {
     return _pieceRepository.observeDocuments();
+  }
+
+  Stream<Piece?> getPieceByIdStream(String pieceId) {
+    return _pieceRepository.observeDocument(pieceId);
   }
 
   Stream<Map<String, Piece>> getPiecesByIdsStream(Set<String> pieceIds) {

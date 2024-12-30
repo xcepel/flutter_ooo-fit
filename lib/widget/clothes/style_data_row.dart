@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/model/style.dart';
 
 class StyleDataRow extends StatelessWidget {
-  final List<String> items;
+  final List<Style> items;
 
   const StyleDataRow({required this.items});
 
   @override
   Widget build(BuildContext context) {
     // Split items into rows of 3
-    List<List<String>> rows = [];
+    List<List<Style>> rows = [];
     for (int i = 0; i < items.length; i += 3) {
       rows.add(items.sublist(i, i + 3 > items.length ? items.length : i + 3));
     }
@@ -25,7 +26,7 @@ class StyleDataRow extends StatelessWidget {
   }
 }
 
-Widget _dotText(String text) {
+Widget _dotText(Style style) {
   return Expanded(
     child: Row(
       mainAxisSize: MainAxisSize.min,
@@ -34,12 +35,12 @@ Widget _dotText(String text) {
           width: 15,
           height: 15,
           decoration: BoxDecoration(
-            color: Colors.deepPurple,
+            color: Color(style.color),
             shape: BoxShape.circle,
           ),
         ),
         SizedBox(width: 8),
-        Text(text),
+        Text(style.name),
       ],
     ),
   );

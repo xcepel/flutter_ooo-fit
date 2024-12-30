@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/widget/common/dropdown_filter.dart';
 import 'package:ooo_fit/widget/outfits/carousel.dart';
+import 'package:ooo_fit/model/piece_placement.dart';
 
 class PlacementClothesChooser extends StatefulWidget {
-  final String label;
-  final String icon;
+  final PiecePlacement details;
   final List<String> clothesList;
 
   const PlacementClothesChooser({
     super.key,
-    required this.label,
-    required this.icon,
+    required this.details,
     required this.clothesList,
   });
 
@@ -62,7 +61,7 @@ class _PlacementClothesChooserState extends State<PlacementClothesChooser> {
       child: Row(
         children: [
           Image.asset(
-            widget.icon,
+            widget.details.picture,
             color: Colors.black,
             width: 30,
             height: 30,
@@ -70,7 +69,7 @@ class _PlacementClothesChooserState extends State<PlacementClothesChooser> {
           ),
           const SizedBox(width: 10),
           Text(
-            widget.label,
+            widget.details.name,
             style: const TextStyle(
               fontSize: 16.0,
               color: Colors.black,

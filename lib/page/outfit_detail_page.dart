@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:ooo_fit/model/piece.dart';
+import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/page/outfit_edit_page.dart';
+import 'package:ooo_fit/service/outfit_service.dart';
+import 'package:ooo_fit/service/piece_service.dart';
+import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/clothes/clothes_items_list.dart';
 import 'package:ooo_fit/widget/clothes/style_data_row.dart';
@@ -7,72 +13,113 @@ import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/edit_button.dart';
+import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_clothes/description_label.dart';
 import 'package:ooo_fit/widget/outfit_clothes/sized_picture.dart';
 
 class OutfitDetailPage extends StatelessWidget {
-  final String name = "Outfit Name";
-  final List<String> styles = [
-    "Formal",
-    "Goth",
-    "Casual",
-    "Sporty",
-    "Vintage",
-    "Bohemian",
-    "Lively"
-  ];
-  final String temperature = "Warm";
-  final String lastWorn = "1. 1. 1999";
-  final String outfitPicture = "assets/images/levander_solid.jpg";
+  final String outfitId;
 
-  OutfitDetailPage({super.key});
+  final OutfitService _outfitService = GetIt.instance.get<OutfitService>();
+  final PieceService _pieceService = GetIt.instance.get<PieceService>();
+  final StyleService _styleService = GetIt.instance.get<StyleService>();
+
+  final String outfitPicture =
+      "assets/images/levander_solid.jpg"; // TODO remove
+
+  OutfitDetailPage({
+    super.key,
+    required this.outfitId,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: name,
-        actionButton: EditButton(editPage: OutfitEditPage()),
-      ),
-      body: ContentFrameDetail(
-        children: [
-          StyleDataRow(items: styles),
-          SizedBox(height: 10),
-          // Bude to tu vubec?, nechci to zarovnavat pokud to odstranime
-          Row(
+    return LoadingStreamBuilder(
+      stream: _outfitService.getOutfitByIdStream(outfitId),
+      builder: (context, outfit) {
+        return Scaffold(
+          appBar: CustomAppBar(
+            title: outfit!.name ?? "",
+            actionButton: EditButton(editPage: OutfitEditPage()),
+          ),
+          body: ContentFrameDetail(
             children: [
-              Icon(Icons.thermostat, color: Colors.blue),
-              Text(temperature)
+              _buildFuture<Style>(
+                future: _getStyles(outfit.styleIds),
+                itemBuilder: (styles) => StyleDataRow(items: styles),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  outfit.temperature.icon,
+                  Text(outfit.temperature.label),
+                ],
+              ),
+              const SizedBox(height: 10),
+              DescriptionLabel(
+                label: "Last worn",
+                value: outfit.lastWorn?.toString() ?? "---",
+              ),
+              const SizedBox(height: 10),
+              _addOutfitPicture(outfitPicture),
+              const PageDivider(),
+              const SizedBox(height: 5),
+              _buildFuture<Piece>(
+                future: _getPieces(outfit.pieceIds),
+                itemBuilder: (pieces) => ClothesItemsList(piecesList: pieces),
+              ),
             ],
           ),
-          SizedBox(height: 10),
-          DescriptionLabel(
-            label: "Last worn",
-            value: lastWorn,
-          ),
-          SizedBox(height: 10),
-          if (outfitPicture != null) _addOutfitPicture(outfitPicture),
-          PageDivider(),
-          SizedBox(height: 5),
-          ClothesItemsList(),
-        ],
-      ),
-      bottomNavigationBar:
-          CustomBottomNavigationBar(currentPage: PageTypes.outfits),
+          bottomNavigationBar:
+              CustomBottomNavigationBar(currentPage: PageTypes.outfits),
+        );
+      },
     );
   }
-}
 
-Widget _addOutfitPicture(String outfitPicture) {
-  return LayoutBuilder(
-    builder: (context, constraints) {
-      double size = constraints.maxWidth;
-      return SizedPicture(
-        sizeX: size,
-        sizeY: size * 1.3,
-        image: outfitPicture,
-      );
-    },
-  );
+  Widget _addOutfitPicture(String outfitPicture) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double size = constraints.maxWidth;
+        return SizedPicture(
+          sizeX: size,
+          sizeY: size * 1.3,
+          image: outfitPicture,
+        );
+      },
+    );
+  }
+
+  Widget _buildFuture<T>({
+    required Future<List<T>> future,
+    required Widget Function(List<T>) itemBuilder,
+  }) {
+    return FutureBuilder<List<T>>(
+      future: future,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Text('No data available.');
+        } else {
+          return itemBuilder(snapshot.data!);
+        }
+      },
+    );
+  }
+
+  Future<List<Style>> _getStyles(List<String> styleIds) async {
+    final List<Style> allStyles =
+        await _styleService.getAllStylesStream().first;
+    return allStyles.where((style) => styleIds.contains(style.id)).toList();
+  }
+
+  Future<List<Piece>> _getPieces(List<String> pieceIds) async {
+    final List<Piece> allPieces =
+        await _pieceService.getAllPiecesStream().first;
+    return allPieces.where((piece) => pieceIds.contains(piece.id)).toList();
+  }
 }

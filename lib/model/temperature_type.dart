@@ -33,7 +33,7 @@ enum TemperatureType {
   }
 
   //TODO: move elsewhere to separate the model from the UI
-  static const iconValue = Icons.thermostat_rounded;
+  static const IconData iconValue = Icons.thermostat_rounded;
 
   Icon get icon {
     switch (this) {

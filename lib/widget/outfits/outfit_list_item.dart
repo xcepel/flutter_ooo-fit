@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/widget/outfit_clothes/bottom_style_dots.dart';
+import 'package:ooo_fit/model/outfit.dart';
+import 'package:ooo_fit/model/style.dart';
+import 'package:ooo_fit/widget/outfit_clothes/bottom_data.dart';
 
 class OutfitListItem extends StatelessWidget {
+  // TODO remove
   final List<String> clothesImages = [
     "assets/images/purple_solid.png",
     "assets/images/purple_solid.png",
@@ -13,15 +16,15 @@ class OutfitListItem extends StatelessWidget {
     "assets/images/purple_solid.png",
   ];
 
-  final String? outfitImage;
-  final String title;
-  final List<Color> styleColors;
+  final String? outfitImage; // TODO REMOVE
+  final Outfit outfit;
+  final List<Style> outfitStyles;
 
   OutfitListItem({
     super.key,
     required this.outfitImage,
-    required this.title,
-    required this.styleColors,
+    required this.outfit,
+    required this.outfitStyles,
   });
 
   @override
@@ -40,11 +43,11 @@ class OutfitListItem extends StatelessWidget {
                     : _buildOutfitImage(),
               ),
             ),
-            BottomStyleDots(styleColors: styleColors),
+            BottomData(styles: outfitStyles, temperature: outfit.temperature),
           ],
         ),
         const SizedBox(height: 5),
-        Text(title),
+        Text(outfit.name ?? ""),
         const SizedBox(height: 5),
       ],
     );
@@ -57,6 +60,7 @@ class OutfitListItem extends StatelessWidget {
     );
   }
 
+  // TODO tohle bude brat z pieces
   Widget _buildClothesMatrix() {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -65,9 +69,8 @@ class OutfitListItem extends StatelessWidget {
         mainAxisSpacing: 4.0,
         childAspectRatio: 2.7 / 2,
       ),
-      itemCount: clothesImages.length > 9
-          ? 9
-          : clothesImages.length, // Show max 9 items
+      itemCount:
+          clothesImages.length > 9 ? 9 : clothesImages.length, // max 9 items
       itemBuilder: (context, index) {
         return ClipRRect(
           borderRadius: BorderRadius.circular(4),

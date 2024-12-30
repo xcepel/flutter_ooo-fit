@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/model/piece_placement.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
@@ -69,37 +70,25 @@ class OutfitEditPage extends StatelessWidget {
           PageDivider(),
 
           PlacementClothesChooser(
-              label: "Head",
-              icon: "assets/icons/placements/head.png",
-              clothesList: pictureItemsData),
+            details: PiecePlacement.head,
+            clothesList: pictureItemsData,
+          ),
           PlacementClothesChooser(
-              label: "Neck",
-              icon: "assets/icons/placements/neck.png",
-              clothesList: pictureItemsData),
+              details: PiecePlacement.neck, clothesList: pictureItemsData),
           PlacementClothesChooser(
-              label: "Body",
-              icon: "assets/icons/placements/body.png",
-              clothesList: pictureItemsData),
+              details: PiecePlacement.body, clothesList: pictureItemsData),
           PlacementClothesChooser(
-              label: "Top",
-              icon: "assets/icons/placements/top.png",
-              clothesList: pictureItemsData),
+              details: PiecePlacement.top, clothesList: pictureItemsData),
           PlacementClothesChooser(
-              label: "Waist",
-              icon: "assets/icons/placements/waist.png",
-              clothesList: pictureItemsData),
+              details: PiecePlacement.hands, clothesList: pictureItemsData),
           PlacementClothesChooser(
-              label: "Bottom",
-              icon: "assets/icons/placements/bottom.png",
-              clothesList: pictureItemsData),
+              details: PiecePlacement.waist, clothesList: pictureItemsData),
           PlacementClothesChooser(
-              label: "Feet",
-              icon: "assets/icons/placements/feet.png",
-              clothesList: pictureItemsData),
+              details: PiecePlacement.bottom, clothesList: pictureItemsData),
           PlacementClothesChooser(
-              label: "Other",
-              icon: "assets/icons/placements/other.png",
-              clothesList: pictureItemsData),
+              details: PiecePlacement.feet, clothesList: pictureItemsData),
+          PlacementClothesChooser(
+              details: PiecePlacement.other, clothesList: pictureItemsData),
 
           PageDivider(),
           PictureChanger(image: image), // todo if no picture just button

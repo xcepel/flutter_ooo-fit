@@ -87,6 +87,10 @@ class OutfitService {
     return _outfitRepository.observeDocuments();
   }
 
+  Stream<Outfit?> getOutfitByIdStream(String outfitId) {
+    return _outfitRepository.observeDocument(outfitId);
+  }
+
   // returns list of outfits and (styleId -> style), (pieceId -> piece) dictionaries
   Stream<(List<Outfit>, Map<String, Style>, Map<String, Piece>)>
       getOutfitsWithStylesAndPiecesStream() {

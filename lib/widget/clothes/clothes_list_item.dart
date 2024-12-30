@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/widget/outfit_clothes/bottom_style_dots.dart';
+import 'package:ooo_fit/model/piece.dart';
+import 'package:ooo_fit/model/style.dart';
+import 'package:ooo_fit/widget/outfit_clothes/bottom_data.dart';
 
 class ClothesListItem extends StatelessWidget {
-  final String image;
-  final String title;
-  final List<Color> styleColors;
+  final Piece piece;
+  final List<Style> pieceStyles;
+  final String image = "assets/images/purple_solid.png";
 
   const ClothesListItem({
     super.key,
-    required this.image,
-    required this.title,
-    required this.styleColors,
+    required this.piece,
+    required this.pieceStyles,
   });
 
   @override
@@ -30,11 +31,11 @@ class ClothesListItem extends StatelessWidget {
                 ),
               ),
             ),
-            BottomStyleDots(styleColors: styleColors),
+            BottomData(styles: pieceStyles, placement: piece.piecePlacement),
           ],
         ),
         const SizedBox(height: 5),
-        Text(title),
+        Text(piece.name),
         const SizedBox(height: 5),
       ],
     );

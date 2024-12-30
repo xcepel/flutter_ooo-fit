@@ -71,4 +71,14 @@ class StyleService {
       },
     );
   }
+
+  Stream<List<Style>> getPiecesStylesByIdsStream(List<String> styleIds) {
+    Set<String> styleIdsSet = Set<String>.from(styleIds);
+
+    return _styleRepository.observeDocumentsByIds(styleIdsSet).map(
+      (styles) {
+        return styles;
+      },
+    );
+  }
 }

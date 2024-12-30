@@ -31,7 +31,7 @@ class Piece {
     this.imagePath,
     required this.piecePlacement,
     required this.styleIds,
-    this.lastWorn,
+    this.lastWorn, // TODO tohle se bude nejspis pri vytvoreni setovat na date vytvoreni?
   });
 
   factory Piece.fromJson(Map<String, dynamic> json) => _$PieceFromJson(json);
