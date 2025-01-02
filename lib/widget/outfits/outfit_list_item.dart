@@ -16,13 +16,11 @@ class OutfitListItem extends StatelessWidget {
     "assets/images/purple_solid.png",
   ];
 
-  final String? outfitImage; // TODO REMOVE
   final Outfit outfit;
   final List<Style> outfitStyles;
 
   OutfitListItem({
     super.key,
-    required this.outfitImage,
     required this.outfit,
     required this.outfitStyles,
   });
@@ -38,7 +36,7 @@ class OutfitListItem extends StatelessWidget {
               aspectRatio: 2 / 3,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
-                child: outfitImage == null
+                child: outfit.imagePath == null
                     ? _buildClothesMatrix()
                     : _buildOutfitImage(),
               ),
@@ -55,7 +53,7 @@ class OutfitListItem extends StatelessWidget {
 
   Widget _buildOutfitImage() {
     return Image.network(
-      outfitImage!,
+      outfit.imagePath!,
       fit: BoxFit.cover,
     );
   }

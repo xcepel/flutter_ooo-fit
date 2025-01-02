@@ -19,7 +19,7 @@ class SizedPicture extends StatelessWidget {
       child: SizedBox(
         width: sizeX,
         height: sizeY,
-        child: Image.asset(
+        child: Image.network(
           image,
           fit: BoxFit.cover,
         ),

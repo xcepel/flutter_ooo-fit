@@ -44,10 +44,6 @@ class OutfitItemsList extends StatelessWidget {
               child: SizedBox(
                 width: itemWidth,
                 child: OutfitListItem(
-                  // TODO remove once real images are available
-                  outfitImage: Random().nextBool()
-                      ? "assets/images/levander_solid.jpg"
-                      : null,
                   outfit: outfit,
                   outfitStyles: _getStyles(outfit.styleIds),
                 ),

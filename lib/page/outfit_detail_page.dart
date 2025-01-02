@@ -13,6 +13,7 @@ import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/edit_button.dart';
+import 'package:ooo_fit/widget/common/loading_future_builder.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_clothes/description_label.dart';
@@ -24,9 +25,6 @@ class OutfitDetailPage extends StatelessWidget {
   final OutfitService _outfitService = GetIt.instance.get<OutfitService>();
   final PieceService _pieceService = GetIt.instance.get<PieceService>();
   final StyleService _styleService = GetIt.instance.get<StyleService>();
-
-  final String outfitPicture =
-      "assets/images/levander_solid.jpg"; // TODO remove
 
   OutfitDetailPage({
     super.key,
@@ -41,13 +39,16 @@ class OutfitDetailPage extends StatelessWidget {
         return Scaffold(
           appBar: CustomAppBar(
             title: outfit!.name ?? "",
-            actionButton: EditButton(editPage: OutfitEditPage()),
+            actionButton: EditButton(
+                editPage: OutfitEditPage(
+              outfit: outfit,
+            )),
           ),
           body: ContentFrameDetail(
             children: [
-              _buildFuture<Style>(
+              LoadingFutureBuilder(
                 future: _getStyles(outfit.styleIds),
-                itemBuilder: (styles) => StyleDataRow(items: styles),
+                builder: (context, styles) => StyleDataRow(items: styles),
               ),
               const SizedBox(height: 10),
               Row(
@@ -62,12 +63,13 @@ class OutfitDetailPage extends StatelessWidget {
                 value: outfit.lastWorn?.toString() ?? "---",
               ),
               const SizedBox(height: 10),
-              _addOutfitPicture(outfitPicture),
+              _addOutfitPicture(outfit.imagePath),
               const PageDivider(),
               const SizedBox(height: 5),
-              _buildFuture<Piece>(
+              LoadingFutureBuilder(
                 future: _getPieces(outfit.pieceIds),
-                itemBuilder: (pieces) => ClothesItemsList(piecesList: pieces),
+                builder: (context, pieces) =>
+                    ClothesItemsList(piecesList: pieces),
               ),
             ],
           ),
@@ -78,35 +80,15 @@ class OutfitDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _addOutfitPicture(String outfitPicture) {
+  Widget _addOutfitPicture(String? outfitPicture) {
     return LayoutBuilder(
       builder: (context, constraints) {
         double size = constraints.maxWidth;
         return SizedPicture(
           sizeX: size,
           sizeY: size * 1.3,
-          image: outfitPicture,
+          image: outfitPicture ?? '',
         );
-      },
-    );
-  }
-
-  Widget _buildFuture<T>({
-    required Future<List<T>> future,
-    required Widget Function(List<T>) itemBuilder,
-  }) {
-    return FutureBuilder<List<T>>(
-      future: future,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Text('No data available.');
-        } else {
-          return itemBuilder(snapshot.data!);
-        }
       },
     );
   }

@@ -23,12 +23,14 @@ class OutfitService {
     required List<String>? pieceIds,
     required List<String>? styleIds,
     required TemperatureType? temperature,
+    required String? imagePath,
   }) async {
     String? error = validate(
         name: name,
         pieceIds: pieceIds,
         styleIds: styleIds,
-        temperature: temperature);
+        temperature: temperature,
+        imagePath: imagePath);
     if (error != null) {
       return error;
     }
@@ -51,12 +53,15 @@ class OutfitService {
     required List<String>? pieceIds,
     required List<String>? styleIds,
     required TemperatureType? temperature,
+    required String imagePath,
   }) async {
     String? error = validate(
-        name: name,
-        pieceIds: pieceIds,
-        styleIds: styleIds,
-        temperature: temperature);
+      name: name,
+      pieceIds: pieceIds,
+      styleIds: styleIds,
+      temperature: temperature,
+      imagePath: imagePath,
+    );
     if (error != null) {
       return error;
     }
@@ -67,11 +72,17 @@ class OutfitService {
     return null;
   }
 
+  Future<String?> deleteOutfit({required Outfit outfit}) async {
+    await _outfitRepository.delete(outfit.id);
+    return null;
+  }
+
   String? validate({
     required String? name,
     required List<String>? pieceIds,
     required List<String>? styleIds,
     required TemperatureType? temperature,
+    required String? imagePath,
   }) {
     if (name == null ||
         (pieceIds == null || pieceIds.isEmpty) ||
@@ -79,7 +90,6 @@ class OutfitService {
         temperature == null) {
       return 'All cells must contain a value';
     }
-
     return null;
   }
 

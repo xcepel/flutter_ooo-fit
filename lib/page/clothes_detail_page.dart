@@ -10,6 +10,7 @@ import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/edit_button.dart';
+import 'package:ooo_fit/widget/common/loading_future_builder.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_clothes/description_label.dart';
@@ -20,9 +21,6 @@ class ClothesDetailPage extends StatelessWidget {
   final String pieceId;
   final PieceService _pieceService = GetIt.instance.get<PieceService>();
   final StyleService _styleService = GetIt.instance.get<StyleService>();
-
-  final String clothingPicture =
-      "assets/images/purple_solid.png"; // TODO remove
 
   ClothesDetailPage({
     super.key,
@@ -37,13 +35,16 @@ class ClothesDetailPage extends StatelessWidget {
         return Scaffold(
           appBar: CustomAppBar(
             title: piece!.name,
-            actionButton: EditButton(editPage: ClothesEditPage()),
+            actionButton: EditButton(
+                editPage: ClothesEditPage(
+              piece: piece,
+            )),
           ),
           body: ContentFrameDetail(
             children: [
-              _buildFuture<Style>(
+              LoadingFutureBuilder(
                 future: _getStyles(piece.styleIds),
-                itemBuilder: (styles) => StyleDataRow(items: styles),
+                builder: (context, styles) => StyleDataRow(items: styles),
               ),
               SizedBox(height: 10),
               Row(
@@ -64,14 +65,13 @@ class ClothesDetailPage extends StatelessWidget {
                 value: piece.lastWorn.toString(), // TODO make prettier
               ),
               SizedBox(height: 10),
-              // TODO az budou obrazky nacist
               LayoutBuilder(
                 builder: (context, constraints) {
                   double size = constraints.maxWidth;
                   return SizedPicture(
                     sizeX: size,
                     sizeY: size,
-                    image: clothingPicture,
+                    image: piece.imagePath!,
                   );
                 },
               ),
@@ -91,26 +91,6 @@ class ClothesDetailPage extends StatelessWidget {
           bottomNavigationBar:
               CustomBottomNavigationBar(currentPage: PageTypes.clothes),
         );
-      },
-    );
-  }
-
-  Widget _buildFuture<T>({
-    required Future<List<T>> future,
-    required Widget Function(List<T>) itemBuilder,
-  }) {
-    return FutureBuilder<List<T>>(
-      future: future,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Text('No data available.');
-        } else {
-          return itemBuilder(snapshot.data!);
-        }
       },
     );
   }

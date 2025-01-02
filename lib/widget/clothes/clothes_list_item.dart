@@ -6,7 +6,6 @@ import 'package:ooo_fit/widget/outfit_clothes/bottom_data.dart';
 class ClothesListItem extends StatelessWidget {
   final Piece piece;
   final List<Style> pieceStyles;
-  final String image = "assets/images/purple_solid.png";
 
   const ClothesListItem({
     super.key,
@@ -26,7 +25,7 @@ class ClothesListItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
                 child: Image.network(
-                  image,
+                  piece.imagePath ?? '',
                   fit: BoxFit.cover,
                 ),
               ),

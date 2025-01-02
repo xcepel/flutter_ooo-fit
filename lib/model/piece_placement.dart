@@ -1,12 +1,12 @@
 enum PiecePlacement {
+  head,
+  neck,
   body,
   top,
+  waist,
   bottom,
   feet,
-  head,
   hands,
-  neck,
-  waist,
   other;
 
   String get label {

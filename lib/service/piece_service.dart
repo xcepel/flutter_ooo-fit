@@ -15,11 +15,12 @@ class PieceService {
     this._styleService,
   );
 
-  Future<String?> savePiece(
-      {required String? name,
-      required PiecePlacement? piecePlacement,
-      required List<String>? styleIds,
-      required String imagePath}) async {
+  Future<String?> savePiece({
+    required String? name,
+    required PiecePlacement? piecePlacement,
+    required List<String>? styleIds,
+    required String imagePath,
+  }) async {
     String? error = validate(
         name: name,
         piecePlacement: piecePlacement,
@@ -62,11 +63,25 @@ class PieceService {
     }
 
     String? downloadLink = await uploadImage(imagePath);
+    //TODO: implement deleting the old versions of images
 
-    //TODO: implement updating images
-    final newPiece = piece.copyWith(name: name);
-    //TODO: implement and use update
-    await _pieceRepository.setOrAdd(piece.id, newPiece);
+    if (downloadLink != null) {
+      final newPiece = piece.copyWith(
+        name: name,
+        imagePath: downloadLink,
+        styleIds: styleIds,
+        piecePlacement: piecePlacement,
+      );
+      //TODO: implement and use update
+      await _pieceRepository.setOrAdd(piece.id, newPiece);
+      return null;
+    }
+
+    return 'Error while uploading the image';
+  }
+
+  Future<String?> deletePiece({required Piece piece}) async {
+    await _pieceRepository.delete(piece.id);
     return null;
   }
 
