@@ -4,9 +4,9 @@ import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
-import 'package:ooo_fit/widget/outfit_clothes/label_button.dart';
-import 'package:ooo_fit/widget/outfit_clothes/picture_changer.dart';
-import 'package:ooo_fit/widget/outfit_clothes/text_edit_label.dart';
+import 'package:ooo_fit/widget/outfit_piece/label_button.dart';
+import 'package:ooo_fit/widget/outfit_piece/picture_changer.dart';
+import 'package:ooo_fit/widget/outfit_piece/text_edit_label.dart';
 
 class EventEditPage extends StatelessWidget {
   final String name = "Event 1";

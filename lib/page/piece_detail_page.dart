@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/style.dart';
-import 'package:ooo_fit/page/clothes_edit_page.dart';
+import 'package:ooo_fit/page/piece_edit_page.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/utils/page_types.dart';
-import 'package:ooo_fit/widget/clothes/style_data_row.dart';
+import 'package:ooo_fit/widget/pieces/style_data_row.dart';
 import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
@@ -13,16 +13,16 @@ import 'package:ooo_fit/widget/common/edit_button.dart';
 import 'package:ooo_fit/widget/common/loading_future_builder.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
-import 'package:ooo_fit/widget/outfit_clothes/description_label.dart';
-import 'package:ooo_fit/widget/outfit_clothes/list_item.dart';
-import 'package:ooo_fit/widget/outfit_clothes/sized_picture.dart';
+import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
+import 'package:ooo_fit/widget/outfit_piece/list_item.dart';
+import 'package:ooo_fit/widget/outfit_piece/sized_picture.dart';
 
-class ClothesDetailPage extends StatelessWidget {
+class PieceDetailPage extends StatelessWidget {
   final String pieceId;
   final PieceService _pieceService = GetIt.instance.get<PieceService>();
   final StyleService _styleService = GetIt.instance.get<StyleService>();
 
-  ClothesDetailPage({
+  PieceDetailPage({
     super.key,
     required this.pieceId,
   });
@@ -36,7 +36,7 @@ class ClothesDetailPage extends StatelessWidget {
           appBar: CustomAppBar(
             title: piece!.name,
             actionButton: EditButton(
-                editPage: ClothesEditPage(
+                editPage: PieceEditPage(
               piece: piece,
             )),
           ),
@@ -89,7 +89,7 @@ class ClothesDetailPage extends StatelessWidget {
             ],
           ),
           bottomNavigationBar:
-              CustomBottomNavigationBar(currentPage: PageTypes.clothes),
+              CustomBottomNavigationBar(currentPage: PageTypes.pieces),
         );
       },
     );

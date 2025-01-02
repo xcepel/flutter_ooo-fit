@@ -4,7 +4,6 @@ import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/page/outfit_detail_page.dart';
 import 'package:ooo_fit/widget/outfits/outfit_list_item.dart';
-import 'dart:math';
 
 class OutfitItemsList extends StatelessWidget {
   final List<Outfit> outfits;

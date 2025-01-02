@@ -1,1 +1,1 @@
-enum PageTypes { outfits, clothes, events, styles }
+enum PageTypes { outfits, pieces, events, styles }

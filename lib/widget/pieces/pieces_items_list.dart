@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/piece.dart';
-import 'package:ooo_fit/page/clothes_detail_page.dart';
+import 'package:ooo_fit/page/piece_detail_page.dart';
 import 'package:ooo_fit/service/style_service.dart';
-import 'package:ooo_fit/widget/clothes/clothes_list_item.dart';
+import 'package:ooo_fit/widget/pieces/piece_list_item.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 
-class ClothesItemsList extends StatelessWidget {
+class PiecesItemsList extends StatelessWidget {
   final List<Piece> piecesList;
   final StyleService _styleService = GetIt.instance.get<StyleService>();
 
-  ClothesItemsList({super.key, required this.piecesList});
+  PiecesItemsList({super.key, required this.piecesList});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class ClothesItemsList extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ClothesDetailPage(
+                      builder: (context) => PieceDetailPage(
                         pieceId: piece.id,
                       ),
                     ),
@@ -38,7 +38,7 @@ class ClothesItemsList extends StatelessWidget {
                 },
                 child: SizedBox(
                   width: itemWidth,
-                  child: ClothesListItem(
+                  child: PieceListItem(
                     piece: piece,
                     pieceStyles: stylesList,
                   ),

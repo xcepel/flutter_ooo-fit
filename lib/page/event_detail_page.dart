@@ -6,8 +6,8 @@ import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/edit_button.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
-import 'package:ooo_fit/widget/outfit_clothes/description_label.dart';
-import 'package:ooo_fit/widget/outfit_clothes/sized_picture.dart';
+import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
+import 'package:ooo_fit/widget/outfit_piece/sized_picture.dart';
 
 class EventDetailPage extends StatelessWidget {
   final String name = "Event 1";

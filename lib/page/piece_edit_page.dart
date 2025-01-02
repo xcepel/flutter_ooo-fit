@@ -3,22 +3,22 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/piece.dart';
-import 'package:ooo_fit/page/clothes_list_page.dart';
-import 'package:ooo_fit/widget/clothes/piece_placement_picker.dart';
+import 'package:ooo_fit/page/piece_list_page.dart';
+import 'package:ooo_fit/widget/pieces/piece_placement_picker.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/common/style_picker.dart';
-import 'package:ooo_fit/widget/outfit_clothes/label_button.dart';
+import 'package:ooo_fit/widget/outfit_piece/label_button.dart';
 
-class ClothesEditPage extends StatelessWidget {
+class PieceEditPage extends StatelessWidget {
   final Piece? piece;
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   final PieceService _pieceService = GetIt.instance.get<PieceService>();
 
-  ClothesEditPage({
+  PieceEditPage({
     super.key,
     this.piece,
   });
@@ -35,7 +35,7 @@ class ClothesEditPage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar:
-          CustomBottomNavigationBar(currentPage: PageTypes.clothes),
+          CustomBottomNavigationBar(currentPage: PageTypes.pieces),
     );
   }
 
@@ -91,7 +91,7 @@ class ClothesEditPage extends StatelessWidget {
     if (error == null) {
       if (context.mounted) {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ClothesListPage(),
+          builder: (context) => PieceListPage(),
         ));
       }
     }

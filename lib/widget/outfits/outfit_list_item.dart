@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/style.dart';
-import 'package:ooo_fit/widget/outfit_clothes/bottom_data.dart';
+import 'package:ooo_fit/widget/outfit_piece/bottom_data.dart';
 
 class OutfitListItem extends StatelessWidget {
   // TODO remove
-  final List<String> clothesImages = [
+  final List<String> piecesImages = [
     "assets/images/purple_solid.png",
     "assets/images/purple_solid.png",
     "assets/images/purple_solid.png",
@@ -37,7 +37,7 @@ class OutfitListItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
                 child: outfit.imagePath == null
-                    ? _buildClothesMatrix()
+                    ? _buildPiecesMatrix()
                     : _buildOutfitImage(),
               ),
             ),
@@ -59,7 +59,7 @@ class OutfitListItem extends StatelessWidget {
   }
 
   // TODO tohle bude brat z pieces
-  Widget _buildClothesMatrix() {
+  Widget _buildPiecesMatrix() {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -68,12 +68,12 @@ class OutfitListItem extends StatelessWidget {
         childAspectRatio: 2.7 / 2,
       ),
       itemCount:
-          clothesImages.length > 9 ? 9 : clothesImages.length, // max 9 items
+          piecesImages.length > 9 ? 9 : piecesImages.length, // max 9 items
       itemBuilder: (context, index) {
         return ClipRRect(
           borderRadius: BorderRadius.circular(4),
           child: Image.asset(
-            clothesImages[index],
+            piecesImages[index],
             fit: BoxFit.cover,
           ),
         );

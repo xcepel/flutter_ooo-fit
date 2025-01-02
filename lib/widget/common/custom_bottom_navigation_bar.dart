@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/page/clothes_list_page.dart';
+import 'package:ooo_fit/page/piece_list_page.dart';
 import 'package:ooo_fit/page/events_list_page.dart';
 import 'package:ooo_fit/page/outfit_list_page.dart';
 import 'package:ooo_fit/page/styles_list_page.dart';
@@ -16,8 +16,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
       case PageTypes.outfits:
         _navigateToPage(context, OutfitListPage());
         break;
-      case PageTypes.clothes:
-        _navigateToPage(context, ClothesListPage());
+      case PageTypes.pieces:
+        _navigateToPage(context, PieceListPage());
         break;
       case PageTypes.events:
         _navigateToPage(context, EventsListPage());
@@ -47,10 +47,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ),
         BottomBarItem(
           icon: const Icon(Icons.checkroom_rounded),
-          title: const Text("Clothes"),
-          backgroundColor: currentPage == PageTypes.clothes
-              ? Colors.deepPurple
-              : Colors.grey,
+          title: const Text("Pieces"),
+          backgroundColor:
+              currentPage == PageTypes.pieces ? Colors.deepPurple : Colors.grey,
         ),
         BottomBarItem(
           icon: const Icon(Icons.calendar_month_rounded),

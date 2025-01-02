@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/widget/homepage/homepage_daily_info.dart';
+import 'package:ooo_fit/widget/common/weather_info.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;

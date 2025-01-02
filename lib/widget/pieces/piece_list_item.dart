@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
-import 'package:ooo_fit/widget/outfit_clothes/bottom_data.dart';
+import 'package:ooo_fit/widget/outfit_piece/bottom_data.dart';
 
-class ClothesListItem extends StatelessWidget {
+class PieceListItem extends StatelessWidget {
   final Piece piece;
   final List<Style> pieceStyles;
 
-  const ClothesListItem({
+  const PieceListItem({
     super.key,
     required this.piece,
     required this.pieceStyles,

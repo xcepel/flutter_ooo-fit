@@ -11,8 +11,8 @@ import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/common/style_picker.dart';
 import 'package:ooo_fit/widget/common/temperature_type_picker.dart';
-import 'package:ooo_fit/widget/outfit_clothes/label_button.dart';
-import 'package:ooo_fit/widget/outfits/placement_clothes_chooser.dart';
+import 'package:ooo_fit/widget/outfit_piece/label_button.dart';
+import 'package:ooo_fit/widget/outfits/placement_piece_chooser.dart';
 
 import 'package:ooo_fit/page/outfit_list_page.dart';
 
@@ -66,26 +66,26 @@ class OutfitEditPage extends StatelessWidget {
             selectedTemperatureType: outfit?.temperature,
           ),
           PageDivider(),
-          PlacementClothesChooser(
+          PlacementPieceChooser(
             details: PiecePlacement.head,
-            clothesList: pictureItemsData,
+            piecesList: pictureItemsData,
           ),
-          PlacementClothesChooser(
-              details: PiecePlacement.neck, clothesList: pictureItemsData),
-          PlacementClothesChooser(
-              details: PiecePlacement.body, clothesList: pictureItemsData),
-          PlacementClothesChooser(
-              details: PiecePlacement.top, clothesList: pictureItemsData),
-          PlacementClothesChooser(
-              details: PiecePlacement.hands, clothesList: pictureItemsData),
-          PlacementClothesChooser(
-              details: PiecePlacement.waist, clothesList: pictureItemsData),
-          PlacementClothesChooser(
-              details: PiecePlacement.bottom, clothesList: pictureItemsData),
-          PlacementClothesChooser(
-              details: PiecePlacement.feet, clothesList: pictureItemsData),
-          PlacementClothesChooser(
-              details: PiecePlacement.other, clothesList: pictureItemsData),
+          PlacementPieceChooser(
+              details: PiecePlacement.neck, piecesList: pictureItemsData),
+          PlacementPieceChooser(
+              details: PiecePlacement.body, piecesList: pictureItemsData),
+          PlacementPieceChooser(
+              details: PiecePlacement.top, piecesList: pictureItemsData),
+          PlacementPieceChooser(
+              details: PiecePlacement.hands, piecesList: pictureItemsData),
+          PlacementPieceChooser(
+              details: PiecePlacement.waist, piecesList: pictureItemsData),
+          PlacementPieceChooser(
+              details: PiecePlacement.bottom, piecesList: pictureItemsData),
+          PlacementPieceChooser(
+              details: PiecePlacement.feet, piecesList: pictureItemsData),
+          PlacementPieceChooser(
+              details: PiecePlacement.other, piecesList: pictureItemsData),
           PageDivider(),
           FormBuilderImagePicker(
             name: 'image',

@@ -7,8 +7,8 @@ import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/utils/page_types.dart';
-import 'package:ooo_fit/widget/clothes/clothes_items_list.dart';
-import 'package:ooo_fit/widget/clothes/style_data_row.dart';
+import 'package:ooo_fit/widget/pieces/pieces_items_list.dart';
+import 'package:ooo_fit/widget/pieces/style_data_row.dart';
 import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
@@ -16,8 +16,8 @@ import 'package:ooo_fit/widget/common/edit_button.dart';
 import 'package:ooo_fit/widget/common/loading_future_builder.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
-import 'package:ooo_fit/widget/outfit_clothes/description_label.dart';
-import 'package:ooo_fit/widget/outfit_clothes/sized_picture.dart';
+import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
+import 'package:ooo_fit/widget/outfit_piece/sized_picture.dart';
 
 class OutfitDetailPage extends StatelessWidget {
   final String outfitId;
@@ -69,7 +69,7 @@ class OutfitDetailPage extends StatelessWidget {
               LoadingFutureBuilder(
                 future: _getPieces(outfit.pieceIds),
                 builder: (context, pieces) =>
-                    ClothesItemsList(piecesList: pieces),
+                    PiecesItemsList(piecesList: pieces),
               ),
             ],
           ),

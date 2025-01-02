@@ -3,33 +3,32 @@ import 'package:ooo_fit/widget/common/dropdown_filter.dart';
 import 'package:ooo_fit/widget/outfits/carousel.dart';
 import 'package:ooo_fit/model/piece_placement.dart';
 
-class PlacementClothesChooser extends StatefulWidget {
+class PlacementPieceChooser extends StatefulWidget {
   final PiecePlacement details;
-  final List<String> clothesList;
+  final List<String> piecesList;
 
-  const PlacementClothesChooser({
+  const PlacementPieceChooser({
     super.key,
     required this.details,
-    required this.clothesList,
+    required this.piecesList,
   });
 
   @override
-  State<PlacementClothesChooser> createState() =>
-      _PlacementClothesChooserState();
+  State<PlacementPieceChooser> createState() => _PlacementPieceChooserState();
 }
 
-class _PlacementClothesChooserState extends State<PlacementClothesChooser> {
+class _PlacementPieceChooserState extends State<PlacementPieceChooser> {
   final List<Widget> _carousels = [];
 
   @override
   void initState() {
     super.initState();
-    _carousels.add(Carousel(pictureItemsData: widget.clothesList));
+    _carousels.add(Carousel(pictureItemsData: widget.piecesList));
   }
 
   void _addCarousel() {
     setState(() {
-      _carousels.add(Carousel(pictureItemsData: widget.clothesList));
+      _carousels.add(Carousel(pictureItemsData: widget.piecesList));
     });
   }
 
