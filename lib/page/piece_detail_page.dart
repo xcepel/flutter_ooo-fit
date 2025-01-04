@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/page/piece_edit_page.dart';
 import 'package:ooo_fit/service/piece_service.dart';
-import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/pieces/style_data_row.dart';
 import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/edit_button.dart';
-import 'package:ooo_fit/widget/common/loading_future_builder.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
@@ -20,7 +17,6 @@ import 'package:ooo_fit/widget/outfit_piece/sized_picture.dart';
 class PieceDetailPage extends StatelessWidget {
   final String pieceId;
   final PieceService _pieceService = GetIt.instance.get<PieceService>();
-  final StyleService _styleService = GetIt.instance.get<StyleService>();
 
   PieceDetailPage({
     super.key,
@@ -30,39 +26,36 @@ class PieceDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoadingStreamBuilder(
-      stream: _pieceService.getPieceByIdStream(pieceId),
-      builder: (context, piece) {
+      stream: _pieceService.getPieceDetailByIdStream(pieceId),
+      builder: (context, pieceData) {
         return Scaffold(
           appBar: CustomAppBar(
-            title: piece!.name,
+            title: pieceData.$1!.name,
             actionButton: EditButton(
                 editPage: PieceEditPage(
-              piece: piece,
+              piece: pieceData.$1,
             )),
           ),
           body: ContentFrameDetail(
             children: [
-              LoadingFutureBuilder(
-                future: _getStyles(piece.styleIds),
-                builder: (context, styles) => StyleDataRow(items: styles),
-              ),
+              StyleDataRow(items: pieceData.$2.values.toList()),
               SizedBox(height: 10),
               Row(
                 children: [
                   Image.asset(
-                    piece.piecePlacement.picture,
+                    pieceData.$1!.piecePlacement.picture,
                     color: Colors.black,
                     width: 30,
                     height: 30,
                     fit: BoxFit.contain,
                   ),
-                  Text(piece.piecePlacement.label)
+                  Text(pieceData.$1!.piecePlacement.label)
                 ],
               ),
               SizedBox(height: 10),
               DescriptionLabel(
                 label: "Last worn",
-                value: piece.lastWorn.toString(), // TODO make prettier
+                value: pieceData.$1!.lastWorn.toString(), // TODO make prettier
               ),
               SizedBox(height: 10),
               LayoutBuilder(
@@ -71,7 +64,7 @@ class PieceDetailPage extends StatelessWidget {
                   return SizedPicture(
                     sizeX: size,
                     sizeY: size,
-                    image: piece.imagePath!,
+                    image: pieceData.$1!.imagePath!,
                   );
                 },
               ),
@@ -81,7 +74,7 @@ class PieceDetailPage extends StatelessWidget {
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: 10,
+                itemCount: 3,
                 itemBuilder: (context, index) {
                   return ListItem(text: "outfit$index");
                 },
@@ -93,11 +86,5 @@ class PieceDetailPage extends StatelessWidget {
         );
       },
     );
-  }
-
-  Future<List<Style>> _getStyles(List<String> styleIds) async {
-    final List<Style> allStyles =
-        await _styleService.getAllStylesStream().first;
-    return allStyles.where((style) => styleIds.contains(style.id)).toList();
   }
 }

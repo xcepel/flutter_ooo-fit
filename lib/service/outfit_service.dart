@@ -126,4 +126,31 @@ class OutfitService {
       },
     );
   }
+
+  // returns one outfit by id and its (styleId -> style), (pieceId -> piece) dictionaries
+  Stream<(Outfit?, Map<String, Style>, Map<String, Piece>)>
+      getOutfitDetailByIdStream(String outfitId) {
+    final Stream<Outfit?> outfitStream = getOutfitByIdStream(outfitId);
+
+    return outfitStream.switchMap((Outfit? outfit) {
+      if (outfit == null) {
+        return Stream.value((null, <String, Style>{}, <String, Piece>{}));
+      }
+
+      final Set<String> styleIds = outfit.styleIds.toSet();
+      final Stream<Map<String, Style>> stylesStream =
+          _styleService.getStylesByIdsStream(styleIds);
+
+      final Set<String> pieceIds = outfit.pieceIds.toSet();
+      final Stream<Map<String, Piece>> piecesStream =
+          _pieceService.getPiecesByIdsStream(pieceIds);
+
+      return Rx.combineLatest2<Map<String, Style>, Map<String, Piece>,
+          (Outfit?, Map<String, Style>, Map<String, Piece>)>(
+        stylesStream,
+        piecesStream,
+        (styles, pieces) => (outfit, styles, pieces),
+      );
+    });
+  }
 }

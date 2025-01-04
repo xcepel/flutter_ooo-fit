@@ -115,6 +115,24 @@ class PieceService {
     );
   }
 
+  // returns one piece by id and its (styleId -> style) dictionaries
+  Stream<(Piece?, Map<String, Style>)> getPieceDetailByIdStream(
+      String pieceId) {
+    final Stream<Piece?> pieceStream = getPieceByIdStream(pieceId);
+
+    return pieceStream.switchMap((Piece? piece) {
+      if (piece == null) {
+        return Stream.value((null, <String, Style>{}));
+      }
+
+      final Set<String> styleIds = piece.styleIds.toSet();
+      final Stream<Map<String, Style>> stylesStream =
+          _styleService.getStylesByIdsStream(styleIds);
+
+      return stylesStream.map((styles) => (piece, styles));
+    });
+  }
+
   Stream<(List<Piece>, Map<String, Style>)> getPiecesWithStylesStream() {
     final piecesStream = getAllPiecesStream();
 

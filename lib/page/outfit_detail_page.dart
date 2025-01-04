@@ -13,7 +13,6 @@ import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/edit_button.dart';
-import 'package:ooo_fit/widget/common/loading_future_builder.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
@@ -34,43 +33,36 @@ class OutfitDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoadingStreamBuilder(
-      stream: _outfitService.getOutfitByIdStream(outfitId),
-      builder: (context, outfit) {
+      stream: _outfitService.getOutfitDetailByIdStream(outfitId),
+      builder: (context, outfitData) {
         return Scaffold(
           appBar: CustomAppBar(
-            title: outfit!.name ?? "",
+            title: outfitData.$1!.name ?? "",
             actionButton: EditButton(
                 editPage: OutfitEditPage(
-              outfit: outfit,
+              outfit: outfitData.$1,
             )),
           ),
           body: ContentFrameDetail(
             children: [
-              LoadingFutureBuilder(
-                future: _getStyles(outfit.styleIds),
-                builder: (context, styles) => StyleDataRow(items: styles),
-              ),
+              StyleDataRow(items: outfitData.$2.values.toList()),
               const SizedBox(height: 10),
               Row(
                 children: [
-                  outfit.temperature.icon,
-                  Text(outfit.temperature.label),
+                  outfitData.$1!.temperature.icon,
+                  Text(outfitData.$1!.temperature.label),
                 ],
               ),
               const SizedBox(height: 10),
               DescriptionLabel(
                 label: "Last worn",
-                value: outfit.lastWorn?.toString() ?? "---",
+                value: outfitData.$1!.lastWorn?.toString() ?? "---",
               ),
               const SizedBox(height: 10),
-              _addOutfitPicture(outfit.imagePath),
+              _addOutfitPicture(outfitData.$1!.imagePath),
               const PageDivider(),
               const SizedBox(height: 5),
-              LoadingFutureBuilder(
-                future: _getPieces(outfit.pieceIds),
-                builder: (context, pieces) =>
-                    PiecesItemsList(piecesList: pieces),
-              ),
+              PiecesItemsList(piecesList: outfitData.$3.values.toList()),
             ],
           ),
           bottomNavigationBar:
