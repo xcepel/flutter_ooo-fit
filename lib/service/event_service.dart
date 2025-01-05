@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:ooo_fit/model/event.dart';
+import 'package:ooo_fit/model/outfit.dart';
+import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/service/database_service.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
+import 'package:rxdart/rxdart.dart';
 
 class EventService {
   final DatabaseService<Event> _eventRepository;
@@ -35,7 +40,7 @@ class EventService {
       return error;
     }
 
-    final piece = Event(
+    final event = Event(
       id: '',
       name: name!,
       eventDatetime: eventDatetime!,
@@ -45,7 +50,7 @@ class EventService {
       temperature: temperature!,
     );
 
-    await _eventRepository.add(piece);
+    await _eventRepository.add(event);
     return null;
   }
 
@@ -70,7 +75,7 @@ class EventService {
       return error;
     }
 
-    final newPiece = event.copyWith(
+    final newEvent = event.copyWith(
       name: name,
       eventDatetime: eventDatetime,
       place: place,
@@ -79,7 +84,7 @@ class EventService {
       temperature: temperature,
     );
     //TODO: implement and use update
-    await _eventRepository.setOrAdd(event.id, newPiece);
+    await _eventRepository.setOrAdd(event.id, newEvent);
     return null;
   }
 
@@ -100,5 +105,55 @@ class EventService {
     return null;
   }
 
-  //TODO: getters
+  Stream<List<Event>> getAllEventsStream() {
+    return _eventRepository.observeDocuments();
+  }
+
+  Stream<Event?> getEventByIdStream(String eventId) {
+    return _eventRepository.observeDocument(eventId);
+  }
+
+  // TODO sort by time
+  Stream<Map<DateTime, List<Event>>> getGroupedEventsStream() {
+    return _eventRepository.observeDocuments().map((List<Event> events) {
+      final Map<DateTime, List<Event>> groupedEvents = {};
+
+      // group by date
+      for (final Event event in events) {
+        final DateTime date = DateTime(event.eventDatetime.year,
+            event.eventDatetime.month, event.eventDatetime.day);
+
+        groupedEvents.containsKey(date)
+            ? groupedEvents[date]!.add(event)
+            : groupedEvents[date] = [event];
+      }
+      return groupedEvents;
+    });
+  }
+
+  Stream<(Event?, Outfit?, Map<String, Style>)> getEventDetailByIdStream(
+      String eventId) {
+    final Stream<Event?> eventStream = getEventByIdStream(eventId);
+
+    return eventStream.switchMap((Event? event) {
+      if (event == null) {
+        return Stream.value((null, null, <String, Style>{}));
+      }
+
+      final Stream<Outfit?> outfitStream = event.outfitId != null
+          ? _outfitService.getOutfitByIdStream(event.outfitId!)
+          : Stream.value(null);
+
+      final Set<String> styleIds = event.styleIds.toSet();
+      final Stream<Map<String, Style>> stylesStream =
+          _styleService.getStylesByIdsStream(styleIds);
+
+      return Rx.combineLatest2<Outfit?, Map<String, Style>,
+          (Event?, Outfit?, Map<String, Style>)>(
+        outfitStream,
+        stylesStream,
+        (outfit, styles) => (event, outfit, styles),
+      );
+    });
+  }
 }

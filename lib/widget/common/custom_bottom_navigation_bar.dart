@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/page/piece_list_page.dart';
+import 'package:ooo_fit/page/pieces_list_page.dart';
 import 'package:ooo_fit/page/events_list_page.dart';
-import 'package:ooo_fit/page/outfit_list_page.dart';
+import 'package:ooo_fit/page/outfits_list_page.dart';
 import 'package:ooo_fit/page/styles_list_page.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -14,10 +14,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
   void _navigate(BuildContext context, PageTypes page) {
     switch (page) {
       case PageTypes.outfits:
-        _navigateToPage(context, OutfitListPage());
+        _navigateToPage(context, OutfitsListPage());
         break;
       case PageTypes.pieces:
-        _navigateToPage(context, PieceListPage());
+        _navigateToPage(context, PiecesListPage());
         break;
       case PageTypes.events:
         _navigateToPage(context, EventsListPage());

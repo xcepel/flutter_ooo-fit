@@ -8,15 +8,15 @@ import 'package:ooo_fit/widget/pieces/pieces_items_list.dart';
 import 'package:ooo_fit/widget/common/content_frame_list.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
-import 'package:ooo_fit/widget/common/custom_floating_action_button.dart';
+import 'package:ooo_fit/widget/common/creation_floating_button.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/outfit_piece/three_part_filter_bar.dart';
 
-class PieceListPage extends StatelessWidget {
+class PiecesListPage extends StatelessWidget {
   final PieceService _pieceService = GetIt.instance.get<PieceService>();
   // TODO kvuli filtrovani to asi necham tady?
 
-  PieceListPage({super.key});
+  PiecesListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,18 +33,13 @@ class PieceListPage extends StatelessWidget {
             stream: _pieceService.getAllPiecesStream(),
             builder: (context, piecesList) {
               return Expanded(
-                child: PiecesItemsList(piecesList: piecesList),
+                child: PiecesItemsList(pieces: piecesList),
               );
             },
           ),
         ],
       ),
-      floatingActionButton: CustomFloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => PieceEditPage()));
-        },
-      ),
+      floatingActionButton: CreationFloatingButton(page: PieceEditPage()),
       bottomNavigationBar:
           CustomBottomNavigationBar(currentPage: PageTypes.pieces),
     );

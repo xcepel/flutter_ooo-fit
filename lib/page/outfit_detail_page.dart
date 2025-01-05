@@ -6,9 +6,8 @@ import 'package:ooo_fit/page/outfit_edit_page.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
+import 'package:ooo_fit/utils/date_time_formater.dart';
 import 'package:ooo_fit/utils/page_types.dart';
-import 'package:ooo_fit/widget/pieces/pieces_items_list.dart';
-import 'package:ooo_fit/widget/pieces/style_data_row.dart';
 import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
@@ -17,6 +16,8 @@ import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
 import 'package:ooo_fit/widget/outfit_piece/sized_picture.dart';
+import 'package:ooo_fit/widget/pieces/pieces_items_list.dart';
+import 'package:ooo_fit/widget/pieces/style_data_row.dart';
 
 class OutfitDetailPage extends StatelessWidget {
   final String outfitId;
@@ -56,13 +57,15 @@ class OutfitDetailPage extends StatelessWidget {
               const SizedBox(height: 10),
               DescriptionLabel(
                 label: "Last worn",
-                value: outfitData.$1!.lastWorn?.toString() ?? "---",
+                value: outfitData.$1!.lastWorn != null
+                    ? DateTimeFormatter(outfitData.$1!.lastWorn!).format()
+                    : "---",
               ),
               const SizedBox(height: 10),
               _addOutfitPicture(outfitData.$1!.imagePath),
               const PageDivider(),
               const SizedBox(height: 5),
-              PiecesItemsList(piecesList: outfitData.$3.values.toList()),
+              PiecesItemsList(pieces: outfitData.$3.values.toList()),
             ],
           ),
           bottomNavigationBar:

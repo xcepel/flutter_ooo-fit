@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/page/piece_edit_page.dart';
 import 'package:ooo_fit/service/piece_service.dart';
+import 'package:ooo_fit/utils/date_time_formater.dart';
 import 'package:ooo_fit/utils/page_types.dart';
-import 'package:ooo_fit/widget/pieces/style_data_row.dart';
 import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
@@ -13,6 +13,7 @@ import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
 import 'package:ooo_fit/widget/outfit_piece/list_item.dart';
 import 'package:ooo_fit/widget/outfit_piece/sized_picture.dart';
+import 'package:ooo_fit/widget/pieces/style_data_row.dart';
 
 class PieceDetailPage extends StatelessWidget {
   final String pieceId;
@@ -55,7 +56,9 @@ class PieceDetailPage extends StatelessWidget {
               SizedBox(height: 10),
               DescriptionLabel(
                 label: "Last worn",
-                value: pieceData.$1!.lastWorn.toString(), // TODO make prettier
+                value: pieceData.$1!.lastWorn != null
+                    ? DateTimeFormatter(pieceData.$1!.lastWorn!).format()
+                    : "---",
               ),
               SizedBox(height: 10),
               LayoutBuilder(

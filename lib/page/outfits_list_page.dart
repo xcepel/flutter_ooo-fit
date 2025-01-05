@@ -9,16 +9,16 @@ import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/content_frame_list.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
-import 'package:ooo_fit/widget/common/custom_floating_action_button.dart';
+import 'package:ooo_fit/widget/common/creation_floating_button.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/outfit_piece/three_part_filter_bar.dart';
 import 'package:ooo_fit/widget/outfits/outfit_items_list.dart';
 
-class OutfitListPage extends StatelessWidget {
+class OutfitsListPage extends StatelessWidget {
   final OutfitService _outfitService = GetIt.instance.get<OutfitService>();
   // TODO kvuli filtrovani to asi necham tady?
 
-  OutfitListPage({super.key});
+  OutfitsListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +46,7 @@ class OutfitListPage extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: CustomFloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => OutfitEditPage()));
-        },
-      ),
+      floatingActionButton: CreationFloatingButton(page: OutfitEditPage()),
       bottomNavigationBar:
           CustomBottomNavigationBar(currentPage: PageTypes.outfits),
     );

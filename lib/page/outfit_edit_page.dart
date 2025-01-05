@@ -14,7 +14,7 @@ import 'package:ooo_fit/widget/common/temperature_type_picker.dart';
 import 'package:ooo_fit/widget/outfit_piece/label_button.dart';
 import 'package:ooo_fit/widget/outfits/placement_piece_chooser.dart';
 
-import 'package:ooo_fit/page/outfit_list_page.dart';
+import 'package:ooo_fit/page/outfits_list_page.dart';
 
 class OutfitEditPage extends StatelessWidget {
   final Outfit? outfit;
@@ -126,7 +126,7 @@ class OutfitEditPage extends StatelessWidget {
     if (error == null) {
       if (context.mounted) {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => OutfitListPage(),
+          builder: (context) => OutfitsListPage(),
         ));
       }
     }

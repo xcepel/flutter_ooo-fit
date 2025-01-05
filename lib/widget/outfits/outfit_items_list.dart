@@ -3,13 +3,13 @@ import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/page/outfit_detail_page.dart';
+import 'package:ooo_fit/widget/common/ghost_card.dart';
 import 'package:ooo_fit/widget/outfits/outfit_list_item.dart';
 
 class OutfitItemsList extends StatelessWidget {
   final List<Outfit> outfits;
   final Map<String, Style> styles;
-  final Map<String, Piece>
-      pieces; // TODO tohle bude potreba pro tisk matic, bude se to predavat
+  final Map<String, Piece> pieces;
 
   const OutfitItemsList({
     super.key,
@@ -28,33 +28,31 @@ class OutfitItemsList extends StatelessWidget {
         child: Wrap(
           spacing: 8,
           runSpacing: 8,
-          children: outfits.map((Outfit outfit) {
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => OutfitDetailPage(
-                      outfitId: outfit.id,
+          children: [
+            ...outfits.map((Outfit outfit) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OutfitDetailPage(
+                        outfitId: outfit.id,
+                      ),
                     ),
+                  );
+                },
+                child: SizedBox(
+                  width: itemWidth,
+                  child: OutfitListItem(
+                    outfit: outfit,
                   ),
-                );
-              },
-              child: SizedBox(
-                width: itemWidth,
-                child: OutfitListItem(
-                  outfit: outfit,
-                  outfitStyles: _getStyles(outfit.styleIds),
                 ),
-              ),
-            );
-          }).toList(),
+              );
+            }),
+            if (outfits.length == 1) GhostCard(itemWidth: itemWidth),
+          ],
         ),
       ),
     );
-  }
-
-  List<Style> _getStyles(List<String> styleIds) {
-    return styleIds.map((String styleId) => styles[styleId]!).toList();
   }
 }

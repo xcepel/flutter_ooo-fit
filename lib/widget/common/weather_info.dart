@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/ioc/ioc_container.dart';
-import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/service/weather_service.dart';
 import 'package:ooo_fit/widget/common/loading_future_builder.dart';
 import 'package:weather/weather.dart';
@@ -21,10 +20,6 @@ class HomepageDailyInfo extends StatelessWidget {
 
         final String formattedTemperature =
             "${temp.celsius!.toStringAsFixed(1)}°C";
-
-        final TemperatureType temperatureType =
-            WeatherService.getTemperatureTypeFromWeather(weather);
-        final Icon temperatureTypeIcon = temperatureType.icon;
 
         return Column(
           children: [

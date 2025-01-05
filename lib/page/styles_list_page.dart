@@ -5,7 +5,7 @@ import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/content_frame_list.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
-import 'package:ooo_fit/widget/common/custom_floating_action_button.dart';
+import 'package:ooo_fit/widget/common/creation_floating_button.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/styles/style_dialog.dart';
 import 'package:ooo_fit/widget/styles/style_row.dart';
@@ -24,9 +24,11 @@ class StylesListPage extends StatelessWidget {
           _buildStyleList(),
         ],
       ),
-      floatingActionButton: CustomFloatingActionButton(onPressed: () {
-        showCustomDialog(context);
-      }),
+      floatingActionButton: CreationFloatingButton(
+        onPressed: () {
+          showCustomDialog(context);
+        },
+      ),
       bottomNavigationBar:
           CustomBottomNavigationBar(currentPage: PageTypes.styles),
     );

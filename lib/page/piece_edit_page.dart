@@ -3,7 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/piece.dart';
-import 'package:ooo_fit/page/piece_list_page.dart';
+import 'package:ooo_fit/page/pieces_list_page.dart';
 import 'package:ooo_fit/widget/pieces/piece_placement_picker.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/utils/page_types.dart';
@@ -91,7 +91,7 @@ class PieceEditPage extends StatelessWidget {
     if (error == null) {
       if (context.mounted) {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => PieceListPage(),
+          builder: (context) => PiecesListPage(),
         ));
       }
     }
