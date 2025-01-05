@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:ooo_fit/model/piece_placement.dart';
 
 class PiecePlacementPicker extends StatelessWidget {
@@ -12,6 +13,11 @@ class PiecePlacementPicker extends StatelessWidget {
       name: 'piecePlacement',
       decoration: const InputDecoration(labelText: 'Placement'),
       initialValue: selectedPlacement,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.required(
+            errorText: 'Placement is required, pick one')
+      ]),
       options: _getPlacementChipOptions(),
     );
   }
@@ -24,7 +30,7 @@ class PiecePlacementPicker extends StatelessWidget {
                 placement.picture,
                 color: Colors.black,
               ),
-              child: Text(placement.name),
+              child: Text(placement.label),
             ))
         .toList();
   }

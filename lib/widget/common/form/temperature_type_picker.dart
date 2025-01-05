@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
 
 class TemperatureTypePicker extends StatelessWidget {
@@ -12,6 +13,9 @@ class TemperatureTypePicker extends StatelessWidget {
       name: 'temperature',
       options: _getTemperatureChipOptions(),
       initialValue: selectedTemperatureType,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator:
+          FormBuilderValidators.required(errorText: 'Temperature is required'),
       decoration: InputDecoration(labelText: 'Temperature'),
     );
   }

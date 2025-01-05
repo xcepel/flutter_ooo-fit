@@ -16,28 +16,18 @@ class PieceService {
   );
 
   Future<String?> savePiece({
-    required String? name,
-    required PiecePlacement? piecePlacement,
-    required List<String>? styleIds,
+    required String name,
+    required PiecePlacement piecePlacement,
+    required List<String> styleIds,
     required String imagePath,
   }) async {
-    String? error = validate(
-        name: name,
-        piecePlacement: piecePlacement,
-        styleIds: styleIds,
-        imagePath: imagePath);
-
-    if (error != null) {
-      return error;
-    }
-
     String? downloadLink = await uploadImage(imagePath);
 
     final Piece piece = Piece(
       id: '',
-      name: name!,
-      piecePlacement: piecePlacement!,
-      styleIds: styleIds!,
+      name: name,
+      piecePlacement: piecePlacement,
+      styleIds: styleIds,
       imagePath: downloadLink!,
     );
 
@@ -47,21 +37,11 @@ class PieceService {
 
   Future<String?> updatePiece({
     required Piece piece,
-    required String? name,
-    required PiecePlacement? piecePlacement,
-    required List<String>? styleIds,
+    required String name,
+    required PiecePlacement piecePlacement,
+    required List<String> styleIds,
     required String imagePath,
   }) async {
-    String? error = validate(
-      name: name,
-      piecePlacement: piecePlacement,
-      styleIds: styleIds,
-      imagePath: imagePath,
-    );
-    if (error != null) {
-      return error;
-    }
-
     String? downloadLink = await uploadImage(imagePath);
     //TODO: implement deleting the old versions of images
 
@@ -82,20 +62,6 @@ class PieceService {
 
   Future<String?> deletePiece({required Piece piece}) async {
     await _pieceRepository.delete(piece.id);
-    return null;
-  }
-
-  String? validate(
-      {required String? name,
-      required PiecePlacement? piecePlacement,
-      required List<String>? styleIds,
-      required String imagePath}) {
-    if (name == null ||
-        piecePlacement == null ||
-        (styleIds == null || styleIds.isEmpty)) {
-      return 'All cells must contain a value';
-    }
-
     return null;
   }
 

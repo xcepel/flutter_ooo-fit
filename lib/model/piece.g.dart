@@ -11,7 +11,7 @@ Piece _$PieceFromJson(Map<String, dynamic> json) => Piece(
       createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['createdAt'], const TimestampConverter().fromJson),
       name: json['name'] as String,
-      imagePath: json['imagePath'] as String?,
+      imagePath: json['imagePath'] as String,
       piecePlacement:
           $enumDecode(_$PiecePlacementEnumMap, json['piecePlacement']),
       styleIds:
@@ -27,7 +27,7 @@ Map<String, dynamic> _$PieceToJson(Piece instance) => <String, dynamic>{
           case final value?)
         'createdAt': value,
       'name': instance.name,
-      if (instance.imagePath case final value?) 'imagePath': value,
+      'imagePath': instance.imagePath,
       'piecePlacement': _$PiecePlacementEnumMap[instance.piecePlacement]!,
       'styleIds': instance.styleIds,
       if (_$JsonConverterToJson<Timestamp, DateTime>(
@@ -43,14 +43,14 @@ Value? _$JsonConverterFromJson<Json, Value>(
     json == null ? null : fromJson(json as Json);
 
 const _$PiecePlacementEnumMap = {
+  PiecePlacement.head: 'head',
+  PiecePlacement.neck: 'neck',
   PiecePlacement.body: 'body',
   PiecePlacement.top: 'top',
+  PiecePlacement.waist: 'waist',
   PiecePlacement.bottom: 'bottom',
   PiecePlacement.feet: 'feet',
-  PiecePlacement.head: 'head',
   PiecePlacement.hands: 'hands',
-  PiecePlacement.neck: 'neck',
-  PiecePlacement.waist: 'waist',
   PiecePlacement.other: 'other',
 };
 

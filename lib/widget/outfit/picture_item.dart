@@ -17,7 +17,7 @@ class PictureItem extends StatelessWidget {
           child: Stack(
             children: [
               SizedBox.expand(
-                child: Image.asset(
+                child: Image.network(
                   image,
                   fit: BoxFit.cover,
                 ),

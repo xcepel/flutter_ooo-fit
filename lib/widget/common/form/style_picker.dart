@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
+import 'package:ooo_fit/widget/pieces/style_dot.dart';
 
 class StylePicker extends StatelessWidget {
   final StyleService _styleService = GetIt.instance.get<StyleService>();
@@ -19,8 +21,15 @@ class StylePicker extends StatelessWidget {
         return FormBuilderFilterChip(
           name: 'styleIds',
           decoration: const InputDecoration(labelText: 'Styles'),
-          options: _getStyleChipOptions(styles),
           initialValue: selectedStyles,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (value) {
+            if (value == null || (value.isEmpty)) {
+              return 'Styles are required, pick at least one';
+            }
+            return null;
+          },
+          options: _getStyleChipOptions(styles),
         );
       },
     );
@@ -30,15 +39,7 @@ class StylePicker extends StatelessWidget {
     return styles
         .map((Style style) => FormBuilderChipOption(
               value: style.id,
-              //TODO: make into component (style dot)
-              avatar: Container(
-                width: 15,
-                height: 15,
-                decoration: BoxDecoration(
-                  color: Color(style.color),
-                  shape: BoxShape.circle,
-                ),
-              ),
+              avatar: StyleDot(color: style.color),
               child: Text(style.name),
             ))
         .toList();

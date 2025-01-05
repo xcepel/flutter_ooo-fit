@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/widget/common/dropdown_filter.dart';
-import 'package:ooo_fit/widget/outfits/carousel.dart';
+import 'package:ooo_fit/widget/common/form/carousel.dart';
 import 'package:ooo_fit/model/piece_placement.dart';
 
 class PlacementPieceChooser extends StatefulWidget {
-  final PiecePlacement details;
-  final List<String> piecesList;
+  final PiecePlacement piecePlacement;
+  final List<Piece> piecesList;
+  final List<String>? selectedIds;
 
   const PlacementPieceChooser({
     super.key,
-    required this.details,
+    required this.piecePlacement,
     required this.piecesList,
+    this.selectedIds,
   });
 
   @override
@@ -18,38 +22,79 @@ class PlacementPieceChooser extends StatefulWidget {
 }
 
 class _PlacementPieceChooserState extends State<PlacementPieceChooser> {
-  final List<Widget> _carousels = [];
+  late List<String> _selectedIds = [];
+  // final List<Widget> _carousels = [];
 
   @override
   void initState() {
     super.initState();
-    _carousels.add(Carousel(pictureItemsData: widget.piecesList));
+    _selectedIds = widget.selectedIds ?? [''];
   }
 
   void _addCarousel() {
     setState(() {
-      _carousels.add(Carousel(pictureItemsData: widget.piecesList));
+      _selectedIds.add('');
     });
   }
 
   void _removeCarousel() {
     setState(() {
-      if (_carousels.isNotEmpty) {
-        _carousels.removeLast();
+      if (_selectedIds.isNotEmpty) {
+        _selectedIds.removeLast();
       }
     });
   }
 
+  List<Widget> _buildCarousels(FormFieldState<List<String>?> field) {
+    return List.generate(
+      _selectedIds.length,
+      (index) => Carousel(
+        itemList: widget.piecesList
+            .map((Piece piece) => CarouselItem(
+                  id: piece.id,
+                  imagePath: piece.imagePath,
+                ))
+            .toList(),
+        onChanged: (value) => _handleChange(field, index, value),
+        initialSelectedId: _selectedIds[index],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildHeader(),
-        // Carousels
-        ..._carousels,
-        const SizedBox(height: 10),
-      ],
+    return FormBuilderField<List<String>?>(
+      name: 'carousel_${widget.piecePlacement.name}',
+      initialValue: _selectedIds,
+      onChanged: (List<String>? val) => print(val.toString()),
+      builder: (FormFieldState<List<String>?> field) {
+        return Column(
+          children: [
+            _buildHeader(),
+            if (widget.piecesList.isNotEmpty)
+              ..._buildCarousels(field)
+            else
+              Text('No items available'),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
     );
+  }
+
+  void _handleChange(
+      FormFieldState<List<String>?> field, int index, String value) {
+    setState(() {
+      if (index < _selectedIds.length) {
+        _selectedIds[index] = value;
+      } else {
+        _selectedIds.add(value);
+      }
+    });
+
+    //TODO: move checking elsewhere maybe
+    final nonEmptyIds = _selectedIds.where((id) => id.isNotEmpty).toList();
+    field.didChange(List.from(nonEmptyIds));
   }
 
   Widget _buildHeader() {
@@ -60,7 +105,7 @@ class _PlacementPieceChooserState extends State<PlacementPieceChooser> {
       child: Row(
         children: [
           Image.asset(
-            widget.details.picture,
+            widget.piecePlacement.picture,
             color: Colors.black,
             width: 30,
             height: 30,
@@ -68,7 +113,7 @@ class _PlacementPieceChooserState extends State<PlacementPieceChooser> {
           ),
           const SizedBox(width: 10),
           Text(
-            widget.details.name,
+            widget.piecePlacement.name,
             style: const TextStyle(
               fontSize: 16.0,
               color: Colors.black,

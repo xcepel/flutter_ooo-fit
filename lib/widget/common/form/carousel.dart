@@ -2,10 +2,27 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/widget/outfit/picture_item.dart';
 
-class Carousel extends StatefulWidget {
-  final List<String> pictureItemsData;
+class CarouselItem {
+  final String id;
+  final String imagePath;
 
-  const Carousel({super.key, required this.pictureItemsData});
+  CarouselItem({
+    required this.id,
+    required this.imagePath,
+  });
+}
+
+class Carousel extends StatefulWidget {
+  final List<CarouselItem> itemList;
+  final void Function(String) onChanged;
+  final String? initialSelectedId;
+
+  const Carousel({
+    super.key,
+    required this.itemList,
+    required this.onChanged,
+    this.initialSelectedId,
+  });
 
   @override
   State<Carousel> createState() => _CarouselState();
@@ -15,9 +32,27 @@ class _CarouselState extends State<Carousel> {
   int _currentIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+
+    _currentIndex = widget.initialSelectedId != null
+        ? widget.itemList
+            .indexWhere((value) => value.id == widget.initialSelectedId)
+        : 0;
+
+    if (_currentIndex == -1) {
+      _currentIndex = 0;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (widget.itemList.isEmpty) {
+      return Center(child: Text("No items available"));
+    }
+
     return CarouselSlider.builder(
-      itemCount: widget.pictureItemsData.length,
+      itemCount: widget.itemList.length,
       itemBuilder: (context, index, realIndex) {
         // Determine if the current item is the focused one
         final bool isFocused = index == _currentIndex;
@@ -30,7 +65,7 @@ class _CarouselState extends State<Carousel> {
             borderRadius: BorderRadius.circular(4.0),
           ),
           child: PictureItem(
-            image: widget.pictureItemsData[index],
+            image: widget.itemList[index].imagePath,
             // TODO Non-active gray coloring for unfocused items?
           ),
         );
@@ -47,6 +82,7 @@ class _CarouselState extends State<Carousel> {
           setState(() {
             _currentIndex = index;
           });
+          widget.onChanged(widget.itemList[index].id);
         },
         scrollPhysics: PageScrollPhysics(),
       ),

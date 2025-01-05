@@ -19,28 +19,18 @@ class OutfitService {
   );
 
   Future<String?> saveOutfit({
-    required String? name,
-    required List<String>? pieceIds,
-    required List<String>? styleIds,
-    required TemperatureType? temperature,
+    required String name,
+    required List<String> pieceIds,
+    required List<String> styleIds,
+    required TemperatureType temperature,
     required String? imagePath,
   }) async {
-    String? error = validate(
-        name: name,
-        pieceIds: pieceIds,
-        styleIds: styleIds,
-        temperature: temperature,
-        imagePath: imagePath);
-    if (error != null) {
-      return error;
-    }
-
     final piece = Outfit(
       id: '',
       name: name,
-      pieceIds: pieceIds!,
-      styleIds: styleIds!,
-      temperature: temperature!,
+      pieceIds: pieceIds,
+      styleIds: styleIds,
+      temperature: temperature,
     );
 
     await _outfitRepository.add(piece);
@@ -53,19 +43,8 @@ class OutfitService {
     required List<String>? pieceIds,
     required List<String>? styleIds,
     required TemperatureType? temperature,
-    required String imagePath,
+    required String? imagePath,
   }) async {
-    String? error = validate(
-      name: name,
-      pieceIds: pieceIds,
-      styleIds: styleIds,
-      temperature: temperature,
-      imagePath: imagePath,
-    );
-    if (error != null) {
-      return error;
-    }
-
     final newPiece = outfit.copyWith(name: name);
     //TODO: implement and use update
     await _outfitRepository.setOrAdd(outfit.id, newPiece);
@@ -74,22 +53,6 @@ class OutfitService {
 
   Future<String?> deleteOutfit({required Outfit outfit}) async {
     await _outfitRepository.delete(outfit.id);
-    return null;
-  }
-
-  String? validate({
-    required String? name,
-    required List<String>? pieceIds,
-    required List<String>? styleIds,
-    required TemperatureType? temperature,
-    required String? imagePath,
-  }) {
-    if (name == null ||
-        (pieceIds == null || pieceIds.isEmpty) ||
-        (styleIds == null || styleIds.isEmpty) ||
-        temperature == null) {
-      return 'All cells must contain a value';
-    }
     return null;
   }
 

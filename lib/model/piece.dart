@@ -14,8 +14,7 @@ class Piece {
 
   final String name;
 
-  // nullable imagePath?
-  final String? imagePath;
+  final String imagePath;
 
   final PiecePlacement piecePlacement;
 
@@ -28,7 +27,7 @@ class Piece {
     required this.id,
     this.createdAt,
     required this.name,
-    this.imagePath,
+    required this.imagePath,
     required this.piecePlacement,
     required this.styleIds,
     this.lastWorn, // TODO tohle se bude nejspis pri vytvoreni setovat na date vytvoreni?
