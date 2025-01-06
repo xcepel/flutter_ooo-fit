@@ -21,33 +21,21 @@ class EventService {
   );
 
   Future<String?> saveEvent({
-    required String? name,
-    required DateTime? eventDatetime,
-    required String? place,
+    required String name,
+    required DateTime eventDatetime,
+    required String place,
     required String? outfitId,
-    required List<String>? styleIds,
-    required TemperatureType? temperature,
+    required List<String> styleIds,
+    required TemperatureType temperature,
   }) async {
-    String? error = validate(
+    final event = Event(
+      id: '',
       name: name,
       eventDatetime: eventDatetime,
       place: place,
       outfitId: outfitId,
       styleIds: styleIds,
       temperature: temperature,
-    );
-    if (error != null) {
-      return error;
-    }
-
-    final event = Event(
-      id: '',
-      name: name!,
-      eventDatetime: eventDatetime!,
-      place: place!,
-      outfitId: outfitId!,
-      styleIds: styleIds!,
-      temperature: temperature!,
     );
 
     await _eventRepository.add(event);
@@ -56,25 +44,13 @@ class EventService {
 
   Future<String?> updateEvent({
     required Event event,
-    required String? name,
-    required DateTime? eventDatetime,
-    required String? place,
+    required String name,
+    required DateTime eventDatetime,
+    required String place,
     required String? outfitId,
-    required List<String>? styleIds,
+    required List<String> styleIds,
     required TemperatureType? temperature,
   }) async {
-    String? error = validate(
-      name: name,
-      eventDatetime: eventDatetime,
-      place: place,
-      outfitId: outfitId,
-      styleIds: styleIds,
-      temperature: temperature,
-    );
-    if (error != null) {
-      return error;
-    }
-
     final newEvent = event.copyWith(
       name: name,
       eventDatetime: eventDatetime,
@@ -88,20 +64,8 @@ class EventService {
     return null;
   }
 
-  String? validate({
-    required String? name,
-    required DateTime? eventDatetime,
-    required String? place,
-    required String? outfitId,
-    required List<String>? styleIds,
-    required TemperatureType? temperature,
-  }) {
-    if (name == null ||
-        eventDatetime == null ||
-        place == null ||
-        (styleIds == null || styleIds.isEmpty)) {
-      return 'All cells must contain a value';
-    }
+  Future<String?> deleteEvent({required Event event}) async {
+    await _eventRepository.delete(event.id);
     return null;
   }
 

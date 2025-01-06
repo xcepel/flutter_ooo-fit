@@ -29,7 +29,11 @@ class EventDetailPage extends StatelessWidget {
           appBar: CustomAppBar(
             title: eventData.$1?.name ??
                 '', // Using ternary to return empty string if null
-            actionButton: EditButton(editPage: EventEditPage()),
+            actionButton: EditButton(
+              editPage: EventEditPage(
+                event: eventData.$1,
+              ),
+            ),
           ),
           body: ContentFrameDetail(
             children: [
