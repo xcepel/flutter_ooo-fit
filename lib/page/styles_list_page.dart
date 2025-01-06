@@ -8,7 +8,7 @@ import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/creation_floating_button.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/styles/style_dialog.dart';
-import 'package:ooo_fit/widget/styles/style_row.dart';
+import 'package:ooo_fit/widget/styles/style_info_row.dart';
 
 class StylesListPage extends StatelessWidget {
   final StyleService _styleService = GetIt.instance.get<StyleService>();
@@ -40,7 +40,8 @@ class StylesListPage extends StatelessWidget {
         stream: _styleService.getAllStylesStream(),
         builder: (context, stylesList) {
           return ListView.separated(
-            itemBuilder: (context, index) => StyleRow(style: stylesList[index]),
+            itemBuilder: (context, index) =>
+                StyleInfoRow(style: stylesList[index]),
             separatorBuilder: (context, index) => Divider(),
             itemCount: stylesList.length,
           );

@@ -12,7 +12,7 @@ import 'package:ooo_fit/widget/common/edit_button.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
 import 'package:ooo_fit/widget/outfits/outfit_list_item.dart';
-import 'package:ooo_fit/widget/pieces/style_data_row.dart';
+import 'package:ooo_fit/widget/styles/style_data_row.dart';
 
 class EventDetailPage extends StatelessWidget {
   final String eventId;

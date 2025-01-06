@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/widget/outfit/picture_item.dart';
+import 'package:ooo_fit/widget/outfits/picture_item.dart';
 
 class CarouselItem {
   final String id;

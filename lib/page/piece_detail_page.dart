@@ -13,7 +13,7 @@ import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
 import 'package:ooo_fit/widget/outfit_piece/list_item.dart';
 import 'package:ooo_fit/widget/outfit_piece/sized_picture.dart';
-import 'package:ooo_fit/widget/pieces/style_data_row.dart';
+import 'package:ooo_fit/widget/styles/style_data_row.dart';
 
 class PieceDetailPage extends StatelessWidget {
   final String pieceId;

@@ -3,12 +3,13 @@ import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/widget/styles/style_dialog.dart';
+import 'package:ooo_fit/widget/styles/style_dot.dart';
 
-class StyleRow extends StatelessWidget {
+class StyleInfoRow extends StatelessWidget {
   final Style style;
   final StyleService _styleService = GetIt.instance.get<StyleService>();
 
-  StyleRow({super.key, required this.style});
+  StyleInfoRow({super.key, required this.style});
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +18,7 @@ class StyleRow extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: 20,
-            height: 20,
-            decoration: BoxDecoration(
-              color: Color(style.color),
-              shape: BoxShape.circle,
-            ),
-          ),
+          StyleDot(size: 20, color: style.color),
           SizedBox(width: 10),
           Expanded(
             child: Text(

@@ -10,23 +10,10 @@ class PieceService {
   final DatabaseService<Piece> _pieceRepository;
   final StyleService _styleService;
 
-  // TODO move to the filter service?
-  final BehaviorSubject<String?> _placementFilterSubject =
-      BehaviorSubject<String?>.seeded(null);
-
   PieceService(
     this._pieceRepository,
     this._styleService,
   );
-
-  Stream<String?> get placementFilterStream => _placementFilterSubject.stream;
-
-  String? get currentPlacementFilter => _placementFilterSubject.value;
-
-  void updatePlacementFilter(String? newFilter) {
-    _placementFilterSubject.add(newFilter);
-    print("Placement: $newFilter, updated: $currentPlacementFilter");
-  }
 
   Future<String?> savePiece({
     required String name,
@@ -82,19 +69,20 @@ class PieceService {
     return _pieceRepository.observeDocuments();
   }
 
-  Stream<List<Piece>> getFilteredPiecesStream() {
-    return Rx.combineLatest2(
-      _placementFilterSubject.stream,
-      _pieceRepository.observeDocuments(),
-      (String? filter, List<Piece> pieces) {
-        if (filter == null) {
-          return pieces;
-        }
-        return pieces
-            .where((piece) => piece.piecePlacement.label == filter)
-            .toList();
-      },
-    );
+  Stream<List<Piece>> getFilteredPiecesStream({
+    Style? styleFilter,
+    String? placementFilter,
+  }) {
+    return _pieceRepository.observeDocuments().map((pieces) {
+      return pieces.where((piece) {
+        final matchesPlacement = placementFilter == null ||
+            piece.piecePlacement.label == placementFilter;
+        final matchesStyle = styleFilter == null ||
+            piece.styleIds.any((id) => id == styleFilter.id);
+
+        return matchesPlacement && matchesStyle;
+      }).toList();
+    });
   }
 
   Stream<Piece?> getPieceByIdStream(String pieceId) {

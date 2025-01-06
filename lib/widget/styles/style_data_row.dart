@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/model/style.dart';
-import 'package:ooo_fit/widget/pieces/style_dot.dart';
+import 'package:ooo_fit/widget/styles/style_dot.dart';
 
 class StyleDataRow extends StatelessWidget {
   final List<Style> items;
@@ -32,7 +32,7 @@ Widget _dotText(Style style) {
     child: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        StyleDot(color: style.color),
+        StyleDot(size: 15, color: style.color),
         SizedBox(width: 8),
         Text(style.name),
       ],

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-class DropdownFilter extends StatefulWidget {
+class DropdownFilter extends StatelessWidget {
   final String label;
+  final String? value;
   final List<String> data;
   final ValueChanged<String?> onChanged;
   final bool whiteStyle;
@@ -11,15 +12,9 @@ class DropdownFilter extends StatefulWidget {
     required this.label,
     required this.data,
     required this.onChanged,
+    this.value,
     this.whiteStyle = false,
   });
-
-  @override
-  DropdownFilterState createState() => DropdownFilterState();
-}
-
-class DropdownFilterState extends State<DropdownFilter> {
-  String? selectedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -31,25 +26,20 @@ class DropdownFilterState extends State<DropdownFilter> {
       ),
       child: DropdownButton<String>(
         hint: Text(
-          widget.label,
+          label,
           style: TextStyle(
-            color: widget.whiteStyle ? Colors.white : Colors.black,
+            color: whiteStyle ? Colors.white : Colors.black,
           ),
         ),
-        value: selectedValue == "All" ? null : selectedValue,
-        items: ["All", ...widget.data]
+        value: value,
+        items: ["All", ...data]
             .map((item) => DropdownMenuItem<String>(
                   value: item,
                   child: Text(item),
                 ))
             .toList(),
         onChanged: (String? newValue) {
-          newValue == "All" ? newValue = null : newValue;
-
-          setState(() {
-            selectedValue = newValue;
-          });
-          widget.onChanged(selectedValue);
+          onChanged(newValue == "All" ? null : newValue);
         },
         underline: Container(),
       ),
