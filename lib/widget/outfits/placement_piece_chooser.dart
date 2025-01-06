@@ -120,11 +120,12 @@ class _PlacementPieceChooserState extends State<PlacementPieceChooser> {
             ),
           ),
           const Spacer(),
-          DropdownFilter(
-            label: "Style",
-            data: [],
-            onChanged: (String? value) {},
-          ), // TODO change
+          DropdownFilter<String>(
+            hint: '',
+            value: null,
+            items: [],
+            onChanged: (Object? value) {},
+          ), // TODO CHANGE
           IconButton(
             icon: const Icon(
               Icons.add_circle_outline_rounded,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ooo_fit/model/piece_placement.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
+import 'package:ooo_fit/widget/styles/style_dot.dart';
 
 class BottomData extends StatelessWidget {
   final List<Style> styles;
@@ -31,15 +32,9 @@ class BottomData extends StatelessWidget {
           children: [
             Row(
               children: styles.map((Style style) {
-                return Container(
-                  margin: const EdgeInsets.only(right: 4),
-                  width: size,
-                  height: size,
-                  decoration: BoxDecoration(
-                    color: Color(style.color),
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 1),
-                  ),
+                return Padding(
+                  padding: const EdgeInsets.only(right: 4),
+                  child: StyleDot(size: size, color: style.color, border: true),
                 );
               }).toList(),
             ),

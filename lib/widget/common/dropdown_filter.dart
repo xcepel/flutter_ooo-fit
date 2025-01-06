@@ -1,46 +1,34 @@
 import 'package:flutter/material.dart';
 
-class DropdownFilter extends StatelessWidget {
-  final String label;
-  final String? value;
-  final List<String> data;
-  final ValueChanged<String?> onChanged;
-  final bool whiteStyle;
+class DropdownFilter<T> extends StatelessWidget {
+  final String hint;
+  final T? value;
+  final List<DropdownMenuItem<T>> items;
+  final ValueChanged<T?>? onChanged;
 
   const DropdownFilter({
     super.key,
-    required this.label,
-    required this.data,
+    required this.hint,
+    required this.value,
+    required this.items,
     required this.onChanged,
-    this.value,
-    this.whiteStyle = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         color: Colors.deepPurple.withOpacity(0.05),
         borderRadius: BorderRadius.circular(4),
       ),
-      child: DropdownButton<String>(
-        hint: Text(
-          label,
-          style: TextStyle(
-            color: whiteStyle ? Colors.white : Colors.black,
-          ),
+      child: DropdownButton<T>(
+        hint: Padding(
+          padding: EdgeInsets.only(left: 8),
+          child: Text(hint),
         ),
         value: value,
-        items: ["All", ...data]
-            .map((item) => DropdownMenuItem<String>(
-                  value: item,
-                  child: Text(item),
-                ))
-            .toList(),
-        onChanged: (String? newValue) {
-          onChanged(newValue == "All" ? null : newValue);
-        },
+        items: items,
+        onChanged: onChanged,
         underline: Container(),
       ),
     );

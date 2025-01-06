@@ -14,10 +14,11 @@ class TextEditLabel extends StatelessWidget {
           child: Text("$label: "),
         ),
         SizedBox(width: 8),
-        DropdownFilter(
-          label: label,
-          data: [],
-          onChanged: (String? value) {},
+        DropdownFilter<String>(
+          hint: '',
+          value: null,
+          items: [],
+          onChanged: (Object? value) {},
         ), // TODO CHANGE
       ],
     );

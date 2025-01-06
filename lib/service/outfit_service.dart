@@ -2,6 +2,7 @@ import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
+import 'package:ooo_fit/model/wear_history.dart';
 import 'package:ooo_fit/service/database_service.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
@@ -66,28 +67,70 @@ class OutfitService {
 
   // returns list of outfits and (styleId -> style), (pieceId -> piece) dictionaries
   Stream<(List<Outfit>, Map<String, Style>, Map<String, Piece>)>
-      getOutfitsWithStylesAndPiecesStream() {
-    final outfitsStream = getAllOutfitsStream();
+      getFilteredOutfitsWithStylesAndPiecesStream({
+    Style? styleFilter,
+    TemperatureType? temperatureFilter,
+    WearHistory? historySort,
+  }) {
+    return _getFilteredOutfitsStream(
+      styleFilter: styleFilter,
+      temperatureFilter: temperatureFilter,
+      historySort: historySort,
+    ).switchMap((List<Outfit> filteredOutfits) {
+      final Set<String> styleIds =
+          filteredOutfits.expand((outfit) => outfit.styleIds).toSet();
+      final Set<String> pieceIds =
+          filteredOutfits.expand((outfit) => outfit.pieceIds).toSet();
 
-    return outfitsStream.switchMap(
-      (outfits) {
-        final styleIds = outfits.expand((piece) => piece.styleIds).toSet();
-        final stylesByIdStream = _styleService.getStylesByIdsStream(styleIds);
+      final Stream<Map<String, Style>> stylesByIdStream =
+          _styleService.getStylesByIdsStream(styleIds);
+      final Stream<Map<String, Piece>> piecesByIdStream =
+          _pieceService.getPiecesByIdsStream(pieceIds);
 
-        final pieceIds = outfits.expand((piece) => piece.pieceIds).toSet();
-        final piecesByIdStream = _pieceService.getPiecesByIdsStream(pieceIds);
+      return Rx.combineLatest2(
+        stylesByIdStream,
+        piecesByIdStream,
+        (Map<String, Style> styles, Map<String, Piece> pieces) => (
+          filteredOutfits,
+          styles,
+          pieces,
+        ),
+      );
+    });
+  }
 
-        return Rx.combineLatest2(
-          stylesByIdStream,
-          piecesByIdStream,
-          (Map<String, Style> styles, Map<String, Piece> pieces) => (
-            outfits,
-            styles,
-            pieces,
-          ),
-        );
-      },
-    );
+  Stream<List<Outfit>> _getFilteredOutfitsStream({
+    Style? styleFilter,
+    TemperatureType? temperatureFilter,
+    WearHistory? historySort,
+  }) {
+    return getAllOutfitsStream().map((List<Outfit> outfits) {
+      final List<Outfit> filteredOutfits = outfits.where((outfit) {
+        final bool matchesStyle = styleFilter == null ||
+            outfit.styleIds.any((id) => id == styleFilter.id);
+        final bool matchesTemperature = temperatureFilter == null ||
+            outfit.temperature == temperatureFilter;
+
+        return matchesStyle && matchesTemperature;
+      }).toList();
+
+      if (historySort != null) {
+        _sortOutfitsByHistory(filteredOutfits, historySort);
+      }
+
+      return filteredOutfits;
+    });
+  }
+
+  void _sortOutfitsByHistory(List<Outfit> outfits, WearHistory historySort) {
+    final comparisonFactor = historySort == WearHistory.mostRecently ? -1 : 1;
+
+    outfits.sort((a, b) {
+      if (a.lastWorn == null && b.lastWorn == null) return 0;
+      if (a.lastWorn == null) return -comparisonFactor; // null at bottom/top
+      if (b.lastWorn == null) return comparisonFactor; // null at top/bottom
+      return comparisonFactor * a.lastWorn!.compareTo(b.lastWorn!);
+    });
   }
 
   // returns one outfit by id and its (styleId -> style), (pieceId -> piece) dictionaries

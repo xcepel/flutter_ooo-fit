@@ -3,18 +3,19 @@ import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/piece_placement.dart';
 import 'package:ooo_fit/model/style.dart';
+import 'package:ooo_fit/model/wear_history.dart';
 import 'package:ooo_fit/page/piece_edit_page.dart';
 import 'package:ooo_fit/service/piece_service.dart';
-import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/utils/page_types.dart';
-import 'package:ooo_fit/widget/common/dropdown_filter.dart';
+import 'package:ooo_fit/widget/outfit_piece/style_filter.dart';
+import 'package:ooo_fit/widget/outfit_piece/wear_history_sort.dart';
 import 'package:ooo_fit/widget/pieces/pieces_items_list.dart';
 import 'package:ooo_fit/widget/common/content_frame_list.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/creation_floating_button.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
-import 'package:ooo_fit/widget/styles/style_dot.dart';
+import 'package:ooo_fit/widget/pieces/placement_filter.dart';
 
 class PiecesListPage extends StatefulWidget {
   const PiecesListPage({super.key});
@@ -25,17 +26,17 @@ class PiecesListPage extends StatefulWidget {
 
 class _PiecesListPageState extends State<PiecesListPage> {
   final PieceService _pieceService = GetIt.instance.get<PieceService>();
-  final StyleService _styleService = GetIt.instance.get<StyleService>();
 
-  String? placementFilter;
+  PiecePlacement? placementFilter;
+  late Style styleFilter;
+  WearHistory? historySort;
 
   final Style allStylesOption = Style(id: "all", name: "All", color: 0);
-  late Style testStyleFilter;
 
   @override
   void initState() {
     super.initState();
-    testStyleFilter = allStylesOption;
+    styleFilter = allStylesOption;
   }
 
   @override
@@ -45,57 +46,22 @@ class _PiecesListPageState extends State<PiecesListPage> {
       body: ContentFrameList(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              LoadingStreamBuilder<List<Style>>(
-                  stream: _styleService.getAllStylesStream(),
-                  builder: (context, styleList) {
-                    final allStylesList = [allStylesOption, ...styleList];
-
-                    return DropdownButton<String>(
-                      hint: Text("Style"),
-                      value: testStyleFilter.id == allStylesOption.id
-                          ? null
-                          : testStyleFilter.id,
-                      items: allStylesList.map((style) {
-                        return DropdownMenuItem<String>(
-                          value: style.id,
-                          child: Row(
-                            children: [
-                              StyleDot(size: 15, color: style.color),
-                              SizedBox(width: 5),
-                              Text(style.name)
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          testStyleFilter = allStylesList.firstWhere(
-                              (style) => style.id == newValue,
-                              orElse: () => allStylesOption);
-                        });
-                      },
-                    );
-                  }),
-              DropdownFilter(
-                label: "Placement",
-                value: placementFilter,
-                data: PiecePlacement.values
-                    .map((placement) => placement.label)
-                    .toList(),
-                onChanged: (String? newFilter) {
-                  setState(() {
-                    placementFilter = newFilter;
-                  });
-                },
-              ),
+              _buildStyleFilter(),
+              SizedBox(width: 4),
+              _buildPlacementFilter(),
+              SizedBox(width: 12),
+              _buildWearHistorySort(),
             ],
           ),
+          SizedBox(height: 10),
           LoadingStreamBuilder<List<Piece>>(
             stream: _pieceService.getFilteredPiecesStream(
-                styleFilter:
-                    testStyleFilter == allStylesOption ? null : testStyleFilter,
-                placementFilter: placementFilter),
+              styleFilter: styleFilter == allStylesOption ? null : styleFilter,
+              placementFilter: placementFilter,
+              historySort: historySort,
+            ),
             builder: (context, piecesList) {
               return Expanded(
                 child: PiecesItemsList(pieces: piecesList),
@@ -104,9 +70,47 @@ class _PiecesListPageState extends State<PiecesListPage> {
           ),
         ],
       ),
-      floatingActionButton: CreationFloatingButton(page: PieceEditPage()),
+      floatingActionButton: const CreationFloatingButton(page: PieceEditPage()),
       bottomNavigationBar:
-          CustomBottomNavigationBar(currentPage: PageTypes.pieces),
+          const CustomBottomNavigationBar(currentPage: PageTypes.pieces),
+    );
+  }
+
+  Widget _buildStyleFilter() {
+    return StyleFilter(
+      selectedStyle: styleFilter,
+      allStylesOption: allStylesOption,
+      onStyleChanged: (newStyle) {
+        setState(() {
+          styleFilter = newStyle;
+        });
+      },
+    );
+  }
+
+  Widget _buildPlacementFilter() {
+    return PlacementFilter(
+      selectedPlacement: placementFilter,
+      onPlacementChanged: (PiecePlacement? newPlacement) {
+        setState(() {
+          placementFilter = newPlacement;
+        });
+      },
+    );
+  }
+
+  Widget _buildWearHistorySort() {
+    return WearHistorySort(
+      selectedHistorySort: historySort,
+      onChanged: (newValue) {
+        setState(() {
+          historySort = newValue == "Default"
+              ? null
+              : WearHistory.values.firstWhere(
+                  (sort) => sort.label == newValue,
+                );
+        });
+      },
     );
   }
 }

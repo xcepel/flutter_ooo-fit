@@ -1,6 +1,7 @@
 import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/piece_placement.dart';
 import 'package:ooo_fit/model/style.dart';
+import 'package:ooo_fit/model/wear_history.dart';
 import 'package:ooo_fit/service/database_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/service/util/helper_functions.dart';
@@ -71,17 +72,35 @@ class PieceService {
 
   Stream<List<Piece>> getFilteredPiecesStream({
     Style? styleFilter,
-    String? placementFilter,
+    PiecePlacement? placementFilter,
+    WearHistory? historySort,
   }) {
-    return _pieceRepository.observeDocuments().map((pieces) {
-      return pieces.where((piece) {
-        final matchesPlacement = placementFilter == null ||
-            piece.piecePlacement.label == placementFilter;
-        final matchesStyle = styleFilter == null ||
+    return getAllPiecesStream().map((List<Piece> pieces) {
+      final List<Piece> filteredPieces = pieces.where((piece) {
+        final bool matchesStyle = styleFilter == null ||
             piece.styleIds.any((id) => id == styleFilter.id);
+        final bool matchesPlacement =
+            placementFilter == null || piece.piecePlacement == placementFilter;
 
-        return matchesPlacement && matchesStyle;
+        return matchesStyle && matchesPlacement;
       }).toList();
+
+      if (historySort != null) {
+        _sortPiecesByHistory(filteredPieces, historySort);
+      }
+
+      return filteredPieces;
+    });
+  }
+
+  void _sortPiecesByHistory(List<Piece> pieces, WearHistory historyFilter) {
+    final comparisonFactor = historyFilter == WearHistory.mostRecently ? -1 : 1;
+
+    pieces.sort((a, b) {
+      if (a.lastWorn == null && b.lastWorn == null) return 0;
+      if (a.lastWorn == null) return -comparisonFactor; // null at bottom/top
+      if (b.lastWorn == null) return comparisonFactor; // null at top/bottom
+      return comparisonFactor * a.lastWorn!.compareTo(b.lastWorn!);
     });
   }
 
