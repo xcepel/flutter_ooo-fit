@@ -10,10 +10,23 @@ class PieceService {
   final DatabaseService<Piece> _pieceRepository;
   final StyleService _styleService;
 
-  const PieceService(
+  // TODO move to the filter service?
+  final BehaviorSubject<String?> _placementFilterSubject =
+      BehaviorSubject<String?>.seeded(null);
+
+  PieceService(
     this._pieceRepository,
     this._styleService,
   );
+
+  Stream<String?> get placementFilterStream => _placementFilterSubject.stream;
+
+  String? get currentPlacementFilter => _placementFilterSubject.value;
+
+  void updatePlacementFilter(String? newFilter) {
+    _placementFilterSubject.add(newFilter);
+    print("Placement: $newFilter, updated: $currentPlacementFilter");
+  }
 
   Future<String?> savePiece({
     required String name,
@@ -69,6 +82,21 @@ class PieceService {
     return _pieceRepository.observeDocuments();
   }
 
+  Stream<List<Piece>> getFilteredPiecesStream() {
+    return Rx.combineLatest2(
+      _placementFilterSubject.stream,
+      _pieceRepository.observeDocuments(),
+      (String? filter, List<Piece> pieces) {
+        if (filter == null) {
+          return pieces;
+        }
+        return pieces
+            .where((piece) => piece.piecePlacement.label == filter)
+            .toList();
+      },
+    );
+  }
+
   Stream<Piece?> getPieceByIdStream(String pieceId) {
     return _pieceRepository.observeDocument(pieceId);
   }
@@ -81,7 +109,6 @@ class PieceService {
     );
   }
 
-  // returns one piece by id and its (styleId -> style) dictionaries
   Stream<(Piece?, Map<String, Style>)> getPieceDetailByIdStream(
       String pieceId) {
     final Stream<Piece?> pieceStream = getPieceByIdStream(pieceId);

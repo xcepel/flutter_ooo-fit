@@ -25,9 +25,21 @@ class ThreePartFilterBar extends StatelessWidget {
             child: Wrap(
               spacing: _filterSpace,
               children: [
-                DropdownFilter(label: filter1Name),
-                DropdownFilter(label: filter2Name),
-                DropdownFilter(label: filter3Name),
+                DropdownFilter(
+                  label: filter1Name,
+                  data: [],
+                  onChanged: (String? value) {},
+                ), // TODO CHANGE
+                DropdownFilter(
+                  label: filter2Name,
+                  data: [],
+                  onChanged: (String? value) {},
+                ), // TODO CHANGE
+                DropdownFilter(
+                  label: filter3Name,
+                  data: [],
+                  onChanged: (String? value) {},
+                ), // TODO CHANGE
               ],
             ),
           ),
