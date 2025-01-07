@@ -15,7 +15,6 @@ class LoadingFutureBuilder<T> extends StatelessWidget {
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error!}'));
         }
-
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
         }

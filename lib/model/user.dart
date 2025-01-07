@@ -14,6 +14,7 @@ class User {
     required this.id,
     required this.name,
     this.profilePhotoPath,
+    // TODO CITY
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

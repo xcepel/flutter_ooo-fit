@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/widget/common/weather_info.dart';
+import 'package:ooo_fit/widget/weather/weather_info.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -26,7 +26,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         if (weather_info)
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
-            child: HomepageDailyInfo(),
+            child: WeatherInfo(),
           ),
         if (actionButton != null) actionButton!,
       ],

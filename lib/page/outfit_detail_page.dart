@@ -11,6 +11,7 @@ import 'package:ooo_fit/widget/common/edit_button.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
+import 'package:ooo_fit/widget/outfit_piece/label_button.dart';
 import 'package:ooo_fit/widget/outfit_piece/sized_picture.dart';
 import 'package:ooo_fit/widget/pieces/pieces_items_list.dart';
 import 'package:ooo_fit/widget/styles/style_data_row.dart';
@@ -54,6 +55,13 @@ class OutfitDetailPage extends StatelessWidget {
                 value: outfitData.$1!.lastWorn != null
                     ? DateTimeFormatter(outfitData.$1!.lastWorn!).format()
                     : "---",
+              ),
+              const SizedBox(height: 10),
+              LabelButton(
+                // TODO do something in backend
+                label: "Wear today",
+                backgroundColor: Colors.transparent,
+                textColor: Colors.grey,
               ),
               const SizedBox(height: 10),
               _addOutfitPicture(outfitData.$1!.imagePath),
