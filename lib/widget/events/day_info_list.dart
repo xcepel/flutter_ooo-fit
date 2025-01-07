@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/model/event.dart';
 import 'package:ooo_fit/widget/common/ghost_card.dart';
-import 'package:ooo_fit/widget/events/event_item.dart';
+import 'package:ooo_fit/widget/events/event_list_item.dart';
 
 class DayInfoList extends StatelessWidget {
   final List<Event> eventsInDay;
@@ -27,8 +27,8 @@ class DayInfoList extends StatelessWidget {
           spacing: 8.0,
           runSpacing: 8.0,
           children: [
-            ...eventsInDay
-                .map((event) => EventItem(event: event, itemWidth: itemWidth)),
+            ...eventsInDay.map(
+                (event) => EventListItem(event: event, itemWidth: itemWidth)),
             if (eventsInDay.length == 1) GhostCard(itemWidth: itemWidth),
           ],
         ),

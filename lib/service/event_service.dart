@@ -77,20 +77,23 @@ class EventService {
     return _eventRepository.observeDocument(eventId);
   }
 
-  // TODO sort by time
   Stream<Map<DateTime, List<Event>>> getGroupedEventsStream() {
     return _eventRepository.observeDocuments().map((List<Event> events) {
       final Map<DateTime, List<Event>> groupedEvents = {};
-
-      // group by date
       for (final Event event in events) {
-        final DateTime date = DateTime(event.eventDatetime.year,
-            event.eventDatetime.month, event.eventDatetime.day);
+        final DateTime date = DateTime(
+          event.eventDatetime.year,
+          event.eventDatetime.month,
+          event.eventDatetime.day,
+        );
 
-        groupedEvents.containsKey(date)
-            ? groupedEvents[date]!.add(event)
-            : groupedEvents[date] = [event];
+        groupedEvents.putIfAbsent(date, () => []).add(event);
       }
+
+      groupedEvents.forEach((DateTime date, List<Event> eventList) {
+        eventList.sort((a, b) => a.eventDatetime.compareTo(b.eventDatetime));
+      });
+
       return groupedEvents;
     });
   }

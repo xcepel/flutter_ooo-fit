@@ -10,13 +10,13 @@ import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/outfits/outfit_list_item.dart';
 import 'package:ooo_fit/widget/styles/style_data_row.dart';
 
-class EventItem extends StatelessWidget {
+class EventListItem extends StatelessWidget {
   final EventService _eventService = GetIt.instance.get<EventService>();
 
   final Event event;
   final double itemWidth;
 
-  EventItem({super.key, required this.event, required this.itemWidth});
+  EventListItem({super.key, required this.event, required this.itemWidth});
 
   @override
   Widget build(BuildContext context) {

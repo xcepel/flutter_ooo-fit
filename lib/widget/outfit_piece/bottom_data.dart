@@ -49,6 +49,7 @@ class BottomData extends StatelessWidget {
     if (placement != null) {
       return Image.asset(
         placement!.picture,
+        color: Colors.black,
         width: 30,
         height: 30,
         fit: BoxFit.contain,

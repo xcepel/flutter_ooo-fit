@@ -8,7 +8,7 @@ import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
-import 'package:ooo_fit/widget/outfit_piece/bottom_data.dart';
+import 'package:ooo_fit/widget/outfit_piece/list_item_card.dart';
 
 class OutfitListItem extends StatelessWidget {
   final Outfit outfit;
@@ -28,30 +28,19 @@ class OutfitListItem extends StatelessWidget {
     return LoadingStreamBuilder<Map<String, Style>>(
       stream: _styleService.getStylesByIdsStream(outfit.styleIds.toSet()),
       builder: (context, Map<String, Style> styles) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                AspectRatio(
-                  aspectRatio: 2 / 3,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: outfit.imagePath == null
-                        ? _buildPiecesMatrix()
-                        : _buildOutfitImage(),
-                  ),
-                ),
-                BottomData(
-                  styles: styles.values.toList(),
-                  temperature: outfit.temperature,
-                ),
-              ],
+        return ListItemCard(
+          name: outfit.name,
+          styles: styles.values.toList(),
+          temperature: outfit.temperature,
+          image: AspectRatio(
+            aspectRatio: 2 / 3,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: outfit.imagePath == null
+                  ? _buildPiecesMatrix()
+                  : _buildOutfitImage(),
             ),
-            const SizedBox(height: 5),
-            Text(outfit.name ?? ""),
-            const SizedBox(height: 5),
-          ],
+          ),
         );
       },
     );

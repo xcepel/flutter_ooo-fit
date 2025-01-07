@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
-import 'package:ooo_fit/widget/outfit_piece/bottom_data.dart';
+import 'package:ooo_fit/widget/outfit_piece/list_item_card.dart';
 
 class PieceListItem extends StatelessWidget {
   final Piece piece;
@@ -15,28 +15,20 @@ class PieceListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Stack(
-          children: [
-            AspectRatio(
-              aspectRatio: 1 / 1,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: Image.network(
-                  piece.imagePath ?? '',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            BottomData(styles: pieceStyles, placement: piece.piecePlacement),
-          ],
+    return ListItemCard(
+      name: piece.name,
+      styles: pieceStyles,
+      piecePlacement: piece.piecePlacement,
+      image: AspectRatio(
+        aspectRatio: 1 / 1,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(4),
+          child: Image.network(
+            piece.imagePath ?? '',
+            fit: BoxFit.cover,
+          ),
         ),
-        const SizedBox(height: 5),
-        Text(piece.name),
-        const SizedBox(height: 5),
-      ],
+      ),
     );
   }
 }
