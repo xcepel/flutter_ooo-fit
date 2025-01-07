@@ -22,7 +22,7 @@ class ImagePicker extends StatelessWidget {
       initialValue: [value],
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) {
-        print(value);
+        // print(value);
         if (isRequired) {
           if (value == null || value.isEmpty || value[0] == null) {
             return 'Photo is required, pick one';

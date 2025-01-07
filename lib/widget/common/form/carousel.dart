@@ -1,27 +1,26 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/widget/outfits/picture_item.dart';
 
 class CarouselItem {
   final String id;
-  final String imagePath;
+  final Widget child;
 
   CarouselItem({
     required this.id,
-    required this.imagePath,
+    required this.child,
   });
 }
 
 class Carousel extends StatefulWidget {
-  final List<CarouselItem> itemList;
+  final List<CarouselItem> items;
   final void Function(String) onChanged;
-  final String? initialSelectedId;
+  final String? selectedId;
 
   const Carousel({
     super.key,
-    required this.itemList,
+    required this.items,
     required this.onChanged,
-    this.initialSelectedId,
+    this.selectedId,
   });
 
   @override
@@ -35,9 +34,8 @@ class _CarouselState extends State<Carousel> {
   void initState() {
     super.initState();
 
-    _currentIndex = widget.initialSelectedId != null
-        ? widget.itemList
-            .indexWhere((value) => value.id == widget.initialSelectedId)
+    _currentIndex = widget.selectedId != null
+        ? widget.items.indexWhere((value) => value.id == widget.selectedId)
         : 0;
 
     if (_currentIndex == -1) {
@@ -47,12 +45,12 @@ class _CarouselState extends State<Carousel> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.itemList.isEmpty) {
+    if (widget.items.isEmpty) {
       return Center(child: Text("No items available"));
     }
 
     return CarouselSlider.builder(
-      itemCount: widget.itemList.length,
+      itemCount: widget.items.length,
       itemBuilder: (context, index, realIndex) {
         // Determine if the current item is the focused one
         final bool isFocused = index == _currentIndex;
@@ -64,10 +62,7 @@ class _CarouselState extends State<Carousel> {
             color: isFocused ? Colors.deepPurpleAccent : null,
             borderRadius: BorderRadius.circular(4.0),
           ),
-          child: PictureItem(
-            image: widget.itemList[index].imagePath,
-            // TODO Non-active gray coloring for unfocused items?
-          ),
+          child: widget.items[index].child,
         );
       },
       options: CarouselOptions(
@@ -82,7 +77,7 @@ class _CarouselState extends State<Carousel> {
           setState(() {
             _currentIndex = index;
           });
-          widget.onChanged(widget.itemList[index].id);
+          widget.onChanged(widget.items[index].id);
         },
         scrollPhysics: PageScrollPhysics(),
       ),

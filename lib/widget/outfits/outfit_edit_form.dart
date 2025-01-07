@@ -6,6 +6,7 @@ import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/piece_placement.dart';
 import 'package:ooo_fit/page/outfits_list_page.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
+import 'package:ooo_fit/utils/functions.dart';
 import 'package:ooo_fit/widget/common/form/delete_button.dart';
 import 'package:ooo_fit/widget/common/form/image_picker.dart';
 import 'package:ooo_fit/widget/common/form/name_form_field.dart';
@@ -60,16 +61,16 @@ class OutfitEditForm extends StatelessWidget {
     String? error = await _outfitService.deleteOutfit(outfit: outfit!);
 
     if (context.mounted) {
-      if (error == null) {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => OutfitsListPage(),
-        ));
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(error ?? "Outfit was deleted successfully"),
-        behavior: SnackBarBehavior.fixed,
-      ));
+      handleActionResult(
+        context: context,
+        errorMessage: error,
+        successMessage: "Outfit was deleted successfully",
+        onSuccessNavigation: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => OutfitsListPage(),
+          ));
+        },
+      );
     }
   }
 
@@ -80,7 +81,7 @@ class OutfitEditForm extends StatelessWidget {
       var imagePath;
       final imageList = formData['image'];
       if (imageList[0] != null) {
-        print(imageList.toString());
+        // print(imageList.toString());
         imagePath = (imageList.first as XFile).path;
       }
 
@@ -94,6 +95,8 @@ class OutfitEditForm extends StatelessWidget {
               .addAll(selectedPieces.where((id) => id.isNotEmpty).toList());
         }
       }
+      print(allSelectedPieces);
+      // print(formData['styleIds']);
 
       String? error;
       if (outfit == null) {
@@ -108,7 +111,7 @@ class OutfitEditForm extends StatelessWidget {
         error = await _outfitService.updateOutfit(
           outfit: outfit!,
           name: formData['name'],
-          pieceIds: formData['pieceIds'],
+          pieceIds: allSelectedPieces,
           styleIds: formData['styleIds'],
           temperature: formData['temperature'],
           imagePath: imagePath,
@@ -116,16 +119,13 @@ class OutfitEditForm extends StatelessWidget {
       }
 
       if (context.mounted) {
-        if (error == null) {
-          Navigator.pop(context);
-        }
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(error ?? "Outfit was saved successfully"),
-          behavior: SnackBarBehavior.fixed,
-        ));
+        handleActionResult(
+          context: context,
+          errorMessage: error,
+          successMessage: "Outfit was saved successfully",
+          onSuccessNavigation: () => Navigator.pop(context),
+        );
       }
-    } else {
-      print("Validation failed");
     }
   }
 }

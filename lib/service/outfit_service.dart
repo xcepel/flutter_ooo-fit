@@ -46,9 +46,15 @@ class OutfitService {
     required TemperatureType? temperature,
     required String? imagePath,
   }) async {
-    final newPiece = outfit.copyWith(name: name);
+    final newOutfit = outfit.copyWith(
+      name: name,
+      pieceIds: pieceIds,
+      styleIds: styleIds,
+      temperature: temperature,
+      imagePath: imagePath,
+    );
     //TODO: implement and use update
-    await _outfitRepository.setOrAdd(outfit.id, newPiece);
+    await _outfitRepository.setOrAdd(outfit.id, newOutfit);
     return null;
   }
 

@@ -4,6 +4,7 @@ import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/page/pieces_list_page.dart';
+import 'package:ooo_fit/utils/functions.dart';
 import 'package:ooo_fit/widget/common/form/save_button.dart';
 import 'package:ooo_fit/widget/common/form/delete_button.dart';
 import 'package:ooo_fit/widget/common/form/image_picker.dart';
@@ -55,67 +56,58 @@ class PieceEditForm extends StatelessWidget {
     String? error = await _pieceService.deletePiece(piece: piece!);
 
     if (context.mounted) {
-      if (error == null) {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => PiecesListPage(),
-        ));
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(error ?? "Piece was deleted successfully"),
-        behavior: SnackBarBehavior.fixed,
-      ));
+      handleActionResult(
+        context: context,
+        errorMessage: error,
+        successMessage: "Piece was deleted successfully",
+        onSuccessNavigation: () {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => PiecesListPage(),
+          ));
+        },
+      );
     }
   }
 
   Future<void> _handleSave(BuildContext context) async {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
-      print('here');
       final Map<String, dynamic> formData = _formKey.currentState!.value;
 
       final imageList = formData['image'];
-      if (imageList != null && imageList.isNotEmpty) {
-        //TODO: image picker contains String path when updating
-        String imagePath;
-        if (imageList.first.runtimeType == String) {
-          imagePath = imageList.first;
-        } else {
-          imagePath = (imageList.first as XFile).path;
-        }
-
-        String? error;
-        if (piece == null) {
-          error = await _pieceService.savePiece(
-            name: formData['name'],
-            piecePlacement: formData['piecePlacement'],
-            styleIds: formData['styleIds'],
-            imagePath: imagePath,
-          );
-        } else {
-          error = await _pieceService.updatePiece(
-            piece: piece!,
-            name: formData['name'],
-            piecePlacement: formData['piecePlacement'],
-            styleIds: formData['styleIds'],
-            imagePath: imagePath,
-          );
-        }
-
-        if (context.mounted) {
-          if (error == null) {
-            Navigator.pop(context);
-          }
-
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(error ?? "Piece was saved successfully"),
-            behavior: SnackBarBehavior.fixed,
-          ));
-        }
+      //TODO: image picker contains String path when updating
+      String imagePath;
+      if (imageList.first.runtimeType == String) {
+        imagePath = imageList.first;
       } else {
-        print("No photo selected");
+        imagePath = (imageList.first as XFile).path;
       }
-    } else {
-      print("Validation failed");
+
+      String? error;
+      if (piece == null) {
+        error = await _pieceService.savePiece(
+          name: formData['name'],
+          piecePlacement: formData['piecePlacement'],
+          styleIds: formData['styleIds'],
+          imagePath: imagePath,
+        );
+      } else {
+        error = await _pieceService.updatePiece(
+          piece: piece!,
+          name: formData['name'],
+          piecePlacement: formData['piecePlacement'],
+          styleIds: formData['styleIds'],
+          imagePath: imagePath,
+        );
+      }
+
+      if (context.mounted) {
+        handleActionResult(
+          context: context,
+          errorMessage: error,
+          successMessage: "Piece was saved successfully",
+          onSuccessNavigation: () => Navigator.pop(context),
+        );
+      }
     }
   }
 }
