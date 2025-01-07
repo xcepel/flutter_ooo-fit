@@ -65,7 +65,7 @@ class _OutfitsListPageState extends State<OutfitsListPage> {
                 temperatureFilter: temperatureFilter,
                 historySort: historySort),
             builder: (context, data) {
-              return Expanded(
+              return Flexible(
                 child: OutfitItemsList(
                   outfits: data.$1,
                   styles: data.$2,

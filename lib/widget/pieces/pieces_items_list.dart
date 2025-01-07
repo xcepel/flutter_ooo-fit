@@ -4,6 +4,7 @@ import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/page/piece_detail_page.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/widget/common/ghost_card.dart';
+import 'package:ooo_fit/widget/common/page_navigation_tile.dart';
 import 'package:ooo_fit/widget/pieces/piece_list_item.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 
@@ -24,17 +25,8 @@ class PiecesItemsList extends StatelessWidget {
           return LoadingStreamBuilder(
             stream: _styleService.getPiecesStylesByIdsStream(piece.styleIds),
             builder: (context, stylesList) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PieceDetailPage(
-                        pieceId: piece.id,
-                      ),
-                    ),
-                  );
-                },
+              return PageNavigationTile(
+                dstPage: PieceDetailPage(pieceId: piece.id),
                 child: SizedBox(
                   width: itemWidth,
                   child: PieceListItem(

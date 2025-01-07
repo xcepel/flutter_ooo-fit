@@ -67,7 +67,7 @@ class PieceDetailPage extends StatelessWidget {
                   return SizedPicture(
                     sizeX: size,
                     sizeY: size,
-                    image: pieceData.$1!.imagePath!,
+                    image: pieceData.$1!.imagePath,
                   );
                 },
               ),

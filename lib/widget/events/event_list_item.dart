@@ -7,6 +7,7 @@ import 'package:ooo_fit/page/event_detail_page.dart';
 import 'package:ooo_fit/service/event_service.dart';
 import 'package:ooo_fit/utils/date_time_formater.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
+import 'package:ooo_fit/widget/common/page_navigation_tile.dart';
 import 'package:ooo_fit/widget/outfits/outfit_list_item.dart';
 import 'package:ooo_fit/widget/styles/style_data_row.dart';
 
@@ -20,15 +21,8 @@ class EventListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => EventDetailPage(eventId: event.id),
-          ),
-        );
-      },
+    return PageNavigationTile(
+      dstPage: EventDetailPage(eventId: event.id),
       child: SizedBox(
         width: itemWidth,
         child: LoadingStreamBuilder<(Event?, Outfit?, Map<String, Style>)>(

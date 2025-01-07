@@ -63,7 +63,7 @@ class _PiecesListPageState extends State<PiecesListPage> {
               historySort: historySort,
             ),
             builder: (context, piecesList) {
-              return Expanded(
+              return Flexible(
                 child: PiecesItemsList(pieces: piecesList),
               );
             },
