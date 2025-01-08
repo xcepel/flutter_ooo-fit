@@ -32,7 +32,10 @@ class PieceEditForm extends StatelessWidget {
       key: _formKey,
       child: Column(
         children: [
-          NameFormField(value: piece?.name),
+          NameFormField(
+            value: piece?.name,
+            isRequired: true,
+          ),
           SizedBox(height: 10),
           StylePicker(selectedStyles: piece?.styleIds),
           SizedBox(height: 10),

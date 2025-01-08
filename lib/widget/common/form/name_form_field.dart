@@ -6,9 +6,11 @@ class NameFormField extends StatelessWidget {
   const NameFormField({
     super.key,
     this.value,
+    required this.isRequired,
   });
 
   final String? value;
+  final bool isRequired;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,9 @@ class NameFormField extends StatelessWidget {
       decoration: const InputDecoration(labelText: 'Name'),
       initialValue: value,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: FormBuilderValidators.required(errorText: 'Name is required'),
+      validator: isRequired
+          ? FormBuilderValidators.required(errorText: 'Name is required')
+          : null,
     );
   }
 }

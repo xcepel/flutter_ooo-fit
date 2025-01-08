@@ -15,11 +15,10 @@ class Event {
   @TimestampConverter()
   final DateTime eventDatetime;
 
-  final String place;
+  final String? place;
 
-  final String name;
+  final String? name;
 
-  // outfit can be added later, after event creation?
   final String? outfitId;
 
   final List<String> styleIds;

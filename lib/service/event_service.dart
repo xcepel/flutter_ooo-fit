@@ -22,9 +22,9 @@ class EventService {
   );
 
   Future<String?> saveEvent({
-    required String name,
+    required String? name,
     required DateTime eventDatetime,
-    required String place,
+    required String? place,
     required String? outfitId,
     required List<String> styleIds,
     required TemperatureType temperature,
@@ -45,9 +45,9 @@ class EventService {
 
   Future<String?> updateEvent({
     required Event event,
-    required String name,
+    required String? name,
     required DateTime eventDatetime,
-    required String place,
+    required String? place,
     required String? outfitId,
     required List<String> styleIds,
     required TemperatureType? temperature,

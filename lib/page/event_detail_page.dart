@@ -60,7 +60,7 @@ class EventDetailPage extends StatelessWidget {
               _buildEventDetailRow(
                 eventData.$1?.place != null,
                 "Place",
-                eventData.$1!.place,
+                eventData.$1!.place!,
               ),
               SizedBox(height: 10),
               eventData.$2 != null

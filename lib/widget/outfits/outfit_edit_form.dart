@@ -33,7 +33,10 @@ class OutfitEditForm extends StatelessWidget {
       key: _formKey,
       child: Column(
         children: [
-          NameFormField(value: outfit?.name),
+          NameFormField(
+            value: outfit?.name,
+            isRequired: true,
+          ),
           SizedBox(height: 10),
           StylePicker(selectedStyles: outfit?.styleIds),
           SizedBox(height: 10),

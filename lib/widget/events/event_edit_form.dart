@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/event.dart';
 import 'package:ooo_fit/model/outfit.dart';
@@ -45,11 +46,13 @@ class _EventEditFormState extends State<EventEditForm> {
         children: [
           NameFormField(
             value: widget.event?.name,
+            isRequired: false,
           ),
           FormBuilderDateTimePicker(
-            name: 'eventDatetime',
+            name: 'datetime',
             decoration: InputDecoration(labelText: 'Date and time'),
             initialValue: widget.event?.eventDatetime ?? DateTime.now(),
+            validator: FormBuilderValidators.required(),
           ),
           SizedBox(height: 10),
           FormBuilderTextField(
@@ -123,6 +126,7 @@ class _EventEditFormState extends State<EventEditForm> {
   Future<void> _handleSave(BuildContext context) async {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       final Map<String, dynamic> formData = _formKey.currentState!.value;
+      print(formData['place']);
 
       String? error;
       if (widget.event == null) {
@@ -132,7 +136,7 @@ class _EventEditFormState extends State<EventEditForm> {
           place: formData['place'],
           temperature: formData['temperature'],
           outfitId: _hideOutfitCarousel ? null : formData['outfitId'][0],
-          eventDatetime: formData['eventDatetime'],
+          eventDatetime: formData['datetime'],
         );
       } else {
         error = await widget._eventService.updateEvent(
@@ -142,7 +146,7 @@ class _EventEditFormState extends State<EventEditForm> {
           place: formData['place'],
           temperature: formData['temperature'],
           outfitId: _hideOutfitCarousel ? null : formData['outfitId'][0],
-          eventDatetime: formData['eventDatetime'],
+          eventDatetime: formData['datetime'],
         );
       }
 

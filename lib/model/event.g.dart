@@ -10,10 +10,10 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
       id: json['id'] as String,
       createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['createdAt'], const TimestampConverter().fromJson),
-      name: json['name'] as String,
+      name: json['name'] as String?,
       eventDatetime: const TimestampConverter()
           .fromJson(json['eventDatetime'] as Timestamp),
-      place: json['place'] as String,
+      place: json['place'] as String?,
       outfitId: json['outfitId'] as String?,
       styleIds:
           (json['styleIds'] as List<dynamic>).map((e) => e as String).toList(),
@@ -29,8 +29,8 @@ Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
         'createdAt': value,
       'eventDatetime':
           const TimestampConverter().toJson(instance.eventDatetime),
-      'place': instance.place,
-      'name': instance.name,
+      if (instance.place case final value?) 'place': value,
+      if (instance.name case final value?) 'name': value,
       if (instance.outfitId case final value?) 'outfitId': value,
       'styleIds': instance.styleIds,
       if (_$TemperatureTypeEnumMap[instance.temperature] case final value?)

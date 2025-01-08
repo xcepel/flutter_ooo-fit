@@ -32,7 +32,7 @@ class EventListItem extends StatelessWidget {
               child: ListTile(
                 title: Row(
                   children: [
-                    Expanded(child: Text(event.name)),
+                    if (event.name != null) Expanded(child: Text(event.name!)),
                     if (event.temperature?.icon != null)
                       event.temperature!.icon,
                   ],
@@ -44,7 +44,7 @@ class EventListItem extends StatelessWidget {
                     const SizedBox(height: 2.0),
                     Text(DateTimeFormatter(event.eventDatetime).formatTime()),
                     const SizedBox(height: 2.0),
-                    Text(event.place),
+                    if (event.place != null) Text(event.place!),
                     if (eventData.$2 != null)
                       OutfitListItem(outfit: eventData.$2!),
                   ],
