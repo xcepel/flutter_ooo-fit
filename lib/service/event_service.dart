@@ -7,6 +7,7 @@ import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/service/database_service.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
+import 'package:ooo_fit/service/util/date_normalize.dart';
 import 'package:rxdart/rxdart.dart';
 
 class EventService {
@@ -78,7 +79,7 @@ class EventService {
   }
 
   Stream<Map<DateTime, List<Event>>> getGroupedEventsStream() {
-    return _eventRepository.observeDocuments().map((List<Event> events) {
+    return getAllEventsStream().map((List<Event> events) {
       final Map<DateTime, List<Event>> groupedEvents = {};
       for (final Event event in events) {
         final DateTime date = DateTime(
@@ -95,6 +96,21 @@ class EventService {
       });
 
       return groupedEvents;
+    });
+  }
+
+  Stream<List<Event>> getEventsByDay(DateTime day) {
+    final DateTime normalizedDay = DateNormalize(day).normalize();
+
+    return getAllEventsStream().map((List<Event> events) {
+      return events.where((Event event) {
+        final DateTime eventDay = DateTime(
+          event.eventDatetime.year,
+          event.eventDatetime.month,
+          event.eventDatetime.day,
+        );
+        return eventDay == normalizedDay;
+      }).toList();
     });
   }
 

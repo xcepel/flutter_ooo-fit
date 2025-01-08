@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/event.dart';
 import 'package:ooo_fit/service/event_service.dart';
+import 'package:ooo_fit/service/util/date_normalize.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -39,18 +40,14 @@ class EventCalendar extends StatelessWidget {
           onDaySelected: (selectedDay, focusedDay) {
             onDaySelected(
               selectedDay,
-              eventData[_normalizeDate(selectedDay)] ?? [],
+              eventData[DateNormalize(selectedDay).normalize()] ?? [],
             );
           },
           onFormatChanged: onFormatChanged,
           onPageChanged: onPageChanged,
-          eventLoader: (day) => eventData[_normalizeDate(day)] ?? [],
+          eventLoader: (day) => eventData[DateNormalize(day).normalize()] ?? [],
         );
       },
     );
-  }
-
-  DateTime _normalizeDate(DateTime date) {
-    return DateTime(date.year, date.month, date.day);
   }
 }

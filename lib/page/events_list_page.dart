@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/model/event.dart';
 import 'package:ooo_fit/page/event_edit_page.dart';
 import 'package:ooo_fit/utils/page_types.dart';
+import 'package:ooo_fit/widget/common/creation_floating_button.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
-import 'package:ooo_fit/widget/common/creation_floating_button.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/events/day_info_list.dart';
 import 'package:ooo_fit/widget/events/event_calendar.dart';
@@ -20,8 +19,7 @@ class EventsListPage extends StatefulWidget {
 class _EventsListPageState extends State<EventsListPage> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
-  List<Event> _selectedEvents = [];
+  DateTime _selectedDay = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +31,7 @@ class _EventsListPageState extends State<EventsListPage> {
           children: [
             _buildEventCalendar(),
             PageDivider(),
-            DayInfoList(eventsInDay: _selectedEvents),
+            DayInfoList(date: _selectedDay),
           ],
         ),
       ),
@@ -51,7 +49,6 @@ class _EventsListPageState extends State<EventsListPage> {
       onDaySelected: (selectedDay, events) {
         setState(() {
           _selectedDay = selectedDay;
-          _selectedEvents = events;
         });
       },
       onFormatChanged: (format) {
