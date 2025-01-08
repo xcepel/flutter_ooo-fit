@@ -15,7 +15,7 @@ class TemperatureFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownFilter<String>(
-      hint: "Temperature",
+      hint: "Temp",
       value: selectedTemperature?.label,
       items: [
         DropdownMenuItem<String>(

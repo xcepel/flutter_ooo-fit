@@ -61,7 +61,7 @@ class _CarouselState extends State<Carousel> {
           curve: Curves.easeOut,
           margin: EdgeInsets.symmetric(horizontal: isFocused ? 4.0 : 0),
           decoration: BoxDecoration(
-            color: isFocused ? Colors.deepPurpleAccent : null,
+            color: isFocused ? Colors.deepPurpleAccent[100] : null,
             borderRadius: BorderRadius.circular(4.0),
           ),
           child: widget.items[index].child,
@@ -72,7 +72,7 @@ class _CarouselState extends State<Carousel> {
         autoPlay: false,
         aspectRatio: widget.forEventOutfit ? 1.39 / 1 : 3 / 1,
         autoPlayCurve: Curves.fastOutSlowIn,
-        enableInfiniteScroll: true,
+        enableInfiniteScroll: false,
         viewportFraction: widget.forEventOutfit ? 0.4 : 0.3,
         initialPage: _currentIndex,
         onPageChanged: (int index, CarouselPageChangedReason reason) {

@@ -7,14 +7,14 @@ import 'package:ooo_fit/model/wear_history.dart';
 import 'package:ooo_fit/page/piece_edit_page.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/utils/page_types.dart';
+import 'package:ooo_fit/widget/common/content_frame_list.dart';
+import 'package:ooo_fit/widget/common/creation_floating_button.dart';
+import 'package:ooo_fit/widget/common/custom_app_bar.dart';
+import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
+import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/outfit_piece/style_filter.dart';
 import 'package:ooo_fit/widget/outfit_piece/wear_history_sort.dart';
 import 'package:ooo_fit/widget/pieces/pieces_items_list.dart';
-import 'package:ooo_fit/widget/common/content_frame_list.dart';
-import 'package:ooo_fit/widget/common/custom_app_bar.dart';
-import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
-import 'package:ooo_fit/widget/common/creation_floating_button.dart';
-import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/pieces/placement_filter.dart';
 
 class PiecesListPage extends StatefulWidget {
@@ -42,7 +42,7 @@ class _PiecesListPageState extends State<PiecesListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Pieces list", weather_info: true),
+      appBar: const CustomAppBar(title: "My pieces", weather_info: true),
       body: ContentFrameList(
         children: [
           Row(

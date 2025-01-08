@@ -49,7 +49,7 @@ class OutfitBuilder extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    placement.name,
+                    placement.label,
                     style: const TextStyle(
                       fontSize: 16.0,
                       color: Colors.black,

@@ -25,7 +25,7 @@ class TemperatureTypePicker extends StatelessWidget {
         .map((TemperatureType tempType) => FormBuilderChipOption(
               value: tempType,
               avatar: tempType.icon,
-              child: Text(tempType.name),
+              child: Text(tempType.label),
             ))
         .toList();
   }

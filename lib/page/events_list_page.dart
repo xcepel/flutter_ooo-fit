@@ -24,7 +24,7 @@ class _EventsListPageState extends State<EventsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Events list', weather_info: true),
+      appBar: CustomAppBar(title: 'Calendar', weather_info: true),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(

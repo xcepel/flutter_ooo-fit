@@ -124,17 +124,26 @@ class _CarouselFormFieldState extends State<CarouselFormField> {
   }
 
   Widget _buildHeader(FormFieldState<List<String>?> field) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
-      width: double.infinity,
-      color: Colors.deepPurpleAccent[100],
-      child: Row(
-        children: [
-          widget.leading != null ? widget.leading! : SizedBox(),
-          const Spacer(),
-          if (widget.multipleSelection) _buildAddRemoveButtons(field)
-        ],
-      ),
+    return Column(
+      children: [
+        Container(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+            width: double.infinity,
+            color: Color(0xFFE3DAFC),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    widget.leading != null ? widget.leading! : SizedBox(),
+                    const Spacer(),
+                    if (widget.multipleSelection) _buildAddRemoveButtons(field)
+                  ],
+                ),
+              ],
+            )),
+        SizedBox(height: 6),
+      ],
     );
   }
 

@@ -7,7 +7,7 @@ class PageDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 5.0),
-      child: Divider(color: Colors.deepPurple),
+      child: Divider(color: Colors.deepPurple[100]),
     );
   }
 }

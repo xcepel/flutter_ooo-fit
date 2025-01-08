@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ooo_fit/page/pieces_list_page.dart';
 import 'package:ooo_fit/page/events_list_page.dart';
 import 'package:ooo_fit/page/outfits_list_page.dart';
+import 'package:ooo_fit/page/pieces_list_page.dart';
 import 'package:ooo_fit/page/styles_list_page.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -38,31 +38,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
         opacity: 0.3,
       ),
       items: [
-        BottomBarItem(
-          icon: const Icon(Icons.accessibility_rounded),
-          title: const Text("Outfits"),
-          backgroundColor: currentPage == PageTypes.outfits
-              ? Colors.deepPurple
-              : Colors.grey,
-        ),
-        BottomBarItem(
-          icon: const Icon(Icons.checkroom_rounded),
-          title: const Text("Pieces"),
-          backgroundColor:
-              currentPage == PageTypes.pieces ? Colors.deepPurple : Colors.grey,
-        ),
-        BottomBarItem(
-          icon: const Icon(Icons.calendar_month_rounded),
-          title: const Text("Events"),
-          backgroundColor:
-              currentPage == PageTypes.events ? Colors.deepPurple : Colors.grey,
-        ),
-        BottomBarItem(
-          icon: const Icon(Icons.auto_awesome_rounded),
-          title: const Text("Styles"),
-          backgroundColor:
-              currentPage == PageTypes.styles ? Colors.deepPurple : Colors.grey,
-        ),
+        barItem(Icons.accessibility_rounded, "My outfits", PageTypes.outfits),
+        barItem(Icons.checkroom_rounded, "My pieces", PageTypes.pieces),
+        barItem(Icons.calendar_month_rounded, "Calendar", PageTypes.events),
+        barItem(Icons.auto_awesome_rounded, "My styles", PageTypes.styles),
       ],
       fabLocation: StylishBarFabLocation.center,
       hasNotch: true,
@@ -79,6 +58,15 @@ class CustomBottomNavigationBar extends StatelessWidget {
       context,
       MaterialPageRoute(builder: (BuildContext context) => page),
       (route) => false,
+    );
+  }
+
+  BottomBarItem barItem(IconData icon, String text, PageTypes page) {
+    return BottomBarItem(
+      icon: Icon(icon),
+      title: Text(text),
+      backgroundColor:
+          currentPage == page ? Colors.deepPurpleAccent : Colors.grey,
     );
   }
 }

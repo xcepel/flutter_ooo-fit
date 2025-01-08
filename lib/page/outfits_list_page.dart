@@ -9,9 +9,9 @@ import 'package:ooo_fit/page/outfit_edit_page.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/content_frame_list.dart';
+import 'package:ooo_fit/widget/common/creation_floating_button.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
-import 'package:ooo_fit/widget/common/creation_floating_button.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/outfit_piece/style_filter.dart';
 import 'package:ooo_fit/widget/outfit_piece/wear_history_sort.dart';
@@ -43,7 +43,7 @@ class _OutfitsListPageState extends State<OutfitsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Outfit list", weather_info: true),
+      appBar: CustomAppBar(title: "My outfits", weather_info: true),
       body: ContentFrameList(
         children: [
           Row(
