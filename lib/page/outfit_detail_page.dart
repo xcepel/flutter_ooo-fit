@@ -53,7 +53,7 @@ class OutfitDetailPage extends StatelessWidget {
               DescriptionLabel(
                 label: "Last worn",
                 value: outfitData.$1!.lastWorn != null
-                    ? DateTimeFormatter(outfitData.$1!.lastWorn!).format()
+                    ? DateTimeFormatter(outfitData.$1!.lastWorn!).formatDate()
                     : "---",
               ),
               const SizedBox(height: 10),

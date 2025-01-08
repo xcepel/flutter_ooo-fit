@@ -5,9 +5,11 @@ class DateTimeFormatter {
 
   const DateTimeFormatter(this.date);
 
-  String format() {
-    final String formattedDate =
-        DateFormat('EEEE, dd. MMMM yyyy, HH:mm').format(date);
-    return formattedDate;
+  String formatDate() {
+    return DateFormat('EEEE, dd. MMMM yyyy, HH:mm').format(date);
+  }
+
+  String formatTime() {
+    return DateFormat('HH:mm').format(date);
   }
 }

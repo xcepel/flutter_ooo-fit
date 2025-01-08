@@ -57,7 +57,7 @@ class PieceDetailPage extends StatelessWidget {
               DescriptionLabel(
                 label: "Last worn",
                 value: pieceData.$1!.lastWorn != null
-                    ? DateTimeFormatter(pieceData.$1!.lastWorn!).format()
+                    ? DateTimeFormatter(pieceData.$1!.lastWorn!).formatDate()
                     : "---",
               ),
               SizedBox(height: 10),

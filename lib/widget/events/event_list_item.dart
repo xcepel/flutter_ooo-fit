@@ -42,9 +42,9 @@ class EventListItem extends StatelessWidget {
                   children: [
                     StyleDataRow(items: eventData.$3.values.toList()),
                     const SizedBox(height: 2.0),
-                    Text(DateTimeFormatter(event.eventDatetime).format()),
+                    Text(DateTimeFormatter(event.eventDatetime).formatTime()),
                     const SizedBox(height: 2.0),
-                    Text("Place: ${event.place}"),
+                    Text(event.place),
                     if (eventData.$2 != null)
                       OutfitListItem(outfit: eventData.$2!),
                   ],

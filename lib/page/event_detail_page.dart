@@ -54,7 +54,7 @@ class EventDetailPage extends StatelessWidget {
               _buildEventDetailRow(
                 eventData.$1?.eventDatetime != null,
                 "Date",
-                DateTimeFormatter(eventData.$1!.eventDatetime).format(),
+                DateTimeFormatter(eventData.$1!.eventDatetime).formatDate(),
               ),
               SizedBox(height: 10),
               _buildEventDetailRow(
