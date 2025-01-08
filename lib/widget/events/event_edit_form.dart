@@ -97,6 +97,7 @@ class _EventEditFormState extends State<EventEditForm> {
             multipleSelection: false,
             name: 'outfitId',
             leading: Text('Outfit'),
+            forEventOutfit: true,
           );
         });
   }

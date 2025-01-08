@@ -8,6 +8,7 @@ class CarouselFormField extends StatefulWidget {
   final List<String>? selectedIds;
   final bool multipleSelection;
   final String name;
+  final bool forEventOutfit;
 
   const CarouselFormField({
     super.key,
@@ -16,6 +17,7 @@ class CarouselFormField extends StatefulWidget {
     this.selectedIds,
     required this.multipleSelection,
     required this.name,
+    this.forEventOutfit = false,
   });
 
   @override
@@ -99,6 +101,7 @@ class _CarouselFormFieldState extends State<CarouselFormField> {
         items: widget.items,
         onChanged: (String value) => _handleChange(field, index, value),
         selectedId: _selectedIds[index],
+        forEventOutfit: widget.forEventOutfit,
       ),
     );
   }

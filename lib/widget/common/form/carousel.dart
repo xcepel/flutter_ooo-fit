@@ -15,12 +15,14 @@ class Carousel extends StatefulWidget {
   final List<CarouselItem> items;
   final void Function(String) onChanged;
   final String? selectedId;
+  final bool forEventOutfit;
 
   const Carousel({
     super.key,
     required this.items,
     required this.onChanged,
     this.selectedId,
+    this.forEventOutfit = false,
   });
 
   @override
@@ -66,12 +68,12 @@ class _CarouselState extends State<Carousel> {
         );
       },
       options: CarouselOptions(
-        enlargeCenterPage: true,
+        enlargeCenterPage: widget.forEventOutfit ? false : true,
         autoPlay: false,
-        aspectRatio: 3 / 1,
+        aspectRatio: widget.forEventOutfit ? 1.39 / 1 : 3 / 1,
         autoPlayCurve: Curves.fastOutSlowIn,
         enableInfiniteScroll: true,
-        viewportFraction: 0.3,
+        viewportFraction: widget.forEventOutfit ? 0.4 : 0.3,
         initialPage: _currentIndex,
         onPageChanged: (int index, CarouselPageChangedReason reason) {
           setState(() {
