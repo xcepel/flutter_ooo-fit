@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/widget/common/downloaded_image.dart';
 
 class PictureItem extends StatelessWidget {
   final String image;
@@ -17,10 +18,7 @@ class PictureItem extends StatelessWidget {
           child: Stack(
             children: [
               SizedBox.expand(
-                child: Image.network(
-                  image,
-                  fit: BoxFit.cover,
-                ),
+                child: DownloadedImage(imagePath: image),
               ),
             ],
           ),

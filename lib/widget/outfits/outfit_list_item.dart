@@ -7,6 +7,7 @@ import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
+import 'package:ooo_fit/widget/common/downloaded_image.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/outfit_piece/list_item_card.dart';
 
@@ -47,10 +48,7 @@ class OutfitListItem extends StatelessWidget {
   }
 
   Widget _buildOutfitImage() {
-    return Image.network(
-      outfit.imagePath!,
-      fit: BoxFit.cover,
-    );
+    return DownloadedImage(imagePath: outfit.imagePath!);
   }
 
   Widget _buildPiecesMatrix() {
@@ -73,10 +71,7 @@ class OutfitListItem extends StatelessWidget {
 
             return ClipRRect(
               borderRadius: BorderRadius.circular(4),
-              child: Image.network(
-                currentPiece.imagePath,
-                fit: BoxFit.cover,
-              ),
+              child: DownloadedImage(imagePath: currentPiece.imagePath),
             );
           },
         );

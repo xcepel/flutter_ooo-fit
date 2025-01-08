@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/widget/outfit_piece/list_item_card.dart';
+import 'package:ooo_fit/widget/common/downloaded_image.dart';
 
 class PieceListItem extends StatelessWidget {
   final Piece piece;
@@ -23,9 +24,8 @@ class PieceListItem extends StatelessWidget {
         aspectRatio: 1 / 1,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(4),
-          child: Image.network(
-            piece.imagePath ?? '',
-            fit: BoxFit.cover,
+          child: DownloadedImage(
+            imagePath: piece.imagePath,
           ),
         ),
       ),

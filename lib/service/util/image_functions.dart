@@ -5,8 +5,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 Future<String?> uploadImage(String imagePath) async {
   final storageRef = FirebaseStorage.instance.ref();
 
-  final time = DateTime.now().millisecondsSinceEpoch.toString();
-  final destination = storageRef.child(time);
+  final name = DateTime.now().millisecondsSinceEpoch.toString();
+  final destination = storageRef.child(name);
 
   if (!File(imagePath).existsSync()) {
     print('File does not exist at the given path: $imagePath');
@@ -18,7 +18,7 @@ Future<String?> uploadImage(String imagePath) async {
 
     if (uploadTask.state == TaskState.success) {
       try {
-        return await destination.getDownloadURL();
+        return name;
       } on FirebaseException catch (e) {
         print('Error fetching download URL: ${e.code} - ${e.message}');
         return null;
@@ -34,4 +34,11 @@ Future<String?> uploadImage(String imagePath) async {
     print('An unexpected error occurred: $e');
     return null;
   }
+}
+
+Future<String?> getImageDownloadURL(String path) async {
+  final ref = FirebaseStorage.instance.ref().child(path);
+  var url = await ref.getDownloadURL();
+  print(url);
+  return url;
 }

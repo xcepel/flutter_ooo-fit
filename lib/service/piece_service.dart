@@ -4,7 +4,7 @@ import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/wear_history.dart';
 import 'package:ooo_fit/service/database_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
-import 'package:ooo_fit/service/util/helper_functions.dart';
+import 'package:ooo_fit/service/util/image_functions.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PieceService {
@@ -43,13 +43,13 @@ class PieceService {
     required List<String> styleIds,
     required String imagePath,
   }) async {
-    String? downloadLink = await uploadImage(imagePath);
+    String? imageName = await uploadImage(imagePath);
     //TODO: implement deleting the old versions of images
 
-    if (downloadLink != null) {
+    if (imageName != null) {
       final newPiece = piece.copyWith(
         name: name,
-        imagePath: downloadLink,
+        imagePath: imageName,
         styleIds: styleIds,
         piecePlacement: piecePlacement,
       );

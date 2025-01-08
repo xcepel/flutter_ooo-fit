@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/widget/common/downloaded_image.dart';
 
 // TODO probably change so it does not fill the whole page
 class SizedPicture extends StatelessWidget {
@@ -19,10 +20,7 @@ class SizedPicture extends StatelessWidget {
       child: SizedBox(
         width: sizeX,
         height: sizeY,
-        child: Image.network(
-          image,
-          fit: BoxFit.cover,
-        ),
+        child: DownloadedImage(imagePath: image),
       ),
     );
   }
