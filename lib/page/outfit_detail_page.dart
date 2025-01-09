@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
+import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/page/outfit_edit_page.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/utils/date_time_formater.dart';
@@ -15,14 +16,13 @@ import 'package:ooo_fit/widget/common/info_bubble.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
-import 'package:ooo_fit/widget/outfit_piece/label_button.dart';
 import 'package:ooo_fit/widget/outfit_piece/sized_picture.dart';
+import 'package:ooo_fit/widget/outfits/wear_now_button.dart';
 import 'package:ooo_fit/widget/pieces/pieces_items_list.dart';
 import 'package:ooo_fit/widget/styles/style_data_row.dart';
 
 class OutfitDetailPage extends StatelessWidget {
   final String outfitId;
-
   final OutfitService _outfitService = GetIt.instance.get<OutfitService>();
 
   OutfitDetailPage({
@@ -41,11 +41,12 @@ class OutfitDetailPage extends StatelessWidget {
 
         return Scaffold(
           appBar: CustomAppBar(
-            title: outfitData.$1!.name ?? "",
+            title: outfit.name ?? "",
             actionButton: EditButton(
-                editPage: OutfitEditPage(
-              outfit: outfit,
-            )),
+              editPage: OutfitEditPage(
+                outfit: outfit,
+              ),
+            ),
           ),
           body: ContentFrameDetail(
             children: [
@@ -65,17 +66,12 @@ class OutfitDetailPage extends StatelessWidget {
                     : "---",
               ),
               const SizedBox(height: 10),
-              LabelButton(
-                // TODO do something in backend
-                label: "Wear today",
-                backgroundColor: Colors.transparent,
-                textColor: Colors.grey,
-              ),
+              WearNowButton(outfitId: outfitId),
               const SizedBox(height: 10),
               _buildOutfitImageSection(outfit.imagePath),
               const PageDivider(),
               const SizedBox(height: 5),
-              PiecesItemsList(pieces: outfitData.$3.values.toList()),
+              PiecesItemsList(pieces: pieces.values.toList()),
             ],
           ),
           bottomNavigationBar:

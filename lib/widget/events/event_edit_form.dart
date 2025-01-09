@@ -88,21 +88,24 @@ class _EventEditFormState extends State<EventEditForm> {
 
   Widget _buildCarouselFormField() {
     return LoadingStreamBuilder(
-        stream: widget._outfitService.getAllOutfitsStream(),
-        builder: (context, outfits) {
-          return CarouselFormField(
-            items: outfits
-                .map((Outfit outfit) => CarouselItem(
-                      id: outfit.id,
-                      child: OutfitListItem(outfit: outfit),
-                    ))
-                .toList(),
-            multipleSelection: false,
-            name: 'outfitId',
-            leading: Text('Outfit'),
-            forEventOutfit: true,
-          );
-        });
+      stream: widget._outfitService.getAllOutfitsStream(),
+      builder: (context, outfits) {
+        String? outfitId = widget.event?.outfitId;
+        return CarouselFormField(
+          items: outfits
+              .map((Outfit outfit) => CarouselItem(
+                    id: outfit.id,
+                    child: OutfitListItem(outfit: outfit),
+                  ))
+              .toList(),
+          selectedIds: outfitId != null ? [outfitId] : null,
+          multipleSelection: false,
+          name: 'outfitId',
+          leading: Text('Outfit'),
+          forEventOutfit: true,
+        );
+      },
+    );
   }
 
   Future<void> _handleDelete(BuildContext context) async {
@@ -126,7 +129,6 @@ class _EventEditFormState extends State<EventEditForm> {
   Future<void> _handleSave(BuildContext context) async {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       final Map<String, dynamic> formData = _formKey.currentState!.value;
-      print(formData['place']);
 
       String? error;
       if (widget.event == null) {

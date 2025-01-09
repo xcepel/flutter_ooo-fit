@@ -34,19 +34,38 @@ class IocContainer {
     );
 
     // Register all Services
-    get.registerSingleton(StyleService(get<DatabaseService<Style>>()));
+    get.registerSingleton(
+      WeatherService(
+        WeatherFactory("1b411c1aff701ce828b36648cfb513d4"),
+      ),
+    );
 
     get.registerSingleton(
-        PieceService(get<DatabaseService<Piece>>(), get<StyleService>()));
+      StyleService(
+        get<DatabaseService<Style>>(),
+      ),
+    );
 
-    get.registerSingleton(OutfitService(get<DatabaseService<Outfit>>(),
-        get<StyleService>(), get<PieceService>()));
+    get.registerSingleton(PieceService(
+      get<DatabaseService<Piece>>(),
+      get<StyleService>(),
+    ));
 
-    get.registerSingleton(EventService(get<DatabaseService<Event>>(),
-        get<StyleService>(), get<OutfitService>()));
-
-    // Register WeatherService
     get.registerSingleton(
-        WeatherService(WeatherFactory("1b411c1aff701ce828b36648cfb513d4")));
+      OutfitService(
+        get<DatabaseService<Outfit>>(),
+        get<StyleService>(),
+        get<PieceService>(),
+      ),
+    );
+
+    get.registerSingleton(
+      EventService(
+        get<DatabaseService<Event>>(),
+        get<StyleService>(),
+        get<OutfitService>(),
+        get<WeatherService>(),
+      ),
+    );
   }
 }

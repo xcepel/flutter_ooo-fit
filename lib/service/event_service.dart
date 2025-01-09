@@ -8,17 +8,21 @@ import 'package:ooo_fit/service/database_service.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/service/util/date_normalize.dart';
+import 'package:ooo_fit/service/weather_service.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:weather/weather.dart';
 
 class EventService {
   final DatabaseService<Event> _eventRepository;
   final StyleService _styleService;
   final OutfitService _outfitService;
+  final WeatherService _weatherService;
 
   const EventService(
     this._eventRepository,
     this._styleService,
     this._outfitService,
+    this._weatherService,
   );
 
   Future<String?> saveEvent({
@@ -68,6 +72,22 @@ class EventService {
   Future<String?> deleteEvent({required Event event}) async {
     await _eventRepository.delete(event.id);
     return null;
+  }
+
+  Future<String?> wearOutfitNow({required String outfitId}) async {
+    //TODO: get city name form settings
+    Weather weather = await _weatherService.getWeatherByCityName('Brno');
+    TemperatureType currentTemp =
+        WeatherService.getTemperatureTypeFromWeather(weather);
+
+    return saveEvent(
+      name: null,
+      eventDatetime: DateTime.now(),
+      place: null,
+      outfitId: outfitId,
+      styleIds: [],
+      temperature: currentTemp,
+    );
   }
 
   Stream<List<Event>> getAllEventsStream() {
