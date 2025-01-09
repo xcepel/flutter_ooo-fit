@@ -15,7 +15,6 @@ import 'package:ooo_fit/widget/common/form/save_button.dart';
 import 'package:ooo_fit/widget/common/form/style_picker.dart';
 import 'package:ooo_fit/widget/common/form/temperature_type_picker.dart';
 import 'package:ooo_fit/widget/common/loading_future_builder.dart';
-import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfits/outfit_builder.dart';
 
 class OutfitEditForm extends StatelessWidget {
@@ -43,16 +42,13 @@ class OutfitEditForm extends StatelessWidget {
           StylePicker(selectedStyles: outfit?.styleIds),
           SizedBox(height: 10),
           TemperatureTypePicker(selectedTemperatureType: outfit?.temperature),
-          PageDivider(),
           OutfitBuilder(
             selectedPieceIds: outfit?.pieceIds,
           ),
-          PageDivider(),
           LoadingFutureBuilder(
             future: _buildImagePicker(),
             builder: (context, imagePicker) => imagePicker,
           ),
-          PageDivider(),
           SaveButton(onPressed: () => {_handleSave(context)}),
           SizedBox(height: 20),
           if (outfit != null)

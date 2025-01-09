@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ooo_fit/ioc/ioc_container.dart';
+import 'package:ooo_fit/ooo_fit_theme.dart';
 import 'package:ooo_fit/page/outfits_list_page.dart';
 
 import 'firebase_options.dart';
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "OOO-FIT",
-      theme: ThemeData(textTheme: GoogleFonts.openSansTextTheme()),
+      theme: oooFitTheme(),
       home: OutfitsListPage(),
     );
   }

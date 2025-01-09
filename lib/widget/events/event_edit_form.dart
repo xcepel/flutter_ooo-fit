@@ -9,14 +9,13 @@ import 'package:ooo_fit/service/event_service.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/utils/functions.dart';
 import 'package:ooo_fit/widget/common/form/carousel.dart';
+import 'package:ooo_fit/widget/common/form/carousel_form_field.dart';
 import 'package:ooo_fit/widget/common/form/delete_button.dart';
 import 'package:ooo_fit/widget/common/form/name_form_field.dart';
 import 'package:ooo_fit/widget/common/form/save_button.dart';
 import 'package:ooo_fit/widget/common/form/style_picker.dart';
 import 'package:ooo_fit/widget/common/form/temperature_type_picker.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
-import 'package:ooo_fit/widget/common/page_divider.dart';
-import 'package:ooo_fit/widget/common/form/carousel_form_field.dart';
 import 'package:ooo_fit/widget/outfits/outfit_list_item.dart';
 
 class EventEditForm extends StatefulWidget {
@@ -76,7 +75,6 @@ class _EventEditFormState extends State<EventEditForm> {
             }),
           ),
           if (!_hideOutfitCarousel) _buildCarouselFormField(),
-          PageDivider(),
           SaveButton(onPressed: () => _handleSave(context)),
           SizedBox(height: 20),
           if (widget.event != null)

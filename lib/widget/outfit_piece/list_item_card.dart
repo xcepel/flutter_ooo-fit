@@ -26,6 +26,7 @@ class ListItemCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
+            alignment: Alignment.bottomCenter,
             children: [
               image,
               BottomData(

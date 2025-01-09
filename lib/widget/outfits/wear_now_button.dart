@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/service/event_service.dart';
-import 'package:ooo_fit/service/weather_service.dart';
 import 'package:ooo_fit/utils/functions.dart';
 import 'package:ooo_fit/widget/outfit_piece/label_button.dart';
-import 'package:weather/weather.dart';
 
 class WearNowButton extends StatelessWidget {
   final String outfitId;

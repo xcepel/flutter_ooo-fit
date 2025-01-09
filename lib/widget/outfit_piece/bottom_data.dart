@@ -9,7 +9,6 @@ class BottomData extends StatelessWidget {
   final TemperatureType? temperature;
   final PiecePlacement? placement;
 
-  final double position = 8.0;
   final double size = 15.0;
 
   const BottomData({
@@ -22,11 +21,15 @@ class BottomData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: position,
+      bottom: 0, // align to the bottom
       left: 0,
       right: 0,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: position),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+        decoration: BoxDecoration(
+          color: Colors.grey.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(4.0),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

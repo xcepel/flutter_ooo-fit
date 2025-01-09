@@ -95,7 +95,6 @@ class EventDetailPage extends StatelessWidget {
         : InfoBubble(
             message: "You haven't chosen an outfit yet! Do it now!",
           );
-    ;
   }
 
   Widget _buildEventDetailRow(String label, String? data) {

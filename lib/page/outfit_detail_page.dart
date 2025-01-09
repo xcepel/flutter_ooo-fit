@@ -3,7 +3,6 @@ import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
-import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/page/outfit_edit_page.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/utils/date_time_formater.dart';
