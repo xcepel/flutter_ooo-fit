@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:ooo_fit/model/event.dart';
+import 'package:ooo_fit/model/outfit.dart';
+import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/page/event_edit_page.dart';
 import 'package:ooo_fit/page/outfit_detail_page.dart';
 import 'package:ooo_fit/service/event_service.dart';
@@ -9,6 +12,7 @@ import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/edit_button.dart';
+import 'package:ooo_fit/widget/common/info_bubble.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_navigation_tile.dart';
 import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
@@ -29,59 +33,43 @@ class EventDetailPage extends StatelessWidget {
     return LoadingStreamBuilder(
       stream: _eventService.getEventDetailByIdStream(eventId),
       builder: (context, eventData) {
+        Event event = eventData.$1!;
+        Outfit? outfit = eventData.$2;
+        Map<String, Style> styles = eventData.$3;
+
         return Scaffold(
           appBar: CustomAppBar(
-            title: eventData.$1?.name ?? '',
+            title: event.name ?? '',
             actionButton: EditButton(
-              editPage: EventEditPage(event: eventData.$1),
+              editPage: EventEditPage(event: event),
             ),
           ),
           body: ContentFrameDetail(
             children: [
-              eventData.$1?.temperature != null
+              event.temperature != null
                   ? Row(
                       children: [
-                        eventData.$1!.temperature!.icon,
-                        Text(eventData.$1!.temperature!.label),
+                        event.temperature!.icon,
+                        Text(event.temperature!.label),
                       ],
                     )
                   : Text("Temperature of event - not filled"),
               SizedBox(height: 10),
-              eventData.$3.isNotEmpty
-                  ? StyleDataRow(items: eventData.$3.values.toList())
+              styles.isNotEmpty
+                  ? StyleDataRow(items: styles.values.toList())
                   : Text("Style of event not - filled"),
               SizedBox(height: 10),
               _buildEventDetailRow(
-                eventData.$1?.eventDatetime != null,
                 "Date",
-                DateTimeFormatter(eventData.$1!.eventDatetime).formatDate(),
+                DateTimeFormatter(event.eventDatetime).formatDate(),
               ),
               SizedBox(height: 10),
               _buildEventDetailRow(
-                eventData.$1?.place != null,
                 "Place",
-                eventData.$1!.place!,
+                event.place,
               ),
               SizedBox(height: 10),
-              eventData.$2 != null
-                  ? Center(
-                      child: PageNavigationTile(
-                        dstPage: OutfitDetailPage(
-                          outfitId: eventData.$2!.id,
-                        ),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width / 2,
-                          child: OutfitListItem(outfit: eventData.$2!),
-                        ),
-                      ),
-                    )
-                  : Center(
-                      child: Text(
-                        'No chosen outfit.',
-                        style: TextStyle(
-                            fontSize: 16, fontStyle: FontStyle.italic),
-                      ),
-                    ),
+              _buildOutfitSection(context, outfit),
             ],
           ),
           bottomNavigationBar:
@@ -91,8 +79,27 @@ class EventDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildEventDetailRow(bool condition, String label, String data) {
-    return condition
+  Widget _buildOutfitSection(BuildContext context, Outfit? outfit) {
+    return outfit != null
+        ? Center(
+            child: PageNavigationTile(
+              dstPage: OutfitDetailPage(
+                outfitId: outfit.id,
+              ),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 2,
+                child: OutfitListItem(outfit: outfit),
+              ),
+            ),
+          )
+        : InfoBubble(
+            message: "You haven't chosen an outfit yet! Do it now!",
+          );
+    ;
+  }
+
+  Widget _buildEventDetailRow(String label, String? data) {
+    return data != null
         ? DescriptionLabel(
             label: label,
             value: data,

@@ -4,11 +4,13 @@ import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/page/pieces_list_page.dart';
+import 'package:ooo_fit/service/util/image_functions.dart';
 import 'package:ooo_fit/utils/functions.dart';
 import 'package:ooo_fit/widget/common/form/save_button.dart';
 import 'package:ooo_fit/widget/common/form/delete_button.dart';
 import 'package:ooo_fit/widget/common/form/image_picker.dart';
 import 'package:ooo_fit/widget/common/form/name_form_field.dart';
+import 'package:ooo_fit/widget/common/loading_future_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/common/form/style_picker.dart';
 import 'package:ooo_fit/widget/pieces/piece_placement_picker.dart';
@@ -41,9 +43,9 @@ class PieceEditForm extends StatelessWidget {
           SizedBox(height: 10),
           PiecePlacementPicker(selectedPlacement: piece?.piecePlacement),
           SizedBox(height: 10),
-          ImagePicker(
-            value: piece?.imagePath,
-            isRequired: true,
+          LoadingFutureBuilder(
+            future: _buildImagePicker(),
+            builder: (context, imagePicker) => imagePicker,
           ),
           PageDivider(),
           SaveButton(onPressed: () => _handleSave(context)),
@@ -52,6 +54,17 @@ class PieceEditForm extends StatelessWidget {
             DeleteButton(onPressed: () => _handleDelete(context)),
         ],
       ),
+    );
+  }
+
+  Future<Widget> _buildImagePicker() async {
+    String? downloadURL;
+    if (piece != null) {
+      downloadURL = await getImageDownloadURL(piece!.imagePath);
+    }
+    return ImagePicker(
+      value: downloadURL,
+      isRequired: true,
     );
   }
 

@@ -6,6 +6,7 @@ import 'package:ooo_fit/model/wear_history.dart';
 import 'package:ooo_fit/service/database_service.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
+import 'package:ooo_fit/service/util/image_functions.dart';
 import 'package:rxdart/rxdart.dart';
 
 class OutfitService {
@@ -26,12 +27,18 @@ class OutfitService {
     required TemperatureType temperature,
     required String? imagePath,
   }) async {
+    String? newImagePath;
+    if (imagePath != null) {
+      newImagePath = await uploadImage(imagePath);
+    }
+
     final piece = Outfit(
       id: '',
       name: name,
       pieceIds: pieceIds,
       styleIds: styleIds,
       temperature: temperature,
+      imagePath: newImagePath,
     );
 
     await _outfitRepository.add(piece);
@@ -46,12 +53,21 @@ class OutfitService {
     required TemperatureType? temperature,
     required String? imagePath,
   }) async {
+    String? newImagePath;
+    if (imagePath != null) {
+      newImagePath = await uploadImage(imagePath);
+    }
+
+    if (newImagePath != null && outfit.imagePath != null) {
+      await deleteImage(outfit.imagePath!);
+    }
+
     final newOutfit = outfit.copyWith(
       name: name,
       pieceIds: pieceIds,
       styleIds: styleIds,
       temperature: temperature,
-      imagePath: imagePath,
+      imagePath: newImagePath,
     );
     //TODO: implement and use update
     await _outfitRepository.setOrAdd(outfit.id, newOutfit);
@@ -60,6 +76,11 @@ class OutfitService {
 
   Future<String?> deleteOutfit({required Outfit outfit}) async {
     await _outfitRepository.delete(outfit.id);
+
+    if (outfit.imagePath != null) {
+      await deleteImage(outfit.imagePath!);
+    }
+
     return null;
   }
 

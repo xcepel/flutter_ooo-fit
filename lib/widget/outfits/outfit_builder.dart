@@ -5,7 +5,7 @@ import 'package:ooo_fit/model/piece_placement.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/widget/common/form/carousel.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
-import 'package:ooo_fit/widget/outfits/carousel_form_field.dart';
+import 'package:ooo_fit/widget/common/form/carousel_form_field.dart';
 import 'package:ooo_fit/widget/outfits/picture_item.dart';
 
 class OutfitBuilder extends StatelessWidget {

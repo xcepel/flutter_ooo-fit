@@ -23,6 +23,7 @@ class Piece {
   @TimestampConverter()
   final DateTime? lastWorn;
 
+  //TODO: https://stackoverflow.com/questions/68009392/dart-custom-copywith-method-with-nullable-properties
   const Piece({
     required this.id,
     this.createdAt,

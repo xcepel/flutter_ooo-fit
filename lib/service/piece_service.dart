@@ -22,14 +22,14 @@ class PieceService {
     required List<String> styleIds,
     required String imagePath,
   }) async {
-    String? downloadLink = await uploadImage(imagePath);
+    String? newImagePath = await uploadImage(imagePath);
 
     final Piece piece = Piece(
       id: '',
       name: name,
       piecePlacement: piecePlacement,
       styleIds: styleIds,
-      imagePath: downloadLink!,
+      imagePath: newImagePath!,
     );
 
     await _pieceRepository.add(piece);
@@ -43,13 +43,13 @@ class PieceService {
     required List<String> styleIds,
     required String imagePath,
   }) async {
-    String? imageName = await uploadImage(imagePath);
-    //TODO: implement deleting the old versions of images
+    String? newImagePath = await uploadImage(imagePath);
 
-    if (imageName != null) {
+    if (newImagePath != null) {
+      deleteImage(piece.imagePath);
       final newPiece = piece.copyWith(
         name: name,
-        imagePath: imageName,
+        imagePath: newImagePath,
         styleIds: styleIds,
         piecePlacement: piecePlacement,
       );
@@ -63,6 +63,8 @@ class PieceService {
 
   Future<String?> deletePiece({required Piece piece}) async {
     await _pieceRepository.delete(piece.id);
+    await deleteImage(piece.imagePath);
+
     return null;
   }
 

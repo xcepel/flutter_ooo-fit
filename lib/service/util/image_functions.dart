@@ -38,7 +38,11 @@ Future<String?> uploadImage(String imagePath) async {
 
 Future<String?> getImageDownloadURL(String path) async {
   final ref = FirebaseStorage.instance.ref().child(path);
-  var url = await ref.getDownloadURL();
-  print(url);
-  return url;
+  return await ref.getDownloadURL();
+}
+
+Future<String?> deleteImage(String path) async {
+  final ref = FirebaseStorage.instance.ref().child(path);
+  await ref.delete();
+  return null;
 }

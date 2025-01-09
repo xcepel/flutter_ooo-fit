@@ -6,6 +6,7 @@ import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/piece_placement.dart';
 import 'package:ooo_fit/page/outfits_list_page.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
+import 'package:ooo_fit/service/util/image_functions.dart';
 import 'package:ooo_fit/utils/functions.dart';
 import 'package:ooo_fit/widget/common/form/delete_button.dart';
 import 'package:ooo_fit/widget/common/form/image_picker.dart';
@@ -13,6 +14,7 @@ import 'package:ooo_fit/widget/common/form/name_form_field.dart';
 import 'package:ooo_fit/widget/common/form/save_button.dart';
 import 'package:ooo_fit/widget/common/form/style_picker.dart';
 import 'package:ooo_fit/widget/common/form/temperature_type_picker.dart';
+import 'package:ooo_fit/widget/common/loading_future_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfits/outfit_builder.dart';
 
@@ -46,9 +48,9 @@ class OutfitEditForm extends StatelessWidget {
             selectedPieceIds: outfit?.pieceIds,
           ),
           PageDivider(),
-          ImagePicker(
-            value: outfit?.imagePath,
-            isRequired: false,
+          LoadingFutureBuilder(
+            future: _buildImagePicker(),
+            builder: (context, imagePicker) => imagePicker,
           ),
           PageDivider(),
           SaveButton(onPressed: () => {_handleSave(context)}),
@@ -57,6 +59,17 @@ class OutfitEditForm extends StatelessWidget {
             DeleteButton(onPressed: () => {_handleDelete(context)}),
         ],
       ),
+    );
+  }
+
+  Future<Widget> _buildImagePicker() async {
+    String? downloadURL;
+    if (outfit?.imagePath != null) {
+      downloadURL = await getImageDownloadURL(outfit!.imagePath!);
+    }
+    return ImagePicker(
+      value: downloadURL,
+      isRequired: false,
     );
   }
 
@@ -81,11 +94,13 @@ class OutfitEditForm extends StatelessWidget {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       final Map<String, dynamic> formData = _formKey.currentState!.value;
 
-      var imagePath;
       final imageList = formData['image'];
+      String? imagePath;
       if (imageList[0] != null) {
-        // print(imageList.toString());
-        imagePath = (imageList.first as XFile).path;
+        final image = imageList.first;
+
+        //TODO: refactor, for the love of god
+        imagePath = image.runtimeType == String ? null : (image as XFile).path;
       }
 
       List<String> allSelectedPieces = [];
@@ -98,8 +113,6 @@ class OutfitEditForm extends StatelessWidget {
               .addAll(selectedPieces.where((id) => id.isNotEmpty).toList());
         }
       }
-      print(allSelectedPieces);
-      // print(formData['styleIds']);
 
       String? error;
       if (outfit == null) {

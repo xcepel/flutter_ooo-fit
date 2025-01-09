@@ -41,6 +41,7 @@ class Event {
 
   Map<String, dynamic> toJson() => _$EventToJson(this);
 
+  //TODO: https://stackoverflow.com/questions/68009392/dart-custom-copywith-method-with-nullable-properties
   Event copyWith({
     String? id,
     DateTime? createdAt,

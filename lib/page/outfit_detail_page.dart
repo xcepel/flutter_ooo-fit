@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:ooo_fit/model/outfit.dart';
+import 'package:ooo_fit/model/piece.dart';
+import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/page/outfit_edit_page.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/utils/date_time_formater.dart';
@@ -8,6 +11,7 @@ import 'package:ooo_fit/widget/common/content_frame_detail.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/edit_button.dart';
+import 'package:ooo_fit/widget/common/info_bubble.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
@@ -31,29 +35,33 @@ class OutfitDetailPage extends StatelessWidget {
     return LoadingStreamBuilder(
       stream: _outfitService.getOutfitDetailByIdStream(outfitId),
       builder: (context, outfitData) {
+        final Outfit outfit = outfitData.$1!;
+        final Map<String, Style> styles = outfitData.$2;
+        final Map<String, Piece> pieces = outfitData.$3;
+
         return Scaffold(
           appBar: CustomAppBar(
             title: outfitData.$1!.name ?? "",
             actionButton: EditButton(
                 editPage: OutfitEditPage(
-              outfit: outfitData.$1,
+              outfit: outfit,
             )),
           ),
           body: ContentFrameDetail(
             children: [
-              StyleDataRow(items: outfitData.$2.values.toList()),
+              StyleDataRow(items: styles.values.toList()),
               const SizedBox(height: 10),
               Row(
                 children: [
-                  outfitData.$1!.temperature.icon,
-                  Text(outfitData.$1!.temperature.label),
+                  outfit.temperature.icon,
+                  Text(outfit.temperature.label),
                 ],
               ),
               const SizedBox(height: 10),
               DescriptionLabel(
                 label: "Last worn",
-                value: outfitData.$1!.lastWorn != null
-                    ? DateTimeFormatter(outfitData.$1!.lastWorn!).formatDate()
+                value: outfit.lastWorn != null
+                    ? DateTimeFormatter(outfit.lastWorn!).formatDate()
                     : "---",
               ),
               const SizedBox(height: 10),
@@ -64,7 +72,7 @@ class OutfitDetailPage extends StatelessWidget {
                 textColor: Colors.grey,
               ),
               const SizedBox(height: 10),
-              _addOutfitPicture(outfitData.$1!.imagePath),
+              _buildOutfitImageSection(outfit.imagePath),
               const PageDivider(),
               const SizedBox(height: 5),
               PiecesItemsList(pieces: outfitData.$3.values.toList()),
@@ -77,7 +85,16 @@ class OutfitDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _addOutfitPicture(String? outfitPicture) {
+  Widget _buildOutfitImageSection(String? imagePath) {
+    return imagePath != null
+        ? _buildOutfitImage(imagePath)
+        : InfoBubble(
+            message:
+                "You haven't taken a picture of your outfit yet. Do it now!",
+          );
+  }
+
+  Widget _buildOutfitImage(String? outfitPicture) {
     return LayoutBuilder(
       builder: (context, constraints) {
         double size = constraints.maxWidth;

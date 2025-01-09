@@ -20,7 +20,7 @@ class LabelButton extends StatelessWidget {
         width: 200,
         child: TextButton(
           style: TextButton.styleFrom(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(10.0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),
               side: BorderSide(color: textColor, width: 2.0),
@@ -32,7 +32,7 @@ class LabelButton extends StatelessWidget {
             label,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: 18,
               color: textColor,
             ),
           ),
