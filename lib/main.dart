@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/ioc/ioc_container.dart';
 import 'package:ooo_fit/ooo_fit_theme.dart';
-import 'package:ooo_fit/page/outfits_list_page.dart';
+import 'package:ooo_fit/page/auth/auth_wrapper.dart';
 
 import 'firebase_options.dart';
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "OOO-FIT",
       theme: oooFitTheme(),
-      home: OutfitsListPage(),
+      home: AuthWrapper(),
     );
   }
 }
