@@ -3,6 +3,7 @@ import 'package:ooo_fit/model/event.dart';
 import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
+import 'package:ooo_fit/service/auth_service.dart';
 import 'package:ooo_fit/service/database_service.dart';
 import 'package:ooo_fit/service/event_service.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
@@ -34,6 +35,11 @@ class IocContainer {
     );
 
     // Register all Services
+
+    get.registerSingleton(
+      AuthService(),
+    );
+
     get.registerSingleton(
       WeatherService(
         WeatherFactory("1b411c1aff701ce828b36648cfb513d4"),
