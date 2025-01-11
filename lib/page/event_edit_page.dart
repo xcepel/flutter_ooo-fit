@@ -17,9 +17,7 @@ class EventEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: '',
-      ),
+      appBar: CustomAppBar(),
       body: ContentFrameDetail(
         children: [EventEditForm(event: event)],
       ),

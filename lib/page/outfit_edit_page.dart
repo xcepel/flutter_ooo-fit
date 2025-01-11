@@ -17,9 +17,7 @@ class OutfitEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: '',
-      ),
+      appBar: CustomAppBar(),
       body: ContentFrameDetail(
         children: [
           OutfitEditForm(outfit: outfit),

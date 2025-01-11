@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:ooo_fit/widget/weather/weather_info.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
+  final String? title;
   final bool weather_info;
   final Widget? actionButton;
 
   const CustomAppBar({
     super.key,
-    required this.title,
+    this.title,
     this.weather_info = false,
     this.actionButton,
   });
@@ -19,10 +19,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: IconThemeData(color: Colors.white),
       backgroundColor: Colors.deepPurpleAccent,
       centerTitle: true,
-      title: Text(
-        title,
-        style: const TextStyle(color: Colors.white),
-      ),
+      title: title != null
+          ? Text(
+              title!,
+              style: const TextStyle(color: Colors.white),
+            )
+          : null,
       actions: [
         if (weather_info)
           Padding(
