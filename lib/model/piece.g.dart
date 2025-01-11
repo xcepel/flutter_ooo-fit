@@ -18,6 +18,7 @@ Piece _$PieceFromJson(Map<String, dynamic> json) => Piece(
           (json['styleIds'] as List<dynamic>).map((e) => e as String).toList(),
       lastWorn: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['lastWorn'], const TimestampConverter().fromJson),
+      userId: json['userId'] as String?,
     );
 
 Map<String, dynamic> _$PieceToJson(Piece instance) => <String, dynamic>{
@@ -34,6 +35,7 @@ Map<String, dynamic> _$PieceToJson(Piece instance) => <String, dynamic>{
               instance.lastWorn, const TimestampConverter().toJson)
           case final value?)
         'lastWorn': value,
+      if (instance.userId case final value?) 'userId': value,
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(

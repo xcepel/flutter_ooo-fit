@@ -2,6 +2,7 @@ import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/piece_placement.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/wear_history.dart';
+import 'package:ooo_fit/service/auth_service.dart';
 import 'package:ooo_fit/service/database_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/service/util/image_functions.dart';
@@ -10,10 +11,12 @@ import 'package:rxdart/rxdart.dart';
 class PieceService {
   final DatabaseService<Piece> _pieceRepository;
   final StyleService _styleService;
+  final AuthService _authService;
 
   PieceService(
     this._pieceRepository,
     this._styleService,
+    this._authService,
   );
 
   Future<String?> savePiece({
@@ -25,12 +28,12 @@ class PieceService {
     String? newImagePath = await uploadImage(imagePath);
 
     final Piece piece = Piece(
-      id: '',
-      name: name,
-      piecePlacement: piecePlacement,
-      styleIds: styleIds,
-      imagePath: newImagePath!,
-    );
+        id: '',
+        name: name,
+        piecePlacement: piecePlacement,
+        styleIds: styleIds,
+        imagePath: newImagePath!,
+        userId: _authService.currentUser?.uid);
 
     await _pieceRepository.add(piece);
     return null;
@@ -68,7 +71,17 @@ class PieceService {
     return null;
   }
 
+  List<Piece> _filterPiecesByUserId(List<Piece> pieces) {
+    final String? currentUserId = _authService.currentUser?.uid;
+    return pieces
+        .where(
+            (piece) => currentUserId == null || piece.userId == currentUserId)
+        .toList();
+  }
+
   Stream<List<Piece>> getAllPiecesStream() {
+    // enable for filtering by userId
+    // return _pieceRepository.observeDocuments().map(_filterPiecesByUserId);
     return _pieceRepository.observeDocuments();
   }
 

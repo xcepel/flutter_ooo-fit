@@ -23,6 +23,9 @@ class Piece {
   @TimestampConverter()
   final DateTime? lastWorn;
 
+  //TODO make required later
+  final String? userId;
+
   //TODO: https://stackoverflow.com/questions/68009392/dart-custom-copywith-method-with-nullable-properties
   const Piece({
     required this.id,
@@ -32,6 +35,7 @@ class Piece {
     required this.piecePlacement,
     required this.styleIds,
     this.lastWorn, // TODO tohle se bude nejspis pri vytvoreni setovat na date vytvoreni?
+    this.userId,
   });
 
   factory Piece.fromJson(Map<String, dynamic> json) => _$PieceFromJson(json);
@@ -47,6 +51,7 @@ class Piece {
     List<String>? styleIds,
     bool? isFavourite,
     DateTime? lastWorn,
+    String? userId,
   }) {
     return Piece(
       id: id ?? this.id,
@@ -56,6 +61,7 @@ class Piece {
       piecePlacement: piecePlacement ?? this.piecePlacement,
       styleIds: styleIds ?? this.styleIds,
       lastWorn: lastWorn ?? this.lastWorn,
+      userId: userId ?? this.userId,
     );
   }
 }

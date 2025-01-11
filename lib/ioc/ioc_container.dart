@@ -55,6 +55,7 @@ class IocContainer {
     get.registerSingleton(PieceService(
       get<DatabaseService<Piece>>(),
       get<StyleService>(),
+      get<AuthService>(),
     ));
 
     get.registerSingleton(
