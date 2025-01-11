@@ -12,6 +12,7 @@ import 'package:ooo_fit/widget/common/content_frame_list.dart';
 import 'package:ooo_fit/widget/common/creation_floating_button.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
+import 'package:ooo_fit/widget/common/list_page_app_bar.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/outfit_piece/style_filter.dart';
 import 'package:ooo_fit/widget/outfit_piece/wear_history_sort.dart';
@@ -48,7 +49,7 @@ class _PiecesListPageState extends State<PiecesListPage> {
     double ratioWidth = screenWidth / 10;
 
     return Scaffold(
-      appBar: const CustomAppBar(title: "My pieces", weather_info: true),
+      appBar: ListPageAppBar(title: 'My pieces'),
       body: ContentFrameList(
         children: [
           Wrap(

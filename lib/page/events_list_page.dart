@@ -4,6 +4,7 @@ import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/creation_floating_button.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
+import 'package:ooo_fit/widget/common/list_page_app_bar.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/events/day_info_list.dart';
 import 'package:ooo_fit/widget/events/event_calendar.dart';
@@ -24,7 +25,7 @@ class _EventsListPageState extends State<EventsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Calendar', weather_info: true),
+      appBar: ListPageAppBar(title: 'Calendar'),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(

@@ -19,6 +19,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: IconThemeData(color: Colors.white),
       backgroundColor: Colors.deepPurpleAccent,
       centerTitle: true,
+      leading: weather_info
+          ? SizedBox(
+              width: 56,
+              child: WeatherInfo(),
+            )
+          : null,
       title: title != null
           ? Text(
               title!,
@@ -26,11 +32,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             )
           : null,
       actions: [
-        if (weather_info)
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: WeatherInfo(),
-          ),
         if (actionButton != null) actionButton!,
       ],
     );
