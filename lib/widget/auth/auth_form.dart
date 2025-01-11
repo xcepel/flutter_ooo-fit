@@ -9,14 +9,14 @@ import 'package:ooo_fit/widget/auth/email_form_field.dart';
 import 'package:ooo_fit/widget/auth/password_form_field.dart';
 import 'package:ooo_fit/widget/outfit_piece/label_button.dart';
 
-class SignInForm extends StatefulWidget {
-  const SignInForm({super.key});
+class AuthForm extends StatefulWidget {
+  const AuthForm({super.key});
 
   @override
-  State<SignInForm> createState() => _SignInFormState();
+  State<AuthForm> createState() => _AuthFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _AuthFormState extends State<AuthForm> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   final AuthService _authService = GetIt.instance.get<AuthService>();
 

@@ -12,9 +12,9 @@ class EmailFormField extends StatelessWidget {
     return FormBuilderTextField(
       name: 'email',
       decoration: const InputDecoration(labelText: 'Email'),
-      autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(errorText: 'Email is required'),
+        FormBuilderValidators.email(),
       ]),
     );
   }
