@@ -6,6 +6,7 @@ import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/wear_history.dart';
 import 'package:ooo_fit/page/piece_edit_page.dart';
 import 'package:ooo_fit/service/piece_service.dart';
+import 'package:ooo_fit/utils/constants.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/content_frame_list.dart';
 import 'package:ooo_fit/widget/common/creation_floating_button.dart';
@@ -30,6 +31,7 @@ class _PiecesListPageState extends State<PiecesListPage> {
   PiecePlacement? placementFilter;
   late Style styleFilter;
   WearHistory? historySort;
+  final double sortSeparator = 4.0;
 
   final Style allStylesOption = Style(id: "all", name: "All", color: 0);
 
@@ -41,18 +43,25 @@ class _PiecesListPageState extends State<PiecesListPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth =
+        MediaQuery.of(context).size.width - (pageEdges + sortSeparator);
+    double ratioWidth = screenWidth / 10;
+
     return Scaffold(
       appBar: const CustomAppBar(title: "My pieces", weather_info: true),
       body: ContentFrameList(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Wrap(
             children: [
-              _buildStyleFilter(),
-              SizedBox(width: 4),
-              _buildPlacementFilter(),
-              SizedBox(width: 12),
-              _buildWearHistorySort(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildStyleFilter(ratioWidth * 3),
+                  _buildPlacementFilter(ratioWidth * 3),
+                  SizedBox(width: sortSeparator),
+                  _buildWearHistorySort(ratioWidth * 4),
+                ],
+              ),
             ],
           ),
           SizedBox(height: 10),
@@ -76,7 +85,7 @@ class _PiecesListPageState extends State<PiecesListPage> {
     );
   }
 
-  Widget _buildStyleFilter() {
+  Widget _buildStyleFilter(double width) {
     return StyleFilter(
       selectedStyle: styleFilter,
       allStylesOption: allStylesOption,
@@ -85,10 +94,11 @@ class _PiecesListPageState extends State<PiecesListPage> {
           styleFilter = newStyle;
         });
       },
+      width: width,
     );
   }
 
-  Widget _buildPlacementFilter() {
+  Widget _buildPlacementFilter(double width) {
     return PlacementFilter(
       selectedPlacement: placementFilter,
       onPlacementChanged: (PiecePlacement? newPlacement) {
@@ -96,10 +106,11 @@ class _PiecesListPageState extends State<PiecesListPage> {
           placementFilter = newPlacement;
         });
       },
+      width: width,
     );
   }
 
-  Widget _buildWearHistorySort() {
+  Widget _buildWearHistorySort(double width) {
     return WearHistorySort(
       selectedHistorySort: historySort,
       onChanged: (newValue) {
@@ -111,6 +122,7 @@ class _PiecesListPageState extends State<PiecesListPage> {
                 );
         });
       },
+      width: width,
     );
   }
 }

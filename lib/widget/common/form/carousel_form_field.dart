@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:ooo_fit/widget/common/form/carousel.dart';
+import 'package:ooo_fit/widget/common/form/carousel_header.dart';
 
 class CarouselFormField extends StatefulWidget {
   final Widget? leading;
@@ -78,6 +79,15 @@ class _CarouselFormFieldState extends State<CarouselFormField> {
     );
   }
 
+  Widget _buildHeader(FormFieldState<List<String>?> field) {
+    return CarouselHeader(
+      leading: widget.leading,
+      multipleSelection: widget.multipleSelection,
+      onAddCarousel: () => _addCarousel(field),
+      onRemoveCarousel: () => _removeCarousel(field),
+    );
+  }
+
   void _addCarousel(FormFieldState<List<String>?> field) {
     setState(() {
       _selectedIds.add(widget.items[0].id);
@@ -121,53 +131,5 @@ class _CarouselFormFieldState extends State<CarouselFormField> {
   void _updateFormFieldState(FormFieldState<List<String>?> field) {
     final nonEmptyIds = _selectedIds.where((id) => id.isNotEmpty).toList();
     field.didChange(List.from(nonEmptyIds));
-  }
-
-  Widget _buildHeader(FormFieldState<List<String>?> field) {
-    return Column(
-      children: [
-        Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
-            width: double.infinity,
-            color: Color(0xFFE3DAFC),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    widget.leading != null ? widget.leading! : SizedBox(),
-                    const Spacer(),
-                    if (widget.multipleSelection) _buildAddRemoveButtons(field)
-                  ],
-                ),
-              ],
-            )),
-        SizedBox(height: 6),
-      ],
-    );
-  }
-
-  //TODO: refactor to send field parameter less
-  Row _buildAddRemoveButtons(FormFieldState<List<String>?> field) {
-    return Row(
-      children: [
-        IconButton(
-          icon: const Icon(
-            Icons.add_circle_outline_rounded,
-            color: Colors.black,
-            size: 20.0,
-          ),
-          onPressed: () => _addCarousel(field),
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.remove_circle_outline,
-            color: Colors.black,
-            size: 20.0,
-          ),
-          onPressed: () => _removeCarousel(field),
-        ),
-      ],
-    );
   }
 }

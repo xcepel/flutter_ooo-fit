@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:ooo_fit/model/piece_placement.dart';
+import 'package:ooo_fit/utils/constants.dart';
 
 class PiecePlacementPicker extends StatelessWidget {
   final PiecePlacement? selectedPlacement;
@@ -11,6 +12,8 @@ class PiecePlacementPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderChoiceChip(
       name: 'piecePlacement',
+      spacing: chipSpacing,
+      shape: chipShape,
       decoration: const InputDecoration(labelText: 'Placement'),
       initialValue: selectedPlacement,
       autovalidateMode: AutovalidateMode.onUserInteraction,

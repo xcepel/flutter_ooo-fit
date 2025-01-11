@@ -4,9 +4,9 @@ import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/piece_placement.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/widget/common/form/carousel.dart';
-import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/form/carousel_form_field.dart';
-import 'package:ooo_fit/widget/outfits/picture_item.dart';
+import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
+import 'package:ooo_fit/widget/pieces/carousel_picture_item.dart';
 
 class OutfitBuilder extends StatelessWidget {
   final List<String>? selectedPieceIds;
@@ -60,7 +60,7 @@ class OutfitBuilder extends StatelessWidget {
               items: piecesWithCurrentPlacement
                   .map((Piece piece) => CarouselItem(
                         id: piece.id,
-                        child: PictureItem(image: piece.imagePath),
+                        child: CarouselPictureItem(image: piece.imagePath),
                       ))
                   .toList(),
               selectedIds: selectedPiecesWithCurrentPlacementIds,

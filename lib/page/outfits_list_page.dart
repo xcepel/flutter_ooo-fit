@@ -7,6 +7,7 @@ import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/model/wear_history.dart';
 import 'package:ooo_fit/page/outfit_edit_page.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
+import 'package:ooo_fit/utils/constants.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/content_frame_list.dart';
 import 'package:ooo_fit/widget/common/creation_floating_button.dart';
@@ -31,6 +32,7 @@ class _OutfitsListPageState extends State<OutfitsListPage> {
   late Style styleFilter;
   TemperatureType? temperatureFilter;
   WearHistory? historySort;
+  final double sortSeparator = 4.0;
 
   final Style allStylesOption = Style(id: "all", name: "All", color: 0);
 
@@ -42,18 +44,21 @@ class _OutfitsListPageState extends State<OutfitsListPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth =
+        MediaQuery.of(context).size.width - (pageEdges + sortSeparator);
+    double ratioWidth = screenWidth / 10;
+
     return Scaffold(
       appBar: CustomAppBar(title: "My outfits", weather_info: true),
       body: ContentFrameList(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildStyleFilter(),
-              SizedBox(width: 4),
-              _buildTemperatureFilter(),
-              SizedBox(width: 12),
-              _buildWearHistorySort(),
+              _buildStyleFilter(ratioWidth * 3),
+              _buildTemperatureFilter(ratioWidth * 3),
+              SizedBox(width: sortSeparator),
+              _buildWearHistorySort(ratioWidth * 4),
             ],
           ),
           SizedBox(height: 10),
@@ -82,7 +87,7 @@ class _OutfitsListPageState extends State<OutfitsListPage> {
     );
   }
 
-  Widget _buildStyleFilter() {
+  Widget _buildStyleFilter(double width) {
     return StyleFilter(
       selectedStyle: styleFilter,
       allStylesOption: allStylesOption,
@@ -91,10 +96,11 @@ class _OutfitsListPageState extends State<OutfitsListPage> {
           styleFilter = newStyle;
         });
       },
+      width: width,
     );
   }
 
-  Widget _buildTemperatureFilter() {
+  Widget _buildTemperatureFilter(double width) {
     return TemperatureFilter(
       selectedTemperature: temperatureFilter,
       onTemperatureChanged: (newTemperature) {
@@ -102,10 +108,11 @@ class _OutfitsListPageState extends State<OutfitsListPage> {
           temperatureFilter = newTemperature;
         });
       },
+      width: width,
     );
   }
 
-  Widget _buildWearHistorySort() {
+  Widget _buildWearHistorySort(double width) {
     return WearHistorySort(
       selectedHistorySort: historySort,
       onChanged: (newValue) {
@@ -117,6 +124,7 @@ class _OutfitsListPageState extends State<OutfitsListPage> {
                 );
         });
       },
+      width: width,
     );
   }
 }

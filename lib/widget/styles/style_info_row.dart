@@ -27,6 +27,7 @@ class StyleInfoRow extends StatelessWidget {
                 fontSize: 18,
                 color: Colors.black,
               ),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           IconButton(

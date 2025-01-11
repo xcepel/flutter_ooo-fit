@@ -36,7 +36,7 @@ class OutfitListItem extends StatelessWidget {
           image: AspectRatio(
             aspectRatio: 2 / 3,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(12),
               child: outfit.imagePath == null
                   ? _buildPiecesMatrix()
                   : _buildOutfitImage(),

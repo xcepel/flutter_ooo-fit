@@ -10,10 +10,10 @@ import 'package:ooo_fit/utils/functions.dart';
 import 'package:ooo_fit/widget/common/form/delete_button.dart';
 import 'package:ooo_fit/widget/common/form/image_picker.dart';
 import 'package:ooo_fit/widget/common/form/name_form_field.dart';
+import 'package:ooo_fit/widget/common/form/piece_placement_picker.dart';
 import 'package:ooo_fit/widget/common/form/save_button.dart';
 import 'package:ooo_fit/widget/common/form/style_picker.dart';
 import 'package:ooo_fit/widget/common/loading_future_builder.dart';
-import 'package:ooo_fit/widget/pieces/piece_placement_picker.dart';
 
 class PieceEditForm extends StatelessWidget {
   final Piece? piece;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/utils/constants.dart';
 
 class InfoBubble extends StatelessWidget {
   final String message;
@@ -10,7 +11,7 @@ class InfoBubble extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFFE3DAFC),
+        color: const Color(detailLightPurple),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(

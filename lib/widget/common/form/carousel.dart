@@ -54,15 +54,21 @@ class _CarouselState extends State<Carousel> {
     return CarouselSlider.builder(
       itemCount: widget.items.length,
       itemBuilder: (context, index, realIndex) {
-        // Determine if the current item is the focused one
         final bool isFocused = index == _currentIndex;
         return AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
           margin: EdgeInsets.symmetric(horizontal: isFocused ? 4.0 : 0),
           decoration: BoxDecoration(
-            color: isFocused ? Colors.deepPurpleAccent[100] : null,
-            borderRadius: BorderRadius.circular(4.0),
+            border: Border.all(
+              color: isFocused
+                  ? Colors.deepPurpleAccent.shade100
+                  : Colors.transparent,
+              width: 4.0,
+            ),
+            borderRadius: widget.forEventOutfit
+                ? BorderRadius.circular(14)
+                : BorderRadius.circular(8),
           ),
           child: widget.items[index].child,
         );

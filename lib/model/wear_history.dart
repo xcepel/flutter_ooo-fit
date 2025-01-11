@@ -13,12 +13,12 @@ enum WearHistory {
     }
   }
 
-  IconData get picture {
+  Icon get icon {
     switch (this) {
       case WearHistory.leastRecently:
-        return Icons.access_time_rounded;
+        return Icon(Icons.access_time_rounded);
       case WearHistory.mostRecently:
-        return Icons.access_time_filled_rounded;
+        return Icon(Icons.access_time_filled_rounded);
     }
   }
 }

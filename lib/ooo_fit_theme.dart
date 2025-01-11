@@ -1,6 +1,7 @@
 // theme.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ooo_fit/utils/constants.dart';
 
 ThemeData oooFitTheme() {
   return ThemeData(
@@ -12,7 +13,7 @@ ThemeData oooFitTheme() {
     ),
     inputDecorationTheme: InputDecorationTheme(
       enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFFE3DAFC), width: 1.0),
+        borderSide: BorderSide(color: Color(detailLightPurple), width: 1.0),
       ),
       // Underline when the field is focused
       focusedBorder: UnderlineInputBorder(

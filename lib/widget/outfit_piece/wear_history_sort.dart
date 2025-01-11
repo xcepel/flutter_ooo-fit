@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/model/wear_history.dart';
 import 'package:ooo_fit/widget/common/dropdown_filter.dart';
+import 'package:ooo_fit/widget/common/dropdown_filter_item_data.dart';
 
 class WearHistorySort extends StatelessWidget {
   final WearHistory? selectedHistorySort;
   final ValueChanged<String?> onChanged;
+  final double width;
 
   const WearHistorySort({
+    super.key,
     required this.selectedHistorySort,
     required this.onChanged,
-    super.key,
+    required this.width,
   });
 
   @override
   Widget build(BuildContext context) {
     return DropdownFilter<String>(
-      hint: "Wear History",
+      hint: "History",
       value: selectedHistorySort?.label,
+      width: width,
       items: [
         DropdownMenuItem<String>(
           value: "Default",
@@ -26,12 +30,10 @@ class WearHistorySort extends StatelessWidget {
         ),
         ...WearHistory.values.map((sort) => DropdownMenuItem<String>(
               value: sort.label,
-              child: Row(
-                children: [
-                  Icon(sort.picture),
-                  SizedBox(width: 5),
-                  Text(sort.label),
-                ],
+              child: DropdownFilterItemData(
+                icon: sort.icon,
+                label: sort.label,
+                width: width,
               ),
             )),
       ],

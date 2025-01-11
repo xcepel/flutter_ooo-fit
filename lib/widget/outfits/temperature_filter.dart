@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/widget/common/dropdown_filter.dart';
+import 'package:ooo_fit/widget/common/dropdown_filter_item_data.dart';
 
 class TemperatureFilter extends StatelessWidget {
   final TemperatureType? selectedTemperature;
   final ValueChanged<TemperatureType?> onTemperatureChanged;
+  final double width;
 
   const TemperatureFilter({
+    super.key,
     required this.selectedTemperature,
     required this.onTemperatureChanged,
-    super.key,
+    required this.width,
   });
 
   @override
@@ -17,6 +20,7 @@ class TemperatureFilter extends StatelessWidget {
     return DropdownFilter<String>(
       hint: "Temp",
       value: selectedTemperature?.label,
+      width: width,
       items: [
         DropdownMenuItem<String>(
           value: "All",
@@ -26,12 +30,10 @@ class TemperatureFilter extends StatelessWidget {
         ),
         ...TemperatureType.values.map((temperature) => DropdownMenuItem<String>(
               value: temperature.label,
-              child: Row(
-                children: [
-                  temperature.icon,
-                  SizedBox(width: 5),
-                  Text(temperature.label),
-                ],
+              child: DropdownFilterItemData(
+                icon: temperature.icon,
+                label: temperature.label,
+                width: width,
               ),
             )),
       ],
