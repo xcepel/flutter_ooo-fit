@@ -2,13 +2,15 @@ import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/piece_placement.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/wear_history.dart';
-import 'package:ooo_fit/service/auth_service.dart';
 import 'package:ooo_fit/service/entity_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/service/util/image_functions.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PieceService extends EntityService<Piece> {
+  static const String errorStoreMessage =
+      "There was a problem with saving the piece. Please try again.";
+
   final StyleService _styleService;
 
   PieceService(
@@ -24,6 +26,9 @@ class PieceService extends EntityService<Piece> {
     required String imagePath,
   }) async {
     String? newImagePath = await uploadImage(imagePath);
+    if (newImagePath == null) {
+      return errorStoreMessage;
+    }
 
     final Piece piece = Piece(
       id: '',
@@ -31,10 +36,14 @@ class PieceService extends EntityService<Piece> {
       name: name,
       piecePlacement: piecePlacement,
       styleIds: styleIds,
-      imagePath: newImagePath!,
+      imagePath: newImagePath,
     );
 
-    await repository.add(piece);
+    try {
+      await repository.add(piece);
+    } catch (e) {
+      return errorStoreMessage;
+    }
     return null;
   }
 
@@ -46,21 +55,35 @@ class PieceService extends EntityService<Piece> {
     required String imagePath,
   }) async {
     String? newImagePath = await uploadImage(imagePath);
-
-    if (newImagePath != null) {
-      deleteImage(piece.imagePath);
-      final newPiece = piece.copyWith(
-        name: name,
-        imagePath: newImagePath,
-        styleIds: styleIds,
-        piecePlacement: piecePlacement,
-      );
-      //TODO: implement and use update
-      await repository.setOrAdd(piece.id, newPiece);
-      return null;
+    if (newImagePath == null) {
+      return errorStoreMessage;
     }
 
-    return 'Error while uploading the image';
+    deleteImage(piece.imagePath);
+    final newPiece = piece.copyWith(
+      name: name,
+      imagePath: newImagePath,
+      styleIds: styleIds,
+      piecePlacement: piecePlacement,
+    );
+
+    try {
+      await repository.setOrAdd(piece.id, newPiece);
+    } catch (e) {
+      return errorStoreMessage;
+    }
+    return null;
+  }
+
+  @override
+  Future<String?> delete(Piece piece) async {
+    String? error = await super.delete(piece);
+    if (error != null) {
+      return error;
+    }
+
+    deleteImage(piece.imagePath);
+    return null;
   }
 
   Stream<List<Piece>> getFilteredPiecesStream({

@@ -107,7 +107,7 @@ class _EventEditFormState extends State<EventEditForm> {
   }
 
   Future<void> _handleDelete(BuildContext context) async {
-    String? error = await widget._eventService.delete(widget.event!.id);
+    String? error = await widget._eventService.delete(widget.event!);
 
     if (context.mounted) {
       handleActionResult(

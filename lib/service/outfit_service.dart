@@ -10,6 +10,9 @@ import 'package:ooo_fit/service/util/image_functions.dart';
 import 'package:rxdart/rxdart.dart';
 
 class OutfitService extends EntityService<Outfit> {
+  static const String errorStoreMessage =
+      "There was a problem with saving the outfit. Please try again.";
+
   final StyleService _styleService;
   final PieceService _pieceService;
 
@@ -30,6 +33,10 @@ class OutfitService extends EntityService<Outfit> {
     String? newImagePath;
     if (imagePath != null) {
       newImagePath = await uploadImage(imagePath);
+
+      if (newImagePath == null) {
+        return errorStoreMessage;
+      }
     }
 
     final piece = Outfit(
@@ -42,7 +49,11 @@ class OutfitService extends EntityService<Outfit> {
       imagePath: newImagePath,
     );
 
-    await repository.add(piece);
+    try {
+      await repository.add(piece);
+    } catch (e) {
+      return errorStoreMessage;
+    }
     return null;
   }
 
@@ -57,6 +68,10 @@ class OutfitService extends EntityService<Outfit> {
     String? newImagePath;
     if (imagePath != null) {
       newImagePath = await uploadImage(imagePath);
+
+      if (newImagePath == null) {
+        return errorStoreMessage;
+      }
     }
 
     if (newImagePath != null && outfit.imagePath != null) {
@@ -70,8 +85,25 @@ class OutfitService extends EntityService<Outfit> {
       temperature: temperature,
       imagePath: newImagePath,
     );
-    //TODO: implement and use update
-    await repository.setOrAdd(outfit.id, newOutfit);
+
+    try {
+      await repository.setOrAdd(outfit.id, newOutfit);
+    } catch (e) {
+      return errorStoreMessage;
+    }
+    return null;
+  }
+
+  @override
+  Future<String?> delete(Outfit outfit) async {
+    String? error = await super.delete(outfit);
+    if (error != null) {
+      return error;
+    }
+
+    if (outfit.imagePath != null) {
+      deleteImage(outfit.imagePath!);
+    }
     return null;
   }
 

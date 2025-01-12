@@ -11,6 +11,9 @@ import 'package:rxdart/rxdart.dart';
 import 'package:weather/weather.dart';
 
 class EventService extends EntityService<Event> {
+  static const String errorStoreMessage =
+      "There was a problem with saving the event. Please try again.";
+
   final StyleService _styleService;
   final OutfitService _outfitService;
   final WeatherService _weatherService;
@@ -42,7 +45,11 @@ class EventService extends EntityService<Event> {
       temperature: temperature,
     );
 
-    await repository.add(event);
+    try {
+      await repository.add(event);
+    } catch (e) {
+      return errorStoreMessage;
+    }
     return null;
   }
 
@@ -55,7 +62,7 @@ class EventService extends EntityService<Event> {
     required List<String> styleIds,
     required TemperatureType? temperature,
   }) async {
-    final newEvent = event.copyWith(
+    final Event newEvent = event.copyWith(
       name: name,
       eventDatetime: eventDatetime,
       place: place,
@@ -63,8 +70,12 @@ class EventService extends EntityService<Event> {
       styleIds: styleIds,
       temperature: temperature,
     );
-    //TODO: implement and use update
-    await repository.setOrAdd(event.id, newEvent);
+
+    try {
+      await repository.setOrAdd(event.id, newEvent);
+    } catch (e) {
+      return errorStoreMessage;
+    }
     return null;
   }
 
@@ -72,7 +83,7 @@ class EventService extends EntityService<Event> {
     //TODO: get city name form settings
     Weather weather = await _weatherService.getWeatherByCityName('Brno');
     TemperatureType currentTemp =
-        WeatherService.getTemperatureTypeFromWeather(weather);
+        _weatherService.getTemperatureTypeFromWeather(weather);
 
     return saveEvent(
       name: null,

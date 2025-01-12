@@ -2,6 +2,9 @@ import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/service/entity_service.dart';
 
 class StyleService extends EntityService<Style> {
+  static const String errorStoreMessage =
+      "There was a problem with saving the style. Please try again.";
+
   const StyleService(
     super.repository,
     super.authService,
@@ -23,7 +26,11 @@ class StyleService extends EntityService<Style> {
       color: color!,
     );
 
-    await repository.add(style);
+    try {
+      await repository.add(style);
+    } catch (e) {
+      return errorStoreMessage;
+    }
     return null;
   }
 
@@ -38,8 +45,12 @@ class StyleService extends EntityService<Style> {
     }
 
     final newStyle = style.copyWith(name: name, color: color);
-    //TODO: implement and use update
-    await repository.setOrAdd(style.id, newStyle);
+
+    try {
+      await repository.setOrAdd(style.id, newStyle);
+    } catch (e) {
+      return errorStoreMessage;
+    }
     return null;
   }
 

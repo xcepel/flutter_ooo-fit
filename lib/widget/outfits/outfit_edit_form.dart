@@ -70,7 +70,7 @@ class OutfitEditForm extends StatelessWidget {
   }
 
   Future<void> _handleDelete(BuildContext context) async {
-    String? error = await _outfitService.delete(outfit!.id);
+    String? error = await _outfitService.delete(outfit!);
 
     if (context.mounted) {
       handleActionResult(

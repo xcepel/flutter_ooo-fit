@@ -34,7 +34,7 @@ class WeatherService {
     );
   }
 
-  static TemperatureType getTemperatureTypeFromWeather(Weather weather) {
+  TemperatureType getTemperatureTypeFromWeather(Weather weather) {
     return TemperatureType.fromCelsius(weather.temperature!.celsius!);
   }
 }

@@ -12,8 +12,12 @@ class EntityService<T extends Entity> {
     this.authService,
   );
 
-  Future<String?> delete(String id) async {
-    await repository.delete(id);
+  Future<String?> delete(T entity) async {
+    try {
+      await repository.delete(entity.id);
+    } catch (e) {
+      return "Failed to delete. Please try again.";
+    }
     return null;
   }
 
