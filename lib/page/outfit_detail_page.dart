@@ -40,8 +40,8 @@ class OutfitDetailPage extends StatelessWidget {
 
         return Scaffold(
           appBar: CustomAppBar(
-            title: outfit.name ?? "",
-            actionButton: EditButton(
+            title: outfit.name,
+            rightActionButton: EditButton(
               editPage: OutfitEditPage(
                 outfit: outfit,
               ),

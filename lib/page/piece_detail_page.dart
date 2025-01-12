@@ -32,7 +32,7 @@ class PieceDetailPage extends StatelessWidget {
         return Scaffold(
           appBar: CustomAppBar(
             title: pieceData.$1!.name,
-            actionButton: EditButton(
+            rightActionButton: EditButton(
                 editPage: PieceEditPage(
               piece: pieceData.$1,
             )),

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/widget/auth/user_menu.dart';
 import 'package:ooo_fit/widget/weather/weather_info.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final bool weather_info;
-  final Widget? actionButton;
+  final Widget? rightActionButton;
+  final bool userMenu;
 
   const CustomAppBar({
     super.key,
     this.title,
     this.weather_info = false,
-    this.actionButton,
+    this.rightActionButton,
+    this.userMenu = false,
   });
 
   @override
@@ -19,20 +22,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: IconThemeData(color: Colors.white),
       backgroundColor: Colors.deepPurpleAccent,
       centerTitle: true,
-      leading: weather_info
-          ? SizedBox(
-              width: 56,
-              child: WeatherInfo(),
-            )
-          : null,
       title: title != null
           ? Text(
               title!,
               style: const TextStyle(color: Colors.white),
             )
           : null,
+      leading: userMenu ? UserMenu() : null,
       actions: [
-        if (actionButton != null) actionButton!,
+        if (weather_info)
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: WeatherInfo(),
+          ),
+        if (rightActionButton != null) rightActionButton!,
       ],
     );
   }

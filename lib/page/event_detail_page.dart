@@ -39,8 +39,8 @@ class EventDetailPage extends StatelessWidget {
 
         return Scaffold(
           appBar: CustomAppBar(
-            title: event.name ?? '',
-            actionButton: EditButton(
+            title: event.name,
+            rightActionButton: EditButton(
               editPage: EventEditPage(event: event),
             ),
           ),
