@@ -70,9 +70,8 @@ class StylesListPage extends StatelessWidget {
   Widget _buildHelpInfo() {
     return Column(
       children: [
-        SizedBox(height: 20),
+        SizedBox(height: 60),
         InfoBubble(
-          icon: Icons.interests_rounded,
           message: "You can add style using + button.\nTry it now!",
         )
       ],

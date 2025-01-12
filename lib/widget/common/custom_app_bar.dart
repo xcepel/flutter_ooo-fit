@@ -14,7 +14,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.weather_info = false,
     this.rightActionButton,
     this.userMenu = false,
-  });
+  }) : assert(!(rightActionButton != null && weather_info == true),
+            'rightActionButton and weather_info cannot both be set at the same time');
 
   @override
   Widget build(BuildContext context) {
