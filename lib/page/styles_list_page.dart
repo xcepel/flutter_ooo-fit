@@ -6,6 +6,7 @@ import 'package:ooo_fit/widget/common/content_frame_list.dart';
 import 'package:ooo_fit/widget/common/creation_floating_button.dart';
 import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
+import 'package:ooo_fit/widget/common/info_bubble.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/styles/style_dialog.dart';
 import 'package:ooo_fit/widget/styles/style_info_row.dart';
@@ -43,6 +44,9 @@ class StylesListPage extends StatelessWidget {
       child: LoadingStreamBuilder(
         stream: _styleService.getAllStream(),
         builder: (context, stylesList) {
+          if (stylesList.isEmpty) {
+            return _buildHelpInfo();
+          }
           return ListView.separated(
             itemBuilder: (context, index) =>
                 StyleInfoRow(style: stylesList[index]),
@@ -60,6 +64,18 @@ class StylesListPage extends StatelessWidget {
       builder: (BuildContext context) => StyleDialog(
         style: null,
       ),
+    );
+  }
+
+  Widget _buildHelpInfo() {
+    return Column(
+      children: [
+        SizedBox(height: 20),
+        InfoBubble(
+          icon: Icons.interests_rounded,
+          message: "You can add style using + button.\nTry it now!",
+        )
+      ],
     );
   }
 }

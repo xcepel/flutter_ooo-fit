@@ -3,8 +3,13 @@ import 'package:ooo_fit/utils/constants.dart';
 
 class InfoBubble extends StatelessWidget {
   final String message;
+  final IconData icon;
 
-  const InfoBubble({super.key, required this.message});
+  const InfoBubble({
+    super.key,
+    required this.message,
+    this.icon = Icons.star_border_purple500_rounded,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,7 @@ class InfoBubble extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.star_border_outlined, color: Colors.black26, size: 24),
+          Icon(icon, color: Colors.black26, size: 24),
           const SizedBox(width: 8),
           Expanded(
             child: Text(

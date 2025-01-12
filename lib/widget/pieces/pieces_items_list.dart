@@ -4,9 +4,10 @@ import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/page/piece_detail_page.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/widget/common/ghost_card.dart';
+import 'package:ooo_fit/widget/common/info_bubble.dart';
+import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_navigation_tile.dart';
 import 'package:ooo_fit/widget/pieces/piece_list_item.dart';
-import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 
 class PiecesItemsList extends StatelessWidget {
   final List<Piece> pieces;
@@ -20,26 +21,40 @@ class PiecesItemsList extends StatelessWidget {
         MediaQuery.of(context).size.width / 2 - 16; // 2 items per row
 
     return SingleChildScrollView(
-      child: Wrap(spacing: 8, runSpacing: 8, children: [
-        ...pieces.map((Piece piece) {
-          return LoadingStreamBuilder(
-            stream: _styleService.getPiecesStylesByIdsStream(piece.styleIds),
-            builder: (context, stylesList) {
-              return PageNavigationTile(
-                dstPage: PieceDetailPage(pieceId: piece.id),
-                child: SizedBox(
-                  width: itemWidth,
-                  child: PieceListItem(
-                    piece: piece,
-                    pieceStyles: stylesList,
-                  ),
-                ),
-              );
-            },
-          );
-        }),
-        if (pieces.length == 1) GhostCard(itemWidth: itemWidth),
-      ]),
+      child: pieces.isEmpty
+          ? _buildHelpInfo()
+          : Wrap(spacing: 8, runSpacing: 8, children: [
+              ...pieces.map((Piece piece) {
+                return LoadingStreamBuilder(
+                  stream:
+                      _styleService.getPiecesStylesByIdsStream(piece.styleIds),
+                  builder: (context, stylesList) {
+                    return PageNavigationTile(
+                      dstPage: PieceDetailPage(pieceId: piece.id),
+                      child: SizedBox(
+                        width: itemWidth,
+                        child: PieceListItem(
+                          piece: piece,
+                          pieceStyles: stylesList,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }),
+              if (pieces.length == 1) GhostCard(itemWidth: itemWidth),
+            ]),
+    );
+  }
+
+  Widget _buildHelpInfo() {
+    return Column(
+      children: [
+        SizedBox(height: 20),
+        InfoBubble(
+          message: "You can add piece using + button.\nTry it now!",
+        )
+      ],
     );
   }
 }

@@ -93,7 +93,8 @@ class EventDetailPage extends StatelessWidget {
             ),
           )
         : InfoBubble(
-            message: "You haven't chosen an outfit yet! Do it now!",
+            message:
+                "You haven't chosen an outfit for the event yet! \nDo it now!",
           );
   }
 

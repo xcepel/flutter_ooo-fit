@@ -84,8 +84,9 @@ class OutfitDetailPage extends StatelessWidget {
     return imagePath != null
         ? _buildOutfitImage(imagePath)
         : InfoBubble(
+            icon: Icons.add_a_photo_rounded,
             message:
-                "You haven't taken a picture of your outfit yet. Do it now!",
+                "You haven't taken a picture of your outfit yet.\nDo it now!",
           );
   }
 
