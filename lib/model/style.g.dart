@@ -8,6 +8,7 @@ part of 'style.dart';
 
 Style _$StyleFromJson(Map<String, dynamic> json) => Style(
       id: json['id'] as String,
+      userId: json['userId'] as String,
       createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['createdAt'], const TimestampConverter().fromJson),
       name: json['name'] as String,
@@ -16,6 +17,7 @@ Style _$StyleFromJson(Map<String, dynamic> json) => Style(
 
 Map<String, dynamic> _$StyleToJson(Style instance) => <String, dynamic>{
       'id': instance.id,
+      'userId': instance.userId,
       if (_$JsonConverterToJson<Timestamp, DateTime>(
               instance.createdAt, const TimestampConverter().toJson)
           case final value?)

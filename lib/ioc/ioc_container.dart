@@ -49,18 +49,20 @@ class IocContainer {
     get.registerSingleton(
       StyleService(
         get<DatabaseService<Style>>(),
+        get<AuthService>(),
       ),
     );
 
     get.registerSingleton(PieceService(
       get<DatabaseService<Piece>>(),
-      get<StyleService>(),
       get<AuthService>(),
+      get<StyleService>(),
     ));
 
     get.registerSingleton(
       OutfitService(
         get<DatabaseService<Outfit>>(),
+        get<AuthService>(),
         get<StyleService>(),
         get<PieceService>(),
       ),
@@ -69,6 +71,7 @@ class IocContainer {
     get.registerSingleton(
       EventService(
         get<DatabaseService<Event>>(),
+        get<AuthService>(),
         get<StyleService>(),
         get<OutfitService>(),
         get<WeatherService>(),

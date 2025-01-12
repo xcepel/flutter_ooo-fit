@@ -3,19 +3,19 @@ import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/model/wear_history.dart';
-import 'package:ooo_fit/service/database_service.dart';
+import 'package:ooo_fit/service/entity_service.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/service/util/image_functions.dart';
 import 'package:rxdart/rxdart.dart';
 
-class OutfitService {
-  final DatabaseService<Outfit> _outfitRepository;
+class OutfitService extends EntityService<Outfit> {
   final StyleService _styleService;
   final PieceService _pieceService;
 
   const OutfitService(
-    this._outfitRepository,
+    super.repository,
+    super.authService,
     this._styleService,
     this._pieceService,
   );
@@ -34,6 +34,7 @@ class OutfitService {
 
     final piece = Outfit(
       id: '',
+      userId: getCurrentUserId(),
       name: name,
       pieceIds: pieceIds,
       styleIds: styleIds,
@@ -41,7 +42,7 @@ class OutfitService {
       imagePath: newImagePath,
     );
 
-    await _outfitRepository.add(piece);
+    await repository.add(piece);
     return null;
   }
 
@@ -70,26 +71,8 @@ class OutfitService {
       imagePath: newImagePath,
     );
     //TODO: implement and use update
-    await _outfitRepository.setOrAdd(outfit.id, newOutfit);
+    await repository.setOrAdd(outfit.id, newOutfit);
     return null;
-  }
-
-  Future<String?> deleteOutfit({required Outfit outfit}) async {
-    await _outfitRepository.delete(outfit.id);
-
-    if (outfit.imagePath != null) {
-      await deleteImage(outfit.imagePath!);
-    }
-
-    return null;
-  }
-
-  Stream<List<Outfit>> getAllOutfitsStream() {
-    return _outfitRepository.observeDocuments();
-  }
-
-  Stream<Outfit?> getOutfitByIdStream(String outfitId) {
-    return _outfitRepository.observeDocument(outfitId);
   }
 
   // returns list of outfits and (styleId -> style), (pieceId -> piece) dictionaries
@@ -110,7 +93,7 @@ class OutfitService {
           filteredOutfits.expand((outfit) => outfit.pieceIds).toSet();
 
       final Stream<Map<String, Style>> stylesByIdStream =
-          _styleService.getStylesByIdsStream(styleIds);
+          _styleService.getByIdsStream(styleIds);
       final Stream<Map<String, Piece>> piecesByIdStream =
           _pieceService.getPiecesByIdsStream(pieceIds);
 
@@ -131,7 +114,7 @@ class OutfitService {
     TemperatureType? temperatureFilter,
     WearHistory? historySort,
   }) {
-    return getAllOutfitsStream().map((List<Outfit> outfits) {
+    return getAllStream().map((List<Outfit> outfits) {
       final List<Outfit> filteredOutfits = outfits.where((outfit) {
         final bool matchesStyle = styleFilter == null ||
             outfit.styleIds.any((id) => id == styleFilter.id);
@@ -163,7 +146,7 @@ class OutfitService {
   // returns one outfit by id and its (styleId -> style), (pieceId -> piece) dictionaries
   Stream<(Outfit?, Map<String, Style>, Map<String, Piece>)>
       getOutfitDetailByIdStream(String outfitId) {
-    final Stream<Outfit?> outfitStream = getOutfitByIdStream(outfitId);
+    final Stream<Outfit?> outfitStream = getByIdStream(outfitId);
 
     return outfitStream.switchMap((Outfit? outfit) {
       if (outfit == null) {
@@ -172,7 +155,7 @@ class OutfitService {
 
       final Set<String> styleIds = outfit.styleIds.toSet();
       final Stream<Map<String, Style>> stylesStream =
-          _styleService.getStylesByIdsStream(styleIds);
+          _styleService.getByIdsStream(styleIds);
 
       final Set<String> pieceIds = outfit.pieceIds.toSet();
       final Stream<Map<String, Piece>> piecesStream =

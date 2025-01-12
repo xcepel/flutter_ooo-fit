@@ -8,6 +8,7 @@ part of 'outfit.dart';
 
 Outfit _$OutfitFromJson(Map<String, dynamic> json) => Outfit(
       id: json['id'] as String,
+      userId: json['userId'] as String,
       createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['createdAt'], const TimestampConverter().fromJson),
       name: json['name'] as String?,
@@ -23,6 +24,7 @@ Outfit _$OutfitFromJson(Map<String, dynamic> json) => Outfit(
 
 Map<String, dynamic> _$OutfitToJson(Outfit instance) => <String, dynamic>{
       'id': instance.id,
+      'userId': instance.userId,
       if (_$JsonConverterToJson<Timestamp, DateTime>(
               instance.createdAt, const TimestampConverter().toJson)
           case final value?)

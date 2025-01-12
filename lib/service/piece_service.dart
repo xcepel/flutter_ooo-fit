@@ -3,20 +3,18 @@ import 'package:ooo_fit/model/piece_placement.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/wear_history.dart';
 import 'package:ooo_fit/service/auth_service.dart';
-import 'package:ooo_fit/service/database_service.dart';
+import 'package:ooo_fit/service/entity_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/service/util/image_functions.dart';
 import 'package:rxdart/rxdart.dart';
 
-class PieceService {
-  final DatabaseService<Piece> _pieceRepository;
+class PieceService extends EntityService<Piece> {
   final StyleService _styleService;
-  final AuthService _authService;
 
   PieceService(
-    this._pieceRepository,
+    super.repository,
+    super.authService,
     this._styleService,
-    this._authService,
   );
 
   Future<String?> savePiece({
@@ -28,14 +26,15 @@ class PieceService {
     String? newImagePath = await uploadImage(imagePath);
 
     final Piece piece = Piece(
-        id: '',
-        name: name,
-        piecePlacement: piecePlacement,
-        styleIds: styleIds,
-        imagePath: newImagePath!,
-        userId: _authService.currentUser?.uid);
+      id: '',
+      userId: getCurrentUserId(),
+      name: name,
+      piecePlacement: piecePlacement,
+      styleIds: styleIds,
+      imagePath: newImagePath!,
+    );
 
-    await _pieceRepository.add(piece);
+    await repository.add(piece);
     return null;
   }
 
@@ -57,32 +56,11 @@ class PieceService {
         piecePlacement: piecePlacement,
       );
       //TODO: implement and use update
-      await _pieceRepository.setOrAdd(piece.id, newPiece);
+      await repository.setOrAdd(piece.id, newPiece);
       return null;
     }
 
     return 'Error while uploading the image';
-  }
-
-  Future<String?> deletePiece({required Piece piece}) async {
-    await _pieceRepository.delete(piece.id);
-    await deleteImage(piece.imagePath);
-
-    return null;
-  }
-
-  List<Piece> _filterPiecesByUserId(List<Piece> pieces) {
-    final String? currentUserId = _authService.currentUser?.uid;
-    return pieces
-        .where(
-            (piece) => currentUserId == null || piece.userId == currentUserId)
-        .toList();
-  }
-
-  Stream<List<Piece>> getAllPiecesStream() {
-    // enable for filtering by userId
-    // return _pieceRepository.observeDocuments().map(_filterPiecesByUserId);
-    return _pieceRepository.observeDocuments();
   }
 
   Stream<List<Piece>> getFilteredPiecesStream({
@@ -90,7 +68,7 @@ class PieceService {
     PiecePlacement? placementFilter,
     WearHistory? historySort,
   }) {
-    return getAllPiecesStream().map((List<Piece> pieces) {
+    return getAllStream().map((List<Piece> pieces) {
       final List<Piece> filteredPieces = pieces.where((piece) {
         final bool matchesStyle = styleFilter == null ||
             piece.styleIds.any((id) => id == styleFilter.id);
@@ -119,12 +97,8 @@ class PieceService {
     });
   }
 
-  Stream<Piece?> getPieceByIdStream(String pieceId) {
-    return _pieceRepository.observeDocument(pieceId);
-  }
-
   Stream<Map<String, Piece>> getPiecesByIdsStream(Set<String> pieceIds) {
-    return _pieceRepository.observeDocumentsByIds(pieceIds).map(
+    return repository.observeDocumentsByIds(pieceIds).map(
       (pieces) {
         return {for (final piece in pieces) piece.id: piece};
       },
@@ -133,7 +107,7 @@ class PieceService {
 
   Stream<(Piece?, Map<String, Style>)> getPieceDetailByIdStream(
       String pieceId) {
-    final Stream<Piece?> pieceStream = getPieceByIdStream(pieceId);
+    final Stream<Piece?> pieceStream = getByIdStream(pieceId);
 
     return pieceStream.switchMap((Piece? piece) {
       if (piece == null) {
@@ -142,19 +116,19 @@ class PieceService {
 
       final Set<String> styleIds = piece.styleIds.toSet();
       final Stream<Map<String, Style>> stylesStream =
-          _styleService.getStylesByIdsStream(styleIds);
+          _styleService.getByIdsStream(styleIds);
 
       return stylesStream.map((styles) => (piece, styles));
     });
   }
 
   Stream<(List<Piece>, Map<String, Style>)> getPiecesWithStylesStream() {
-    final piecesStream = getAllPiecesStream();
+    final piecesStream = getAllStream();
 
     return piecesStream.switchMap(
       (pieces) {
         final styleIds = pieces.expand((piece) => piece.styleIds).toSet();
-        final stylesByIdStream = _styleService.getStylesByIdsStream(styleIds);
+        final stylesByIdStream = _styleService.getByIdsStream(styleIds);
 
         return stylesByIdStream.map((styles) => (pieces, styles));
       },

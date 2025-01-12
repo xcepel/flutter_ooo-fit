@@ -86,7 +86,7 @@ class _EventEditFormState extends State<EventEditForm> {
 
   Widget _buildCarouselFormField() {
     return LoadingStreamBuilder(
-      stream: widget._outfitService.getAllOutfitsStream(),
+      stream: widget._outfitService.getAllStream(),
       builder: (context, outfits) {
         String? outfitId = widget.event?.outfitId;
         return CarouselFormField(
@@ -107,8 +107,7 @@ class _EventEditFormState extends State<EventEditForm> {
   }
 
   Future<void> _handleDelete(BuildContext context) async {
-    String? error =
-        await widget._eventService.deleteEvent(event: widget.event!);
+    String? error = await widget._eventService.delete(widget.event!.id);
 
     if (context.mounted) {
       handleActionResult(

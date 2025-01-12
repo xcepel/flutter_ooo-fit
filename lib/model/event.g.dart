@@ -8,6 +8,7 @@ part of 'event.dart';
 
 Event _$EventFromJson(Map<String, dynamic> json) => Event(
       id: json['id'] as String,
+      userId: json['userId'] as String,
       createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['createdAt'], const TimestampConverter().fromJson),
       name: json['name'] as String?,
@@ -23,6 +24,7 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
 
 Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
       'id': instance.id,
+      'userId': instance.userId,
       if (_$JsonConverterToJson<Timestamp, DateTime>(
               instance.createdAt, const TimestampConverter().toJson)
           case final value?)

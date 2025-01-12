@@ -26,7 +26,7 @@ class StyleFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoadingStreamBuilder<List<Style>>(
-      stream: _styleService.getAllStylesStream(),
+      stream: _styleService.getAllStream(),
       builder: (context, styleList) {
         final List<Style> allStylesList = [allStylesOption, ...styleList];
 

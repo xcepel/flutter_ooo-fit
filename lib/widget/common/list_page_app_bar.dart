@@ -13,7 +13,7 @@ class ListPageAppBar extends StatelessWidget implements PreferredSizeWidget {
     return CustomAppBar(
       title: title,
       weather_info: true,
-      lea: UserMenu(),
+      userMenu: true,
     );
   }
 

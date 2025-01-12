@@ -43,7 +43,7 @@ class StyleInfoRow extends StatelessWidget {
           SizedBox(width: 10),
           IconButton(
             icon: Icon(Icons.delete_rounded),
-            onPressed: () => _styleService.delete(id: style.id),
+            onPressed: () => _styleService.delete(style.id),
           ),
         ],
       ),

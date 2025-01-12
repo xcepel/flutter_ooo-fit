@@ -1,10 +1,11 @@
 import 'package:ooo_fit/model/style.dart';
-import 'package:ooo_fit/service/database_service.dart';
+import 'package:ooo_fit/service/entity_service.dart';
 
-class StyleService {
-  final DatabaseService<Style> _styleRepository;
-
-  const StyleService(this._styleRepository);
+class StyleService extends EntityService<Style> {
+  const StyleService(
+    super.repository,
+    super.authService,
+  );
 
   Future<String?> saveStyle({
     required String? name,
@@ -17,11 +18,12 @@ class StyleService {
 
     final style = Style(
       id: '',
+      userId: getCurrentUserId(),
       name: name!,
       color: color!,
     );
 
-    await _styleRepository.add(style);
+    await repository.add(style);
     return null;
   }
 
@@ -37,7 +39,7 @@ class StyleService {
 
     final newStyle = style.copyWith(name: name, color: color);
     //TODO: implement and use update
-    await _styleRepository.setOrAdd(style.id, newStyle);
+    await repository.setOrAdd(style.id, newStyle);
     return null;
   }
 
@@ -51,31 +53,10 @@ class StyleService {
     return null;
   }
 
-  Future<String?> delete({required String id}) async {
-    await _styleRepository.delete(id);
-    return null;
-  }
-
-  // Return stream of alphabetically sorted styles
-  Stream<List<Style>> getAllStylesStream() {
-    return _styleRepository.observeDocuments().map((styles) {
-      styles.sort((a, b) => a.name.compareTo(b.name));
-      return styles;
-    });
-  }
-
-  Stream<Map<String, Style>> getStylesByIdsStream(Set<String> styleIds) {
-    return _styleRepository.observeDocumentsByIds(styleIds).map(
-      (styles) {
-        return {for (final style in styles) style.id: style};
-      },
-    );
-  }
-
   Stream<List<Style>> getPiecesStylesByIdsStream(List<String> styleIds) {
     Set<String> styleIdsSet = Set<String>.from(styleIds);
 
-    return _styleRepository.observeDocumentsByIds(styleIdsSet).map(
+    return repository.observeDocumentsByIds(styleIdsSet).map(
       (styles) {
         return styles;
       },

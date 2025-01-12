@@ -27,7 +27,7 @@ class OutfitListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoadingStreamBuilder<Map<String, Style>>(
-      stream: _styleService.getStylesByIdsStream(outfit.styleIds.toSet()),
+      stream: _styleService.getByIdsStream(outfit.styleIds.toSet()),
       builder: (context, Map<String, Style> styles) {
         return ListItemCard(
           name: outfit.name,

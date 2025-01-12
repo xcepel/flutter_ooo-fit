@@ -1,10 +1,8 @@
-import 'dart:async';
-
 import 'package:ooo_fit/model/event.dart';
 import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
-import 'package:ooo_fit/service/database_service.dart';
+import 'package:ooo_fit/service/entity_service.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
 import 'package:ooo_fit/service/util/date_normalize.dart';
@@ -12,14 +10,14 @@ import 'package:ooo_fit/service/weather_service.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:weather/weather.dart';
 
-class EventService {
-  final DatabaseService<Event> _eventRepository;
+class EventService extends EntityService<Event> {
   final StyleService _styleService;
   final OutfitService _outfitService;
   final WeatherService _weatherService;
 
   const EventService(
-    this._eventRepository,
+    super.repository,
+    super.authService,
     this._styleService,
     this._outfitService,
     this._weatherService,
@@ -35,6 +33,7 @@ class EventService {
   }) async {
     final event = Event(
       id: '',
+      userId: getCurrentUserId(),
       name: name,
       eventDatetime: eventDatetime,
       place: place,
@@ -43,7 +42,7 @@ class EventService {
       temperature: temperature,
     );
 
-    await _eventRepository.add(event);
+    await repository.add(event);
     return null;
   }
 
@@ -65,12 +64,7 @@ class EventService {
       temperature: temperature,
     );
     //TODO: implement and use update
-    await _eventRepository.setOrAdd(event.id, newEvent);
-    return null;
-  }
-
-  Future<String?> deleteEvent({required Event event}) async {
-    await _eventRepository.delete(event.id);
+    await repository.setOrAdd(event.id, newEvent);
     return null;
   }
 
@@ -90,16 +84,8 @@ class EventService {
     );
   }
 
-  Stream<List<Event>> getAllEventsStream() {
-    return _eventRepository.observeDocuments();
-  }
-
-  Stream<Event?> getEventByIdStream(String eventId) {
-    return _eventRepository.observeDocument(eventId);
-  }
-
   Stream<Map<DateTime, List<Event>>> getGroupedEventsStream() {
-    return getAllEventsStream().map((List<Event> events) {
+    return getAllStream().map((List<Event> events) {
       final Map<DateTime, List<Event>> groupedEvents = {};
       for (final Event event in events) {
         final DateTime date = DateTime(
@@ -122,7 +108,7 @@ class EventService {
   Stream<List<Event>> getEventsByDay(DateTime day) {
     final DateTime normalizedDay = DateNormalize(day).normalize();
 
-    return getAllEventsStream().map((List<Event> events) {
+    return getAllStream().map((List<Event> events) {
       return events.where((Event event) {
         final DateTime eventDay = DateTime(
           event.eventDatetime.year,
@@ -136,7 +122,7 @@ class EventService {
 
   Stream<(Event?, Outfit?, Map<String, Style>)> getEventDetailByIdStream(
       String eventId) {
-    final Stream<Event?> eventStream = getEventByIdStream(eventId);
+    final Stream<Event?> eventStream = getByIdStream(eventId);
 
     return eventStream.switchMap((Event? event) {
       if (event == null) {
@@ -144,12 +130,12 @@ class EventService {
       }
 
       final Stream<Outfit?> outfitStream = event.outfitId != null
-          ? _outfitService.getOutfitByIdStream(event.outfitId!)
+          ? _outfitService.getByIdStream(event.outfitId!)
           : Stream.value(null);
 
       final Set<String> styleIds = event.styleIds.toSet();
       final Stream<Map<String, Style>> stylesStream =
-          _styleService.getStylesByIdsStream(styleIds);
+          _styleService.getByIdsStream(styleIds);
 
       return Rx.combineLatest2<Outfit?, Map<String, Style>,
           (Event?, Outfit?, Map<String, Style>)>(

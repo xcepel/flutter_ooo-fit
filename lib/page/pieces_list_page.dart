@@ -33,7 +33,8 @@ class _PiecesListPageState extends State<PiecesListPage> {
   WearHistory? historySort;
   final double sortSeparator = 4.0;
 
-  final Style allStylesOption = Style(id: "all", name: "All", color: 0);
+  final Style allStylesOption =
+      Style(id: "all", userId: '', name: "All", color: 0);
 
   @override
   void initState() {

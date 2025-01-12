@@ -41,7 +41,7 @@ class StylesListPage extends StatelessWidget {
   Widget _buildStyleList() {
     return Expanded(
       child: LoadingStreamBuilder(
-        stream: _styleService.getAllStylesStream(),
+        stream: _styleService.getAllStream(),
         builder: (context, stylesList) {
           return ListView.separated(
             itemBuilder: (context, index) =>

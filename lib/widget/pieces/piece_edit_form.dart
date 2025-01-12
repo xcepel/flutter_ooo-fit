@@ -66,7 +66,7 @@ class PieceEditForm extends StatelessWidget {
   }
 
   Future<void> _handleDelete(BuildContext context) async {
-    String? error = await _pieceService.deletePiece(piece: piece!);
+    String? error = await _pieceService.delete(piece!.id);
 
     if (context.mounted) {
       handleActionResult(

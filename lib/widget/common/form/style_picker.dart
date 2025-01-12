@@ -16,7 +16,7 @@ class StylePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoadingStreamBuilder(
-      stream: _styleService.getAllStylesStream(),
+      stream: _styleService.getAllStream(),
       builder: (context, styles) {
         return FormBuilderFilterChip(
           name: 'styleIds',

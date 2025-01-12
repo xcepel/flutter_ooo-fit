@@ -21,7 +21,7 @@ class OutfitBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoadingStreamBuilder(
-      stream: _pieceService.getAllPiecesStream(),
+      stream: _pieceService.getAllStream(),
       builder: (context, pieces) {
         return Column(
           children: PiecePlacement.values.map((PiecePlacement placement) {

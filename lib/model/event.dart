@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:ooo_fit/model/entity.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/service/util/timestamp_converter.dart';
 
 part 'event.g.dart';
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
-class Event {
-  final String id;
-
+class Event extends Entity {
   @TimestampConverter()
   final DateTime? createdAt;
 
@@ -27,7 +26,8 @@ class Event {
   final TemperatureType? temperature;
 
   const Event({
-    required this.id,
+    required super.id,
+    required super.userId,
     this.createdAt,
     required this.name,
     required this.eventDatetime,
@@ -44,6 +44,7 @@ class Event {
   //TODO: https://stackoverflow.com/questions/68009392/dart-custom-copywith-method-with-nullable-properties
   Event copyWith({
     String? id,
+    String? userId,
     DateTime? createdAt,
     DateTime? eventDatetime,
     String? place,
@@ -54,6 +55,7 @@ class Event {
   }) {
     return Event(
       id: id ?? this.id,
+      userId: userId ?? this.userId,
       createdAt: createdAt ?? this.createdAt,
       eventDatetime: eventDatetime ?? this.eventDatetime,
       place: place ?? this.place,
