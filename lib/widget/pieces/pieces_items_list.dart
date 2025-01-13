@@ -10,10 +10,15 @@ import 'package:ooo_fit/widget/common/page_navigation_tile.dart';
 import 'package:ooo_fit/widget/pieces/piece_list_item.dart';
 
 class PiecesItemsList extends StatelessWidget {
+  final bool fromOutfitDetail;
   final List<Piece> pieces;
   final StyleService _styleService = GetIt.instance.get<StyleService>();
 
-  PiecesItemsList({super.key, required this.pieces});
+  PiecesItemsList({
+    super.key,
+    required this.pieces,
+    this.fromOutfitDetail = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +55,11 @@ class PiecesItemsList extends StatelessWidget {
   Widget _buildHelpInfo() {
     return Column(
       children: [
-        SizedBox(height: 20),
+        SizedBox(height: fromOutfitDetail ? 0 : 20),
         InfoBubble(
-          message: "You can add piece using + button.\nTry it now!",
+          message: fromOutfitDetail
+              ? "Your outfit does not have any pieces.\nAdd them now!"
+              : "There are no pieces with this type.\nYou can add piece using + button.\nTry it now!",
         )
       ],
     );

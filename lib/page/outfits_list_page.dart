@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/outfit.dart';
@@ -5,6 +7,7 @@ import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/model/wear_history.dart';
+import 'package:ooo_fit/page/outfit_detail_page.dart';
 import 'package:ooo_fit/page/outfit_edit_page.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/utils/constants.dart';
@@ -66,6 +69,7 @@ class _OutfitsListPageState extends State<OutfitsListPage> {
               _buildWearHistorySort(ratioWidth * 4),
             ],
           ),
+          _buildRandomOutfitButton(),
           SizedBox(height: 10),
           LoadingStreamBuilder<
               (List<Outfit>, Map<String, Style>, Map<String, Piece>)>(
@@ -130,6 +134,46 @@ class _OutfitsListPageState extends State<OutfitsListPage> {
         });
       },
       width: width,
+    );
+  }
+
+  Widget _buildRandomOutfitButton() {
+    return LoadingStreamBuilder<List<Outfit>>(
+      stream: _outfitService.getFilteredOutfitsStream(
+        styleFilter: styleFilter == allStylesOption ? null : styleFilter,
+        temperatureFilter: temperatureFilter,
+        historySort: historySort,
+      ),
+      builder: (context, outfits) {
+        if (outfits.isEmpty) {
+          return SizedBox();
+        } else {
+          return ElevatedButton(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.shuffle, color: Colors.grey),
+                SizedBox(width: 5),
+                Text(
+                  style: TextStyle(color: Colors.black54),
+                  "Choose Random Outfit",
+                ),
+              ],
+            ),
+            onPressed: () {
+              final Outfit randomOutfit =
+                  outfits[Random().nextInt(outfits.length)];
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      OutfitDetailPage(outfitId: randomOutfit.id),
+                ),
+              );
+            },
+          );
+        }
+      },
     );
   }
 }

@@ -54,7 +54,8 @@ class OutfitItemsList extends StatelessWidget {
       children: [
         SizedBox(height: 20),
         InfoBubble(
-          message: "You can add outfit using + button.\nTry it now!",
+          message:
+              "There are no outfits with this type.\nYou can add outfit using + button.\nTry it now!",
         )
       ],
     );

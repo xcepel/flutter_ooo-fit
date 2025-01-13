@@ -70,7 +70,10 @@ class OutfitDetailPage extends StatelessWidget {
               _buildOutfitImageSection(outfit.imagePath),
               const PageDivider(),
               const SizedBox(height: 5),
-              PiecesItemsList(pieces: pieces.values.toList()),
+              PiecesItemsList(
+                pieces: pieces.values.toList(),
+                fromOutfitDetail: true,
+              ),
             ],
           ),
           bottomNavigationBar:

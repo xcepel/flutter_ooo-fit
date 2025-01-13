@@ -95,14 +95,14 @@ class OutfitService extends EntityService<Outfit> {
   }
 
   @override
-  Future<String?> delete(Outfit outfit) async {
-    String? error = await super.delete(outfit);
+  Future<String?> delete(Outfit entity) async {
+    String? error = await super.delete(entity);
     if (error != null) {
       return error;
     }
 
-    if (outfit.imagePath != null) {
-      deleteImage(outfit.imagePath!);
+    if (entity.imagePath != null) {
+      deleteImage(entity.imagePath!);
     }
     return null;
   }
@@ -114,7 +114,7 @@ class OutfitService extends EntityService<Outfit> {
     TemperatureType? temperatureFilter,
     WearHistory? historySort,
   }) {
-    return _getFilteredOutfitsStream(
+    return getFilteredOutfitsStream(
       styleFilter: styleFilter,
       temperatureFilter: temperatureFilter,
       historySort: historySort,
@@ -141,7 +141,7 @@ class OutfitService extends EntityService<Outfit> {
     });
   }
 
-  Stream<List<Outfit>> _getFilteredOutfitsStream({
+  Stream<List<Outfit>> getFilteredOutfitsStream({
     Style? styleFilter,
     TemperatureType? temperatureFilter,
     WearHistory? historySort,
