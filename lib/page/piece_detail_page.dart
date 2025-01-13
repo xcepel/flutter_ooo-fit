@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:ooo_fit/model/outfit.dart';
+import 'package:ooo_fit/model/piece.dart';
+import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/page/piece_edit_page.dart';
+import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/utils/date_time_formater.dart';
 import 'package:ooo_fit/utils/page_types.dart';
@@ -11,13 +15,14 @@ import 'package:ooo_fit/widget/common/edit_button.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
 import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
-import 'package:ooo_fit/widget/outfit_piece/list_item.dart';
 import 'package:ooo_fit/widget/outfit_piece/sized_picture.dart';
+import 'package:ooo_fit/widget/outfits/outfit_items_list.dart';
 import 'package:ooo_fit/widget/styles/style_data_row.dart';
 
 class PieceDetailPage extends StatelessWidget {
   final String pieceId;
   final PieceService _pieceService = GetIt.instance.get<PieceService>();
+  final OutfitService _outfitService = GetIt.instance.get<OutfitService>();
 
   PieceDetailPage({
     super.key,
@@ -72,14 +77,18 @@ class PieceDetailPage extends StatelessWidget {
                 },
               ),
               PageDivider(),
-              // TODO nevim jak to tahat. budeme to vubec ukazovat, nebo to nenapadne zahrabeme?
               DescriptionLabel(label: "In outfits", value: ""),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  return ListItem(text: "outfit$index");
+              LoadingStreamBuilder<
+                  (List<Outfit>, Map<String, Style>, Map<String, Piece>)>(
+                stream: _outfitService.getPieceOutfitsWithStylesAndPiecesStream(
+                    pieceId: pieceId),
+                builder: (context, data) {
+                  return OutfitItemsList(
+                    outfits: data.$1,
+                    styles: data.$2,
+                    pieces: data.$3,
+                    fromPieceDetail: true,
+                  );
                 },
               ),
             ],

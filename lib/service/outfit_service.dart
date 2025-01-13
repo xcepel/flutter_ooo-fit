@@ -107,40 +107,6 @@ class OutfitService extends EntityService<Outfit> {
     return null;
   }
 
-  // returns list of outfits and (styleId -> style), (pieceId -> piece) dictionaries
-  Stream<(List<Outfit>, Map<String, Style>, Map<String, Piece>)>
-      getFilteredOutfitsWithStylesAndPiecesStream({
-    Style? styleFilter,
-    TemperatureType? temperatureFilter,
-    WearHistory? historySort,
-  }) {
-    return getFilteredOutfitsStream(
-      styleFilter: styleFilter,
-      temperatureFilter: temperatureFilter,
-      historySort: historySort,
-    ).switchMap((List<Outfit> filteredOutfits) {
-      final Set<String> styleIds =
-          filteredOutfits.expand((outfit) => outfit.styleIds).toSet();
-      final Set<String> pieceIds =
-          filteredOutfits.expand((outfit) => outfit.pieceIds).toSet();
-
-      final Stream<Map<String, Style>> stylesByIdStream =
-          _styleService.getByIdsStream(styleIds);
-      final Stream<Map<String, Piece>> piecesByIdStream =
-          _pieceService.getPiecesByIdsStream(pieceIds);
-
-      return Rx.combineLatest2(
-        stylesByIdStream,
-        piecesByIdStream,
-        (Map<String, Style> styles, Map<String, Piece> pieces) => (
-          filteredOutfits,
-          styles,
-          pieces,
-        ),
-      );
-    });
-  }
-
   Stream<List<Outfit>> getFilteredOutfitsStream({
     Style? styleFilter,
     TemperatureType? temperatureFilter,
@@ -161,6 +127,60 @@ class OutfitService extends EntityService<Outfit> {
       }
 
       return filteredOutfits;
+    });
+  }
+
+  Stream<(List<Outfit>, Map<String, Style>, Map<String, Piece>)>
+      getPieceOutfitsWithStylesAndPiecesStream({
+    required String pieceId,
+  }) {
+    final Stream<List<Outfit>> filteredOutfitsStream = getAllStream().map(
+      (List<Outfit> outfits) =>
+          outfits.where((outfit) => outfit.pieceIds.contains(pieceId)).toList(),
+    );
+
+    return _combineOutfitsWithStylesAndPieces(filteredOutfitsStream);
+  }
+
+  Stream<(List<Outfit>, Map<String, Style>, Map<String, Piece>)>
+      getFilteredOutfitsWithStylesAndPiecesStream({
+    Style? styleFilter,
+    TemperatureType? temperatureFilter,
+    WearHistory? historySort,
+  }) {
+    final Stream<List<Outfit>> filteredOutfitsStream = getFilteredOutfitsStream(
+      styleFilter: styleFilter,
+      temperatureFilter: temperatureFilter,
+      historySort: historySort,
+    );
+
+    return _combineOutfitsWithStylesAndPieces(filteredOutfitsStream);
+  }
+
+  Stream<(List<Outfit>, Map<String, Style>, Map<String, Piece>)>
+      _combineOutfitsWithStylesAndPieces(
+    Stream<List<Outfit>> outfitsStream,
+  ) {
+    return outfitsStream.switchMap((List<Outfit> outfits) {
+      final Set<String> styleIds =
+          outfits.expand((outfit) => outfit.styleIds).toSet();
+      final Set<String> pieceIds =
+          outfits.expand((outfit) => outfit.pieceIds).toSet();
+
+      final Stream<Map<String, Style>> stylesByIdStream =
+          _styleService.getByIdsStream(styleIds);
+      final Stream<Map<String, Piece>> piecesByIdStream =
+          _pieceService.getPiecesByIdsStream(pieceIds);
+
+      return Rx.combineLatest2(
+        stylesByIdStream,
+        piecesByIdStream,
+        (Map<String, Style> styles, Map<String, Piece> pieces) => (
+          outfits,
+          styles,
+          pieces,
+        ),
+      );
     });
   }
 

@@ -9,6 +9,7 @@ import 'package:ooo_fit/widget/common/page_navigation_tile.dart';
 import 'package:ooo_fit/widget/outfits/outfit_list_item.dart';
 
 class OutfitItemsList extends StatelessWidget {
+  final bool fromPieceDetail;
   final List<Outfit> outfits;
   final Map<String, Style> styles;
   final Map<String, Piece> pieces;
@@ -18,6 +19,7 @@ class OutfitItemsList extends StatelessWidget {
     required this.outfits,
     required this.styles,
     required this.pieces,
+    this.fromPieceDetail = false,
   });
 
   @override
@@ -52,10 +54,11 @@ class OutfitItemsList extends StatelessWidget {
   Widget _buildHelpInfo() {
     return Column(
       children: [
-        SizedBox(height: 20),
+        SizedBox(height: fromPieceDetail ? 0 : 20),
         InfoBubble(
-          message:
-              "There are no outfits with this type.\nYou can add outfit using + button.\nTry it now!",
+          message: fromPieceDetail
+              ? "Your piece is not used in any outfits.\nAdd it now!"
+              : "There are no outfits with this type.\nYou can add outfit using + button.\nTry it now!",
         )
       ],
     );
