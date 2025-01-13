@@ -43,3 +43,6 @@ app.*.map.json
 /android/app/release
 
 analysis_options.yaml
+
+# Node related
+node_modules/

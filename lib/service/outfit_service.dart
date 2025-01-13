@@ -47,6 +47,7 @@ class OutfitService extends EntityService<Outfit> {
       styleIds: styleIds,
       temperature: temperature,
       imagePath: newImagePath,
+      lastWorn: null,
     );
 
     try {
@@ -84,6 +85,7 @@ class OutfitService extends EntityService<Outfit> {
       styleIds: styleIds,
       temperature: temperature,
       imagePath: newImagePath,
+      lastWorn: outfit.lastWorn,
     );
 
     try {
