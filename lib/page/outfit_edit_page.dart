@@ -51,6 +51,7 @@ class OutfitEditPage extends StatelessWidget {
 
   Future<String?> handleSave(Map<String, dynamic> formData) async {
     final imageList = formData['image'];
+    print(imageList.toString());
     //TODO deduplicate
     String? imagePath;
     if (imageList != null && imageList.isNotEmpty && imageList.first != null) {

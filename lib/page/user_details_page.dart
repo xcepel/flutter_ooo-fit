@@ -3,10 +3,10 @@ import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/model/user_data.dart';
 import 'package:ooo_fit/service/user_data_service.dart';
 import 'package:ooo_fit/widget/auth/user_details_form.dart';
-import 'package:ooo_fit/widget/common/content_frame_detail.dart';
-import 'package:ooo_fit/widget/common/custom_app_bar.dart';
 import 'package:ooo_fit/widget/common/form/edit_form_wrapper.dart';
 import 'package:ooo_fit/widget/common/loading_future_builder.dart';
+import 'package:ooo_fit/widget/common/page_formating/content_frame_detail.dart';
+import 'package:ooo_fit/widget/common/page_formating/custom_app_bar.dart';
 
 class UserDetailsPage extends StatelessWidget {
   final UserDataService _userDataService = GetIt.instance<UserDataService>();
@@ -20,14 +20,15 @@ class UserDetailsPage extends StatelessWidget {
         body: ContentFrameDetail(
           children: [
             LoadingFutureBuilder(
-                future: _userDataService.getCurrentUsersData(),
-                builder: (context, userData) {
-                  return EditFormWrapper(
-                      onSaveSuccessMessage:
-                          "Your details were saved successfully",
-                      onSave: handleSave,
-                      child: UserDetailsForm(userData: userData!));
-                }),
+              future: _userDataService.getCurrentUsersData(),
+              builder: (context, userData) {
+                return EditFormWrapper(
+                  onSaveSuccessMessage: "Your details were saved successfully",
+                  onSave: handleSave,
+                  child: UserDetailsForm(userData: userData!),
+                );
+              },
+            ),
           ],
         ));
   }

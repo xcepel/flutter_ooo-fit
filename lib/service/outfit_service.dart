@@ -66,19 +66,23 @@ class OutfitService extends EntityService<Outfit> {
     required TemperatureType? temperature,
     required String? imagePath,
   }) async {
-    String? newImagePath;
-    if (imagePath != null) {
-      newImagePath = imagePath == outfit.imagePath
-          ? imagePath
-          : await uploadImage(imagePath);
+    final String? newImagePath = imagePath;
+    final String? oldImagePath = outfit.imagePath;
 
-      if (newImagePath == null) {
-        return errorStoreMessage;
+    // TODO: refactor
+    String? newSavedImagePath;
+    if (newImagePath != oldImagePath) {
+      if (newImagePath != null) {
+        newSavedImagePath = await uploadImage(newImagePath);
+        if (newSavedImagePath == null) {
+          return errorStoreMessage;
+        }
       }
-
-      if (outfit.imagePath != null) {
-        await deleteImage(outfit.imagePath!);
+      if (oldImagePath != null) {
+        deleteImage(oldImagePath);
       }
+    } else {
+      newSavedImagePath = oldImagePath;
     }
 
     final newOutfit = outfit.copyWith(
@@ -86,7 +90,7 @@ class OutfitService extends EntityService<Outfit> {
       pieceIds: pieceIds,
       styleIds: styleIds,
       temperature: temperature,
-      imagePath: ReferenceWrapper.value(newImagePath),
+      imagePath: ReferenceWrapper.value(newSavedImagePath),
     );
 
     try {
