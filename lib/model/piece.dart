@@ -22,7 +22,6 @@ class Piece extends Entity {
   @TimestampConverter()
   final DateTime? lastWorn;
 
-  //TODO: https://stackoverflow.com/questions/68009392/dart-custom-copywith-method-with-nullable-properties
   const Piece({
     required super.id,
     required super.userId,

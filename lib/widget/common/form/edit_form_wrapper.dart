@@ -8,7 +8,7 @@ import 'package:ooo_fit/widget/common/round_button.dart';
 class EditFormWrapper extends StatefulWidget {
   final Widget child;
   final String onSaveSuccessMessage;
-  final String onDeleteSuccessMessage;
+  final String? onDeleteSuccessMessage;
   final Future<String?> Function(Map<String, dynamic> formData) onSave;
   final Future<String?> Function()? onDelete;
   final Widget? onDeleteNavigationPage;
@@ -17,12 +17,15 @@ class EditFormWrapper extends StatefulWidget {
     super.key,
     required this.child,
     required this.onSaveSuccessMessage,
-    required this.onDeleteSuccessMessage,
+    this.onDeleteSuccessMessage,
     required this.onSave,
     this.onDelete,
-    required this.onDeleteNavigationPage,
-  }) : assert(onDelete == null || onDeleteNavigationPage != null,
-            'onDeleteNavigationPage must not be null if onDelete is provided');
+    this.onDeleteNavigationPage,
+  }) : assert(
+            onDelete == null ||
+                (onDeleteNavigationPage != null &&
+                    onDeleteSuccessMessage != null),
+            'onDeleteNavigationPage and onDeleteSuccessMessage must not be null if onDelete is provided');
 
   @override
   State<EditFormWrapper> createState() => _EditFormWrapperState();
@@ -39,7 +42,9 @@ class _EditFormWrapperState extends State<EditFormWrapper> {
       child: Column(
         children: [
           widget.child,
-          PageDivider(),
+          SizedBox(
+            height: 50,
+          ),
           if (isLoading)
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
@@ -95,7 +100,7 @@ class _EditFormWrapperState extends State<EditFormWrapper> {
       handleActionResult(
         context: context,
         errorMessage: error,
-        successMessage: widget.onDeleteSuccessMessage,
+        successMessage: widget.onDeleteSuccessMessage!,
         onSuccessNavigation: () => Navigator.push(
             context,
             MaterialPageRoute(

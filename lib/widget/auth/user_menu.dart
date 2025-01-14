@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:ooo_fit/page/auth/auth_page.dart';
+import 'package:ooo_fit/page/auth_page.dart';
+import 'package:ooo_fit/page/user_details_page.dart';
 import 'package:ooo_fit/service/auth_service.dart';
 
 class UserMenu extends StatelessWidget {
@@ -18,7 +19,7 @@ class UserMenu extends StatelessWidget {
           value: 'profile',
           child: ListTile(
             leading: const Icon(Icons.account_circle),
-            title: const Text('User details'),
+            title: const Text('My details'),
           ),
         ),
         PopupMenuItem(
@@ -34,7 +35,12 @@ class UserMenu extends StatelessWidget {
 
   void _handleMenuSelection(String value, BuildContext context) async {
     if (value == 'profile') {
-      // TODO: Navigate to the user details page
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UserDetailsPage(),
+        ),
+      );
     } else if (value == 'sign_out') {
       await _authService.signOut();
       Navigator.pushAndRemoveUntil(

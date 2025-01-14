@@ -53,7 +53,6 @@ class OutfitEditPage extends StatelessWidget {
     final imageList = formData['image'];
     //TODO deduplicate
     String? imagePath;
-    // TODO does not work for unchanged image, deletes it
     if (imageList != null && imageList.isNotEmpty && imageList.first != null) {
       // case when ImagePicker is displaying Piece's existing image (from URL)
       // imagePath can remain unchanged, since it is the image already in database

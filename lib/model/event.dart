@@ -23,7 +23,6 @@ class Event extends Entity {
 
   final List<String> styleIds;
 
-  // temperature can be fetched later if event is too far in the future?
   final TemperatureType? temperature;
 
   const Event({

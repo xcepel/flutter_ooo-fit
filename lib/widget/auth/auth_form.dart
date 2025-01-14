@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/page/outfits_list_page.dart';
 import 'package:ooo_fit/service/auth_service.dart';
+import 'package:ooo_fit/service/user_data_service.dart';
 import 'package:ooo_fit/utils/functions.dart';
 import 'package:ooo_fit/widget/auth/confirm_password_form_field.dart';
 import 'package:ooo_fit/widget/auth/email_form_field.dart';
@@ -19,6 +20,8 @@ class AuthForm extends StatefulWidget {
 class _AuthFormState extends State<AuthForm> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   final AuthService _authService = GetIt.instance.get<AuthService>();
+  final UserDataService _userDataService =
+      GetIt.instance.get<UserDataService>();
 
   bool _isSignUp = false;
 
@@ -29,6 +32,12 @@ class _AuthFormState extends State<AuthForm> {
       child: Column(
         children: [
           EmailFormField(),
+          if (_isSignUp) ...[
+            SizedBox(
+              height: 10,
+            ),
+            _buildCityTextField(),
+          ],
           const SizedBox(height: 10),
           PasswordFormField(
             showLengthInfo: _isSignUp,
@@ -42,6 +51,17 @@ class _AuthFormState extends State<AuthForm> {
           _buildFormSwitchButton(),
         ],
       ),
+    );
+  }
+
+  FormBuilderTextField _buildCityTextField() {
+    return FormBuilderTextField(
+      name: 'city',
+      decoration: InputDecoration(
+          labelText: 'City',
+          helperText:
+              'This detail will be used to fetch you the current weather info in you area. You can change it later in the user details.',
+          helperMaxLines: 3),
     );
   }
 
@@ -93,6 +113,13 @@ class _AuthFormState extends State<AuthForm> {
       String? error = await _authService.createUserWithEmailAndPassword(
         email: formData['email'],
         password: formData['password'],
+      );
+
+      String? userId = _authService.currentUser!.uid;
+
+      await _userDataService.saveUserData(
+        userId: userId,
+        city: formData['city'],
       );
 
       if (context.mounted) {

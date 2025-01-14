@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:ooo_fit/page/auth/auth_page.dart';
+import 'package:ooo_fit/page/auth_page.dart';
 import 'package:ooo_fit/page/outfits_list_page.dart';
 import 'package:ooo_fit/service/auth_service.dart';
 

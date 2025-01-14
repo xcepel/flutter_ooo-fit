@@ -19,7 +19,7 @@ class StyleService extends EntityService<Style> {
       return error;
     }
 
-    final style = Style(
+    final Style style = Style(
       id: '',
       userId: getCurrentUserId(),
       name: name!,
@@ -44,7 +44,10 @@ class StyleService extends EntityService<Style> {
       return error;
     }
 
-    final newStyle = style.copyWith(name: name, color: color);
+    final Style newStyle = style.copyWith(
+      name: name,
+      color: color,
+    );
 
     try {
       await repository.setOrAdd(style.id, newStyle);

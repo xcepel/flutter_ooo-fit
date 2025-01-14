@@ -2,10 +2,12 @@ import 'package:ooo_fit/model/event.dart';
 import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
+import 'package:ooo_fit/model/user_data.dart';
 import 'package:ooo_fit/model/util/reference_wrapper.dart';
 import 'package:ooo_fit/service/entity_service.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
+import 'package:ooo_fit/service/user_data_service.dart';
 import 'package:ooo_fit/service/util/date_normalize.dart';
 import 'package:ooo_fit/service/weather_service.dart';
 import 'package:rxdart/rxdart.dart';
@@ -18,6 +20,7 @@ class EventService extends EntityService<Event> {
   final StyleService _styleService;
   final OutfitService _outfitService;
   final WeatherService _weatherService;
+  final UserDataService _userDataService;
 
   const EventService(
     super.repository,
@@ -25,6 +28,7 @@ class EventService extends EntityService<Event> {
     this._styleService,
     this._outfitService,
     this._weatherService,
+    this._userDataService,
   );
 
   Future<String?> saveEvent({
@@ -33,7 +37,7 @@ class EventService extends EntityService<Event> {
     required String? place,
     required String? outfitId,
     required List<String> styleIds,
-    required TemperatureType temperature,
+    required TemperatureType? temperature,
   }) async {
     final event = Event(
       id: '',
@@ -81,10 +85,14 @@ class EventService extends EntityService<Event> {
   }
 
   Future<String?> wearOutfitNow({required String outfitId}) async {
-    //TODO: get city name form settings
-    Weather weather = await _weatherService.getWeatherByCityName('Brno');
-    TemperatureType currentTemp =
-        _weatherService.getTemperatureTypeFromWeather(weather);
+    UserData? currentUserData = await _userDataService.getCurrentUsersData();
+    String? cityName = currentUserData?.city;
+
+    TemperatureType? currentTemp;
+    if (cityName != null) {
+      Weather weather = await _weatherService.getWeatherByCityName(cityName);
+      currentTemp = _weatherService.getTemperatureTypeFromWeather(weather);
+    }
 
     return saveEvent(
       name: null,
