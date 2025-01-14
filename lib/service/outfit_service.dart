@@ -67,8 +67,11 @@ class OutfitService extends EntityService<Outfit> {
     required String? imagePath,
   }) async {
     String? newImagePath;
-    if (imagePath != null && imagePath != outfit.imagePath) {
-      newImagePath = await uploadImage(imagePath);
+    if (imagePath != null) {
+      newImagePath = imagePath == outfit.imagePath
+          ? imagePath
+          : await uploadImage(imagePath);
+
       if (newImagePath == null) {
         return errorStoreMessage;
       }

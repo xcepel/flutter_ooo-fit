@@ -84,7 +84,7 @@ class _PiecesListPageState extends State<PiecesListPage> {
           ),
         ],
       ),
-      floatingActionButton: const CreationFloatingButton(page: PieceEditPage()),
+      floatingActionButton: CreationFloatingButton(page: PieceEditPage()),
       bottomNavigationBar:
           const CustomBottomNavigationBar(currentPage: PageTypes.pieces),
     );
