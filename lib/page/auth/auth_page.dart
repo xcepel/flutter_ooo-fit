@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/widget/auth/auth_form.dart';
-import 'package:ooo_fit/widget/common/content_frame_detail.dart';
-import 'package:ooo_fit/widget/common/custom_app_bar.dart';
+import 'package:ooo_fit/widget/common/page_formating/content_frame_detail.dart';
+import 'package:ooo_fit/widget/common/page_formating/custom_app_bar.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});

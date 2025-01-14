@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:ooo_fit/utils/constants.dart';
 import 'package:ooo_fit/utils/functions.dart';
-import 'package:ooo_fit/widget/common/form/delete_button.dart';
-import 'package:ooo_fit/widget/common/form/save_button.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
+import 'package:ooo_fit/widget/common/round_button.dart';
 
 class EditFormWrapper extends StatefulWidget {
   final Widget child;
@@ -46,10 +46,19 @@ class _EditFormWrapperState extends State<EditFormWrapper> {
               child: CircularProgressIndicator(),
             )
           else ...[
-            SaveButton(onPressed: () => _handleSave()),
-            const SizedBox(height: 20),
+            RoundButton(
+              icon: Icons.save_rounded,
+              text: "Save",
+              onPressed: () => _handleSave(),
+            ),
+            const SizedBox(height: 5),
             if (widget.onDelete != null)
-              DeleteButton(onPressed: () => _handleDelete()),
+              RoundButton(
+                icon: Icons.delete_rounded,
+                text: "Delete",
+                onPressed: () => _handleDelete(),
+                color: dangerRed,
+              ),
           ],
         ],
       ),

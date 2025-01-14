@@ -5,10 +5,10 @@ import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/page/pieces_list_page.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/utils/page_types.dart';
-import 'package:ooo_fit/widget/common/content_frame_detail.dart';
-import 'package:ooo_fit/widget/common/custom_app_bar.dart';
-import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/form/edit_form_wrapper.dart';
+import 'package:ooo_fit/widget/common/page_formating/content_frame_detail.dart';
+import 'package:ooo_fit/widget/common/page_formating/custom_app_bar.dart';
+import 'package:ooo_fit/widget/common/page_formating/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/pieces/piece_edit_form.dart';
 
 class PieceEditPage extends StatelessWidget {

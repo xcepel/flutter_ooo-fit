@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // Colors
 const int detailLightPurple = 0xFFE3DAFC;
+const int dangerRed = 0xFFFCD5D5;
 
 // constants for pages
 const EdgeInsets pagePadding =

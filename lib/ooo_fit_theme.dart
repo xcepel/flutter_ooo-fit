@@ -5,7 +5,11 @@ import 'package:ooo_fit/utils/constants.dart';
 
 ThemeData oooFitTheme() {
   return ThemeData(
-    textTheme: GoogleFonts.openSansTextTheme(),
+    textTheme: GoogleFonts.openSansTextTheme(
+      TextTheme(
+        bodyMedium: TextStyle(fontSize: 16.0), // normal text (in details,...)
+      ),
+    ),
     checkboxTheme: CheckboxThemeData(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(50),

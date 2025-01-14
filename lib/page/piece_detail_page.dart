@@ -8,12 +8,12 @@ import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/service/piece_service.dart';
 import 'package:ooo_fit/utils/date_time_formater.dart';
 import 'package:ooo_fit/utils/page_types.dart';
-import 'package:ooo_fit/widget/common/content_frame_detail.dart';
-import 'package:ooo_fit/widget/common/custom_app_bar.dart';
-import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/edit_button.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
+import 'package:ooo_fit/widget/common/page_formating/content_frame_detail.dart';
+import 'package:ooo_fit/widget/common/page_formating/custom_app_bar.dart';
+import 'package:ooo_fit/widget/common/page_formating/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/outfit_piece/description_label.dart';
 import 'package:ooo_fit/widget/outfit_piece/sized_picture.dart';
 import 'package:ooo_fit/widget/outfits/outfit_items_list.dart';
@@ -55,6 +55,7 @@ class PieceDetailPage extends StatelessWidget {
                     height: 30,
                     fit: BoxFit.contain,
                   ),
+                  SizedBox(width: 4),
                   Text(pieceData.$1!.piecePlacement.label)
                 ],
               ),

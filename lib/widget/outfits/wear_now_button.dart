@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ooo_fit/service/event_service.dart';
 import 'package:ooo_fit/utils/functions.dart';
-import 'package:ooo_fit/widget/outfit_piece/label_button.dart';
+import 'package:ooo_fit/widget/common/round_button.dart';
 
 class WearNowButton extends StatelessWidget {
   final String outfitId;
@@ -16,11 +16,12 @@ class WearNowButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LabelButton(
-      label: "I'm wearing this now",
-      backgroundColor: Colors.transparent,
-      textColor: Colors.grey,
-      onPressed: () => _wearOutfitToday(context),
+    return Center(
+      child: RoundButton(
+        icon: Icons.accessibility_rounded,
+        text: "Wear now",
+        onPressed: () => _wearOutfitToday(context),
+      ),
     );
   }
 

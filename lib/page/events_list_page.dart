@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ooo_fit/page/event_edit_page.dart';
 import 'package:ooo_fit/utils/page_types.dart';
-import 'package:ooo_fit/widget/common/creation_floating_button.dart';
-import 'package:ooo_fit/widget/common/custom_app_bar.dart';
-import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/page_divider.dart';
+import 'package:ooo_fit/widget/common/page_formating/creation_floating_button.dart';
+import 'package:ooo_fit/widget/common/page_formating/custom_app_bar.dart';
+import 'package:ooo_fit/widget/common/page_formating/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/events/day_info_list.dart';
 import 'package:ooo_fit/widget/events/event_calendar.dart';
 import 'package:table_calendar/table_calendar.dart';

@@ -46,6 +46,28 @@ class EventCalendar extends StatelessWidget {
           onFormatChanged: onFormatChanged,
           onPageChanged: onPageChanged,
           eventLoader: (day) => eventData[DateNormalize(day).normalize()] ?? [],
+          startingDayOfWeek: StartingDayOfWeek.monday,
+          calendarStyle: CalendarStyle(
+            defaultTextStyle: TextStyle(fontSize: 16.0), // Adjust day numbers
+            selectedDecoration: BoxDecoration(
+              color: Colors.deepPurpleAccent,
+              shape: BoxShape.circle,
+            ),
+            todayDecoration: BoxDecoration(
+              color: Colors.deepPurpleAccent[100],
+              shape: BoxShape.circle,
+            ),
+          ),
+          daysOfWeekStyle: DaysOfWeekStyle(
+            weekdayStyle: TextStyle(fontSize: 14.0), // Days of week text
+            weekendStyle: TextStyle(fontSize: 14.0, color: Colors.deepPurple),
+          ),
+          headerStyle: HeaderStyle(
+            titleTextStyle:
+                TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            formatButtonVisible: false,
+            titleCentered: true,
+          ),
         );
       },
     );

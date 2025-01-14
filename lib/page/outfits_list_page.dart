@@ -12,11 +12,12 @@ import 'package:ooo_fit/page/outfit_edit_page.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/utils/constants.dart';
 import 'package:ooo_fit/utils/page_types.dart';
-import 'package:ooo_fit/widget/common/content_frame_list.dart';
-import 'package:ooo_fit/widget/common/creation_floating_button.dart';
-import 'package:ooo_fit/widget/common/custom_app_bar.dart';
-import 'package:ooo_fit/widget/common/custom_bottom_navigation_bar.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
+import 'package:ooo_fit/widget/common/page_formating/content_frame_list.dart';
+import 'package:ooo_fit/widget/common/page_formating/creation_floating_button.dart';
+import 'package:ooo_fit/widget/common/page_formating/custom_app_bar.dart';
+import 'package:ooo_fit/widget/common/page_formating/custom_bottom_navigation_bar.dart';
+import 'package:ooo_fit/widget/common/round_button.dart';
 import 'package:ooo_fit/widget/outfit_piece/style_filter.dart';
 import 'package:ooo_fit/widget/outfit_piece/wear_history_sort.dart';
 import 'package:ooo_fit/widget/outfits/outfit_items_list.dart';
@@ -148,18 +149,9 @@ class _OutfitsListPageState extends State<OutfitsListPage> {
         if (outfits.isEmpty) {
           return SizedBox();
         } else {
-          return ElevatedButton(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.shuffle, color: Colors.grey),
-                SizedBox(width: 5),
-                Text(
-                  style: TextStyle(color: Colors.black54),
-                  "Choose Random Outfit",
-                ),
-              ],
-            ),
+          return RoundButton(
+            icon: Icons.shuffle,
+            text: "Choose Random Outfit",
             onPressed: () {
               final Outfit randomOutfit =
                   outfits[Random().nextInt(outfits.length)];
