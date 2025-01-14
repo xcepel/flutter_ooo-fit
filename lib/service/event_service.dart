@@ -2,6 +2,7 @@ import 'package:ooo_fit/model/event.dart';
 import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
+import 'package:ooo_fit/model/util/reference_wrapper.dart';
 import 'package:ooo_fit/service/entity_service.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
 import 'package:ooo_fit/service/style_service.dart';
@@ -63,10 +64,10 @@ class EventService extends EntityService<Event> {
     required TemperatureType? temperature,
   }) async {
     final Event newEvent = event.copyWith(
-      name: name,
+      name: ReferenceWrapper.value(name),
       eventDatetime: eventDatetime,
-      place: place,
-      outfitId: outfitId,
+      place: ReferenceWrapper.value(place),
+      outfitId: ReferenceWrapper.value(outfitId),
       styleIds: styleIds,
       temperature: temperature,
     );

@@ -91,12 +91,17 @@ class OutfitEditForm extends StatelessWidget {
       final Map<String, dynamic> formData = _formKey.currentState!.value;
 
       final imageList = formData['image'];
+      //TODO deduplicate
       String? imagePath;
-      if (imageList[0] != null) {
-        final image = imageList.first;
-
-        //TODO: refactor, for the love of god
-        imagePath = image.runtimeType == String ? null : (image as XFile).path;
+      if (imageList != null && imageList.isNotEmpty) {
+        // case when ImagePicker is displaying Piece's existing image (from URL)
+        // imagePath can remain unchanged, since it is the image already in database
+        if (imageList.first is String) {
+          imagePath = outfit!.imagePath;
+        } else {
+          // imageList.first is XFile
+          imagePath = (imageList.first as XFile).path;
+        }
       }
 
       List<String> allSelectedPieces = [];

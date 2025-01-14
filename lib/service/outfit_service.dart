@@ -2,6 +2,7 @@ import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
+import 'package:ooo_fit/model/util/reference_wrapper.dart';
 import 'package:ooo_fit/model/wear_history.dart';
 import 'package:ooo_fit/service/entity_service.dart';
 import 'package:ooo_fit/service/piece_service.dart';
@@ -66,16 +67,15 @@ class OutfitService extends EntityService<Outfit> {
     required String? imagePath,
   }) async {
     String? newImagePath;
-    if (imagePath != null) {
+    if (imagePath != null && imagePath != outfit.imagePath) {
       newImagePath = await uploadImage(imagePath);
-
       if (newImagePath == null) {
         return errorStoreMessage;
       }
-    }
 
-    if (newImagePath != null && outfit.imagePath != null) {
-      await deleteImage(outfit.imagePath!);
+      if (outfit.imagePath != null) {
+        await deleteImage(outfit.imagePath!);
+      }
     }
 
     final newOutfit = outfit.copyWith(
@@ -83,7 +83,7 @@ class OutfitService extends EntityService<Outfit> {
       pieceIds: pieceIds,
       styleIds: styleIds,
       temperature: temperature,
-      imagePath: newImagePath,
+      imagePath: ReferenceWrapper.value(newImagePath),
     );
 
     try {

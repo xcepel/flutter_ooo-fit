@@ -54,12 +54,15 @@ class PieceService extends EntityService<Piece> {
     required List<String> styleIds,
     required String imagePath,
   }) async {
-    String? newImagePath = await uploadImage(imagePath);
-    if (newImagePath == null) {
-      return errorStoreMessage;
+    String? newImagePath;
+    if (imagePath != piece.imagePath) {
+      newImagePath = await uploadImage(imagePath);
+      if (newImagePath == null) {
+        return errorStoreMessage;
+      }
+      deleteImage(piece.imagePath);
     }
 
-    deleteImage(piece.imagePath);
     final newPiece = piece.copyWith(
       name: name,
       imagePath: newImagePath,

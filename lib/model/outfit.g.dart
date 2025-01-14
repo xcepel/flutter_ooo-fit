@@ -11,7 +11,7 @@ Outfit _$OutfitFromJson(Map<String, dynamic> json) => Outfit(
       userId: json['userId'] as String,
       createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['createdAt'], const TimestampConverter().fromJson),
-      name: json['name'] as String?,
+      name: json['name'] as String,
       imagePath: json['imagePath'] as String?,
       pieceIds:
           (json['pieceIds'] as List<dynamic>).map((e) => e as String).toList(),
@@ -29,7 +29,7 @@ Map<String, dynamic> _$OutfitToJson(Outfit instance) => <String, dynamic>{
               instance.createdAt, const TimestampConverter().toJson)
           case final value?)
         'createdAt': value,
-      if (instance.name case final value?) 'name': value,
+      'name': instance.name,
       if (instance.imagePath case final value?) 'imagePath': value,
       'pieceIds': instance.pieceIds,
       'styleIds': instance.styleIds,

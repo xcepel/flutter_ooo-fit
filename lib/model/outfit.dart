@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:ooo_fit/model/entity.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
+import 'package:ooo_fit/model/util/reference_wrapper.dart';
 import 'package:ooo_fit/service/util/timestamp_converter.dart';
 
 part 'outfit.g.dart';
@@ -11,7 +12,7 @@ class Outfit extends Entity {
   @TimestampConverter()
   final DateTime? createdAt;
 
-  final String? name;
+  final String name;
 
   final String? imagePath;
 
@@ -28,7 +29,7 @@ class Outfit extends Entity {
     required super.id,
     required super.userId,
     this.createdAt,
-    this.name,
+    required this.name,
     this.imagePath,
     required this.pieceIds,
     required this.styleIds,
@@ -45,7 +46,7 @@ class Outfit extends Entity {
     String? userId,
     DateTime? createdAt,
     String? name,
-    String? imagePath,
+    ReferenceWrapper<String?>? imagePath,
     List<String>? pieceIds,
     List<String>? styleIds,
     TemperatureType? temperature,
@@ -57,7 +58,7 @@ class Outfit extends Entity {
       userId: userId ?? this.userId,
       createdAt: createdAt ?? this.createdAt,
       name: name ?? this.name,
-      imagePath: imagePath ?? this.imagePath,
+      imagePath: imagePath != null ? imagePath.value : this.imagePath,
       pieceIds: pieceIds ?? this.pieceIds,
       styleIds: styleIds ?? this.styleIds,
       temperature: temperature ?? this.temperature,

@@ -87,11 +87,14 @@ class PieceEditForm extends StatelessWidget {
       final Map<String, dynamic> formData = _formKey.currentState!.value;
 
       final imageList = formData['image'];
-      //TODO: image picker contains String path when updating
+
       String imagePath;
-      if (imageList.first.runtimeType == String) {
-        imagePath = imageList.first;
+      // case when ImagePicker is displaying Piece's existing image (from URL)
+      // imagePath can remain unchanged, since it is the image already in database
+      if (imageList.first is String) {
+        imagePath = piece!.imagePath;
       } else {
+        // imageList.first is XFile
         imagePath = (imageList.first as XFile).path;
       }
 
