@@ -79,7 +79,14 @@ class OutfitListItem extends StatelessWidget {
           itemCount: min(piecesCount, matrixImageCount),
           itemBuilder: (context, index) {
             String currentPieceId = outfit.pieceIds[index];
-            Piece currentPiece = pieces[currentPieceId]!;
+            Piece? currentPiece = pieces[currentPieceId];
+
+            if (currentPiece == null) {
+              return Image.asset(
+                'assets/images/light_gray_solid.jpg',
+                fit: BoxFit.cover,
+              );
+            }
 
             return ClipRRect(
               borderRadius: BorderRadius.circular(2),
