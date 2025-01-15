@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 class DescriptionLabel extends StatelessWidget {
   final String label;
   final String value;
-  const DescriptionLabel({super.key, required this.label, required this.value});
+  final TextStyle? style;
+
+  const DescriptionLabel({
+    super.key,
+    required this.label,
+    required this.value,
+    this.style,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +19,15 @@ class DescriptionLabel extends StatelessWidget {
       children: [
         Text(
           "$label: ",
+          style: style ?? Theme.of(context).textTheme.bodyMedium,
         ),
         Expanded(
           child: Text(
             value,
+            style: style ?? Theme.of(context).textTheme.bodyMedium,
           ),
         ),
       ],
     );
-    // TODO add sized box?
   }
 }

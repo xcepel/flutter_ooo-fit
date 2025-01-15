@@ -40,7 +40,7 @@ class OutfitService extends EntityService<Outfit> {
       }
     }
 
-    final piece = Outfit(
+    final Outfit piece = Outfit(
       id: '',
       userId: getCurrentUserId(),
       name: name,
@@ -48,6 +48,7 @@ class OutfitService extends EntityService<Outfit> {
       styleIds: styleIds,
       temperature: temperature,
       imagePath: newImagePath,
+      archived: false,
     );
 
     try {
@@ -85,7 +86,7 @@ class OutfitService extends EntityService<Outfit> {
       newSavedImagePath = oldImagePath;
     }
 
-    final newOutfit = outfit.copyWith(
+    final Outfit newOutfit = outfit.copyWith(
       name: name,
       pieceIds: pieceIds,
       styleIds: styleIds,
@@ -103,15 +104,35 @@ class OutfitService extends EntityService<Outfit> {
 
   @override
   Future<String?> delete(Outfit entity) async {
-    String? error = await super.delete(entity);
-    if (error != null) {
-      return error;
-    }
+    final Outfit newOutfit = entity.copyWith(
+      archived: true,
+    );
 
-    if (entity.imagePath != null) {
-      deleteImage(entity.imagePath!);
+    try {
+      await repository.setOrAdd(entity.id, newOutfit);
+    } catch (e) {
+      return errorStoreMessage;
     }
+    // String? error = await super.delete(entity);
+    // if (error != null) {
+    //   return error;
+    // }
+    //
+    // if (entity.imagePath != null) {
+    //   deleteImage(entity.imagePath!);
+    // }
     return null;
+  }
+
+  Stream<List<Outfit>> getAllNonArchivedStream() {
+    return _filterOutArchived(getAllStream());
+  }
+
+  Stream<List<Outfit>> _filterOutArchived(Stream<List<Outfit>> outfitStream) {
+    return outfitStream.map(
+      (List<Outfit> outfits) =>
+          outfits.where((outfit) => outfit.archived != true).toList(),
+    );
   }
 
   Stream<List<Outfit>> getFilteredOutfitsStream({
@@ -141,7 +162,8 @@ class OutfitService extends EntityService<Outfit> {
       getPieceOutfitsWithStylesAndPiecesStream({
     required String pieceId,
   }) {
-    final Stream<List<Outfit>> filteredOutfitsStream = getAllStream().map(
+    final Stream<List<Outfit>> filteredOutfitsStream =
+        getAllNonArchivedStream().map(
       (List<Outfit> outfits) =>
           outfits.where((outfit) => outfit.pieceIds.contains(pieceId)).toList(),
     );
@@ -161,7 +183,8 @@ class OutfitService extends EntityService<Outfit> {
       historySort: historySort,
     );
 
-    return _combineOutfitsWithStylesAndPieces(filteredOutfitsStream);
+    return _combineOutfitsWithStylesAndPieces(
+        _filterOutArchived(filteredOutfitsStream));
   }
 
   Stream<(List<Outfit>, Map<String, Style>, Map<String, Piece>)>

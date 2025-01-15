@@ -35,7 +35,9 @@ class PiecesItemsList extends StatelessWidget {
                       _styleService.getPiecesStylesByIdsStream(piece.styleIds),
                   builder: (context, stylesList) {
                     return PageNavigationTile(
-                      dstPage: PieceDetailPage(pieceId: piece.id),
+                      dstPage: piece.archived
+                          ? null
+                          : PieceDetailPage(pieceId: piece.id),
                       child: SizedBox(
                         width: itemWidth,
                         child: PieceListItem(

@@ -19,6 +19,8 @@ class Piece extends Entity {
 
   final List<String> styleIds;
 
+  final bool archived;
+
   @TimestampConverter()
   final DateTime? lastWorn;
 
@@ -30,6 +32,7 @@ class Piece extends Entity {
     required this.imagePath,
     required this.piecePlacement,
     required this.styleIds,
+    required this.archived,
     this.lastWorn, // TODO tohle se bude nejspis pri vytvoreni setovat na date vytvoreni?
   });
 
@@ -45,7 +48,7 @@ class Piece extends Entity {
     String? imagePath,
     PiecePlacement? piecePlacement,
     List<String>? styleIds,
-    bool? isFavourite,
+    bool? archived,
     DateTime? lastWorn,
   }) {
     return Piece(
@@ -56,6 +59,7 @@ class Piece extends Entity {
       imagePath: imagePath ?? this.imagePath,
       piecePlacement: piecePlacement ?? this.piecePlacement,
       styleIds: styleIds ?? this.styleIds,
+      archived: archived ?? this.archived,
       lastWorn: lastWorn ?? this.lastWorn,
     );
   }

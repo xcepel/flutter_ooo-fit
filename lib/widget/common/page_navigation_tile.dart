@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PageNavigationTile extends StatelessWidget {
-  final Widget dstPage;
+  final Widget? dstPage;
   final Widget child;
 
   const PageNavigationTile({
@@ -14,12 +14,14 @@ class PageNavigationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => dstPage,
-          ),
-        );
+        dstPage == null
+            ? null
+            : Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => dstPage!,
+                ),
+              );
       },
       child: child,
     );

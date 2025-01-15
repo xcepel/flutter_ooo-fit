@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:ooo_fit/model/user_data.dart';
 import 'package:ooo_fit/service/user_data_service.dart';
 import 'package:ooo_fit/service/weather_service.dart';
 import 'package:ooo_fit/widget/common/loading_stream_builder.dart';
-import 'package:ooo_fit/widget/weather/change_city_dialog.dart';
 import 'package:weather/weather.dart';
 
 class WeatherInfo extends StatelessWidget {

@@ -22,7 +22,7 @@ class DropdownFilter<T> extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 2),
       width: width,
       decoration: BoxDecoration(
-        color: Colors.deepPurple.withOpacity(0.05),
+        color: Colors.deepPurple.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(4),
       ),
       child: DropdownButton<T>(

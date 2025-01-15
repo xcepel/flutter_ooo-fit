@@ -4,8 +4,8 @@ import 'package:ooo_fit/model/event.dart';
 import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/page/event_edit_page.dart';
-import 'package:ooo_fit/page/outfit_detail_page.dart';
 import 'package:ooo_fit/service/event_service.dart';
+import 'package:ooo_fit/utils/constants.dart';
 import 'package:ooo_fit/utils/date_time_formater.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/edit_button.dart';
@@ -46,6 +46,9 @@ class EventDetailPage extends StatelessWidget {
           ),
           body: ContentFrameDetail(
             children: [
+              outfit?.archived ?? false
+                  ? _buildDeletedOutfitInfo()
+                  : SizedBox(),
               event.temperature != null
                   ? Row(
                       children: [
@@ -57,7 +60,7 @@ class EventDetailPage extends StatelessWidget {
               SizedBox(height: 10),
               styles.isNotEmpty
                   ? StyleDataRow(items: styles.values.toList())
-                  : Text("Style of event not - filled"),
+                  : Text("Style: ---"),
               SizedBox(height: 10),
               _buildEventDetailRow(
                 "Date",
@@ -83,9 +86,7 @@ class EventDetailPage extends StatelessWidget {
     return outfit != null
         ? Center(
             child: PageNavigationTile(
-              dstPage: OutfitDetailPage(
-                outfitId: outfit.id,
-              ),
+              dstPage: null,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width / 2,
                 child: OutfitListItem(outfit: outfit),
@@ -108,5 +109,18 @@ class EventDetailPage extends StatelessWidget {
             label: label,
             value: '---',
           );
+  }
+
+  Widget _buildDeletedOutfitInfo() {
+    return Column(
+      children: [
+        InfoBubble(
+          icon: Icons.warning_amber_rounded,
+          message: "This event contains deleted outfit!",
+          color: dangerRed,
+        ),
+        SizedBox(height: 10)
+      ],
+    );
   }
 }

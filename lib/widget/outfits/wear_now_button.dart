@@ -33,7 +33,7 @@ class WearNowButton extends StatelessWidget {
           context: context,
           errorMessage: error,
           successMessage:
-              'This outfit was successfully saved to you calendar.');
+              'This outfit was successfully saved to your calendar.');
     }
   }
 }

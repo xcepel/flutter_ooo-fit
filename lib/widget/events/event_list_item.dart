@@ -40,7 +40,10 @@ class EventListItem extends StatelessWidget {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    StyleDataRow(items: eventData.$3.values.toList()),
+                    StyleDataRow(
+                      items: eventData.$3.values.toList(),
+                      inOneRow: 2,
+                    ),
                     const SizedBox(height: 2.0),
                     Text(DateTimeFormatter(event.eventDatetime).formatTime()),
                     const SizedBox(height: 2.0),

@@ -4,15 +4,16 @@ import 'package:ooo_fit/widget/styles/style_dot.dart';
 
 class StyleDataRow extends StatelessWidget {
   final List<Style> items;
+  final int inOneRow;
 
-  const StyleDataRow({required this.items});
-
+  const StyleDataRow({required this.items, this.inOneRow = 3});
   @override
   Widget build(BuildContext context) {
-    // Split items into rows of 3
+    // Split items into rows of inOneRow (usually 3)
     List<List<Style>> rows = [];
-    for (int i = 0; i < items.length; i += 3) {
-      rows.add(items.sublist(i, i + 3 > items.length ? items.length : i + 3));
+    for (int i = 0; i < items.length; i += inOneRow) {
+      rows.add(items.sublist(
+          i, i + inOneRow > items.length ? items.length : i + inOneRow));
     }
 
     return Column(

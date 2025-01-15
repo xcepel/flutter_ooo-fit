@@ -78,7 +78,12 @@ class PieceDetailPage extends StatelessWidget {
                 },
               ),
               PageDivider(),
-              DescriptionLabel(label: "In outfits", value: ""),
+              DescriptionLabel(
+                label: "In outfits",
+                value: "",
+                style: TextStyle(fontSize: 20),
+              ),
+              SizedBox(height: 10,),
               LoadingStreamBuilder<
                   (List<Outfit>, Map<String, Style>, Map<String, Piece>)>(
                 stream: _outfitService.getPieceOutfitsWithStylesAndPiecesStream(

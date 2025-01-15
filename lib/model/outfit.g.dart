@@ -18,6 +18,7 @@ Outfit _$OutfitFromJson(Map<String, dynamic> json) => Outfit(
       styleIds:
           (json['styleIds'] as List<dynamic>).map((e) => e as String).toList(),
       temperature: $enumDecode(_$TemperatureTypeEnumMap, json['temperature']),
+      archived: json['archived'] as bool,
       lastWorn: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['lastWorn'], const TimestampConverter().fromJson),
     );
@@ -34,6 +35,7 @@ Map<String, dynamic> _$OutfitToJson(Outfit instance) => <String, dynamic>{
       'pieceIds': instance.pieceIds,
       'styleIds': instance.styleIds,
       'temperature': _$TemperatureTypeEnumMap[instance.temperature]!,
+      'archived': instance.archived,
       if (_$JsonConverterToJson<Timestamp, DateTime>(
               instance.lastWorn, const TimestampConverter().toJson)
           case final value?)

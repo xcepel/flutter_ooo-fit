@@ -5,6 +5,7 @@ import 'package:ooo_fit/model/piece.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/page/outfit_edit_page.dart';
 import 'package:ooo_fit/service/outfit_service.dart';
+import 'package:ooo_fit/utils/constants.dart';
 import 'package:ooo_fit/utils/date_time_formater.dart';
 import 'package:ooo_fit/utils/page_types.dart';
 import 'package:ooo_fit/widget/common/edit_button.dart';
@@ -49,6 +50,7 @@ class OutfitDetailPage extends StatelessWidget {
           ),
           body: ContentFrameDetail(
             children: [
+              _buildMissingPieceInfo(pieces),
               StyleDataRow(items: styles.values.toList()),
               const SizedBox(height: 10),
               Row(
@@ -81,6 +83,23 @@ class OutfitDetailPage extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget _buildMissingPieceInfo(Map<String, Piece> pieces) {
+    if (pieces.values.any((piece) => piece.archived)) {
+      return Column(
+        children: [
+          InfoBubble(
+            icon: Icons.warning_amber_rounded,
+            message:
+                "This outfit contains deleted piece!\nRemove it, replace it or delete this outfit.",
+            color: dangerRed,
+          ),
+          SizedBox(height: 10)
+        ],
+      );
+    }
+    return SizedBox();
   }
 
   Widget _buildOutfitImageSection(String? imagePath) {

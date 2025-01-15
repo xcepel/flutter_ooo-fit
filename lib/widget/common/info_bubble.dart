@@ -4,11 +4,13 @@ import 'package:ooo_fit/utils/constants.dart';
 class InfoBubble extends StatelessWidget {
   final String message;
   final IconData icon;
+  final int color;
 
   const InfoBubble({
     super.key,
     required this.message,
     this.icon = Icons.star_border_purple500_rounded,
+    this.color = detailLightPurple,
   });
 
   @override
@@ -16,7 +18,7 @@ class InfoBubble extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: const Color(detailLightPurple),
+        color: Color(color),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(

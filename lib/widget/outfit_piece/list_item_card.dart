@@ -3,12 +3,14 @@ import 'package:ooo_fit/model/piece_placement.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/model/temperature_type.dart';
 import 'package:ooo_fit/widget/outfit_piece/bottom_data.dart';
+import 'package:ooo_fit/widget/outfit_piece/top_warning_data.dart';
 
 class ListItemCard extends StatelessWidget {
   final String? name;
   final List<Style> styles;
   final TemperatureType? temperature;
   final PiecePlacement? piecePlacement;
+  final bool topWarning;
   final Widget image;
   const ListItemCard({
     super.key,
@@ -16,6 +18,7 @@ class ListItemCard extends StatelessWidget {
     required this.styles,
     this.temperature,
     this.piecePlacement,
+    required this.topWarning,
     required this.image,
   });
 
@@ -29,6 +32,7 @@ class ListItemCard extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             children: [
               image,
+              topWarning ? TopWarningData() : SizedBox(),
               BottomData(
                 styles: styles,
                 temperature: temperature,

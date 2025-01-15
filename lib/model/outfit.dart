@@ -22,6 +22,8 @@ class Outfit extends Entity {
 
   final TemperatureType temperature;
 
+  final bool archived;
+
   @TimestampConverter()
   final DateTime? lastWorn;
 
@@ -34,6 +36,7 @@ class Outfit extends Entity {
     required this.pieceIds,
     required this.styleIds,
     required this.temperature,
+    required this.archived,
     this.lastWorn,
   });
 
@@ -50,7 +53,7 @@ class Outfit extends Entity {
     List<String>? pieceIds,
     List<String>? styleIds,
     TemperatureType? temperature,
-    bool? isFavourite,
+    bool? archived,
     DateTime? lastWorn,
   }) {
     return Outfit(
@@ -62,6 +65,7 @@ class Outfit extends Entity {
       pieceIds: pieceIds ?? this.pieceIds,
       styleIds: styleIds ?? this.styleIds,
       temperature: temperature ?? this.temperature,
+      archived: archived ?? this.archived,
       lastWorn: lastWorn ?? this.lastWorn,
     );
   }

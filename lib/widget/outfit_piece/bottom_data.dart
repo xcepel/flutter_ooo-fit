@@ -27,7 +27,7 @@ class BottomData extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
         decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.2),
+          color: Colors.grey.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(4.0),
         ),
         child: Row(

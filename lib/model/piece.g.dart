@@ -17,6 +17,7 @@ Piece _$PieceFromJson(Map<String, dynamic> json) => Piece(
           $enumDecode(_$PiecePlacementEnumMap, json['piecePlacement']),
       styleIds:
           (json['styleIds'] as List<dynamic>).map((e) => e as String).toList(),
+      archived: json['archived'] as bool,
       lastWorn: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['lastWorn'], const TimestampConverter().fromJson),
     );
@@ -32,6 +33,7 @@ Map<String, dynamic> _$PieceToJson(Piece instance) => <String, dynamic>{
       'imagePath': instance.imagePath,
       'piecePlacement': _$PiecePlacementEnumMap[instance.piecePlacement]!,
       'styleIds': instance.styleIds,
+      'archived': instance.archived,
       if (_$JsonConverterToJson<Timestamp, DateTime>(
               instance.lastWorn, const TimestampConverter().toJson)
           case final value?)

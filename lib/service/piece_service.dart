@@ -37,6 +37,7 @@ class PieceService extends EntityService<Piece> {
       piecePlacement: piecePlacement,
       styleIds: styleIds,
       imagePath: newImagePath,
+      archived: false,
     );
 
     try {
@@ -63,7 +64,7 @@ class PieceService extends EntityService<Piece> {
       deleteImage(piece.imagePath);
     }
 
-    final newPiece = piece.copyWith(
+    final Piece newPiece = piece.copyWith(
       name: name,
       imagePath: newImagePath,
       styleIds: styleIds,
@@ -79,14 +80,34 @@ class PieceService extends EntityService<Piece> {
   }
 
   @override
-  Future<String?> delete(Piece piece) async {
-    String? error = await super.delete(piece);
-    if (error != null) {
-      return error;
-    }
+  Future<String?> delete(Piece entity) async {
+    final Piece newPiece = entity.copyWith(
+      archived: true,
+    );
 
-    deleteImage(piece.imagePath);
+    try {
+      await repository.setOrAdd(entity.id, newPiece);
+    } catch (e) {
+      return errorStoreMessage;
+    }
+    // String? error = await super.delete(piece);
+    // if (error != null) {
+    //   return error;
+    // }
+    //
+    // deleteImage(piece.imagePath);
     return null;
+  }
+
+  Stream<List<Piece>> getAllNonArchivedStream() {
+    return _filterOutArchived(getAllStream());
+  }
+
+  Stream<List<Piece>> _filterOutArchived(Stream<List<Piece>> pieceStream) {
+    return pieceStream.map(
+      (List<Piece> pieces) =>
+          pieces.where((piece) => piece.archived != true).toList(),
+    );
   }
 
   Stream<List<Piece>> getFilteredPiecesStream({
@@ -94,7 +115,7 @@ class PieceService extends EntityService<Piece> {
     PiecePlacement? placementFilter,
     WearHistory? historySort,
   }) {
-    return getAllStream().map((List<Piece> pieces) {
+    return getAllNonArchivedStream().map((List<Piece> pieces) {
       final List<Piece> filteredPieces = pieces.where((piece) {
         final bool matchesStyle = styleFilter == null ||
             piece.styleIds.any((id) => id == styleFilter.id);

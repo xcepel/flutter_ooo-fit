@@ -93,7 +93,7 @@ class _EventEditFormState extends State<EventEditForm> {
 
   Widget _buildCarouselFormField() {
     return LoadingStreamBuilder(
-      stream: _outfitService.getAllStream(),
+      stream: _outfitService.getAllNonArchivedStream(),
       builder: (context, outfits) {
         String? outfitId = widget.event?.outfitId;
         return CarouselFormField(

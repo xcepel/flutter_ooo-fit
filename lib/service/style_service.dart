@@ -76,4 +76,6 @@ class StyleService extends EntityService<Style> {
       },
     );
   }
+
+  // TODO override detele -> projit vsechny outfity, piecy,... se stylem a odstranit ze seznamu
 }
