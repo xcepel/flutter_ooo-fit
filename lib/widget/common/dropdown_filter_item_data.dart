@@ -14,23 +14,18 @@ class DropdownFilterItemData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        maxWidth: width,
-      ),
-      child: Row(
-        children: [
-          SizedBox(width: 5),
-          icon,
-          SizedBox(width: 5),
-          Expanded(
-            child: Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-            ),
+    return Row(
+      children: [
+        SizedBox(width: 5),
+        icon,
+        SizedBox(width: 5),
+        Expanded(
+          child: Text(
+            label,
+            overflow: TextOverflow.ellipsis,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

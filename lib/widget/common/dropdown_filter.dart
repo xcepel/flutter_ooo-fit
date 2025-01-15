@@ -28,11 +28,9 @@ class DropdownFilter<T> extends StatelessWidget {
       child: DropdownButton<T>(
         hint: Padding(
           padding: EdgeInsets.only(left: 6),
-          child: Expanded(
-            child: Text(
-              hint,
-              overflow: TextOverflow.ellipsis,
-            ),
+          child: Text(
+            hint,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         value: value,
