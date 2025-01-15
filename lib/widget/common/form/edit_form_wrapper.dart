@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:ooo_fit/utils/constants.dart';
 import 'package:ooo_fit/utils/functions.dart';
+import 'package:ooo_fit/widget/common/form/delete_confirm_dialog.dart';
 import 'package:ooo_fit/widget/common/round_button.dart';
 
 class EditFormWrapper extends StatefulWidget {
@@ -60,7 +61,7 @@ class _EditFormWrapperState extends State<EditFormWrapper> {
               RoundButton(
                 icon: Icons.delete_rounded,
                 text: "Delete",
-                onPressed: () => _handleDelete(),
+                onPressed: () => _showDeleteConfirmationDialog(),
                 color: dangerRed,
               ),
           ],
@@ -107,5 +108,22 @@ class _EditFormWrapperState extends State<EditFormWrapper> {
             )),
       );
     }
+  }
+
+  void _showDeleteConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DeleteConfirmDialog(
+          onCancel: () {
+            Navigator.pop(context);
+          },
+          onConfirm: () {
+            Navigator.pop(context);
+            _handleDelete();
+          },
+        );
+      },
+    );
   }
 }
