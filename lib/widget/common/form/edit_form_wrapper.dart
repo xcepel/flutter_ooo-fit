@@ -43,7 +43,7 @@ class _EditFormWrapperState extends State<EditFormWrapper> {
         children: [
           widget.child,
           SizedBox(
-            height: 50,
+            height: 30,
           ),
           if (isLoading)
             const Padding(

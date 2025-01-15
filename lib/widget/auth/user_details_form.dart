@@ -20,7 +20,7 @@ class UserDetailsForm extends StatelessWidget {
           decoration: InputDecoration(
               labelText: 'City',
               helperText:
-                  'This detail is used to fetch you the current weather info in you area.',
+                  'This detail is used to fetch the current weather info in your area.',
               helperMaxLines: 3),
         ),
         SizedBox(

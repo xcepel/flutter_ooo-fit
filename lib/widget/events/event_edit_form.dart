@@ -32,7 +32,8 @@ class _EventEditFormState extends State<EventEditForm> {
   @override
   void initState() {
     super.initState();
-    _hideOutfitCarousel = widget.event?.outfitId == null;
+    _hideOutfitCarousel =
+        widget.event == null ? false : widget.event?.outfitId == null;
   }
 
   @override
@@ -41,7 +42,8 @@ class _EventEditFormState extends State<EventEditForm> {
 
     if (widget.event != oldWidget.event) {
       setState(() {
-        _hideOutfitCarousel = widget.event?.outfitId == null;
+        _hideOutfitCarousel =
+            widget.event == null ? false : widget.event?.outfitId == null;
       });
     }
   }

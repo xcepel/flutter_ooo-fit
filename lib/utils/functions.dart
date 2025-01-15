@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ooo_fit/widget/common/custom_snack_bar.dart';
 
 void handleActionResult({
   required BuildContext context,
@@ -11,8 +12,10 @@ void handleActionResult({
       onSuccessNavigation();
     }
   }
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text(errorMessage ?? successMessage),
-    behavior: SnackBarBehavior.fixed,
-  ));
+  ScaffoldMessenger.of(context).showSnackBar(
+    CustomSnackBar(
+      successMessage: successMessage,
+      errorMessage: errorMessage,
+    ),
+  );
 }
