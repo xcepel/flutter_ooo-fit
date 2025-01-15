@@ -8,10 +8,13 @@ import 'package:ooo_fit/utils/functions.dart';
 import 'package:ooo_fit/widget/auth/confirm_password_form_field.dart';
 import 'package:ooo_fit/widget/auth/email_form_field.dart';
 import 'package:ooo_fit/widget/auth/password_form_field.dart';
+import 'package:ooo_fit/widget/common/round_button.dart';
 import 'package:ooo_fit/widget/outfit_piece/label_button.dart';
 
 class AuthForm extends StatefulWidget {
-  const AuthForm({super.key});
+  const AuthForm({
+    super.key,
+  });
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -60,7 +63,7 @@ class _AuthFormState extends State<AuthForm> {
       decoration: InputDecoration(
           labelText: 'City',
           helperText:
-              'This detail will be used to fetch you the current weather info in you area. You can change it later in the user details.',
+              'This detail will be used to fetch the current weather info in you area. You can change it later in the user details.',
           helperMaxLines: 3),
     );
   }
@@ -76,11 +79,9 @@ class _AuthFormState extends State<AuthForm> {
     );
   }
 
-  LabelButton _buildSubmitButton(BuildContext context) {
-    return LabelButton(
-      label: _isSignUp ? 'Create Account' : 'Sign in',
-      backgroundColor: Colors.transparent,
-      textColor: Colors.deepPurple,
+  Widget _buildSubmitButton(BuildContext context) {
+    return RoundButton(
+      text: _isSignUp ? 'Create Account' : 'Sign in',
       onPressed: () =>
           _isSignUp ? _handleSignUp(context) : _handleSignIn(context),
     );
@@ -115,12 +116,14 @@ class _AuthFormState extends State<AuthForm> {
         password: formData['password'],
       );
 
-      String? userId = _authService.currentUser!.uid;
+      if (error == null) {
+        String? userId = _authService.currentUser!.uid;
 
-      await _userDataService.saveUserData(
-        userId: userId,
-        city: formData['city'],
-      );
+        await _userDataService.saveUserData(
+          userId: userId,
+          city: formData['city'],
+        );
+      }
 
       if (context.mounted) {
         handleActionResult(

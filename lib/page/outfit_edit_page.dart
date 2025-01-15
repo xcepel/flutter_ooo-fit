@@ -51,8 +51,6 @@ class OutfitEditPage extends StatelessWidget {
 
   Future<String?> handleSave(Map<String, dynamic> formData) async {
     final imageList = formData['image'];
-    print(imageList.toString());
-    //TODO deduplicate
     String? imagePath;
     if (imageList != null && imageList.isNotEmpty && imageList.first != null) {
       // case when ImagePicker is displaying Piece's existing image (from URL)
@@ -68,12 +66,9 @@ class OutfitEditPage extends StatelessWidget {
     List<String> allSelectedPieces = [];
     for (PiecePlacement placement in PiecePlacement.values) {
       String fieldName = 'carousel_${placement.name}';
-      List<String>? selectedPieces = formData[fieldName];
-      //TODO: check sooner maybe
-      if (selectedPieces != null) {
-        allSelectedPieces
-            .addAll(selectedPieces.where((id) => id.isNotEmpty).toList());
-      }
+      List<String> selectedPieces = formData[fieldName];
+      allSelectedPieces
+          .addAll(selectedPieces.where((id) => id.isNotEmpty).toList());
     }
 
     if (outfit == null) {

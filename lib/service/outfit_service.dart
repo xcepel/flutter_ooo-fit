@@ -70,7 +70,6 @@ class OutfitService extends EntityService<Outfit> {
     final String? newImagePath = imagePath;
     final String? oldImagePath = outfit.imagePath;
 
-    // TODO: refactor
     String? newSavedImagePath;
     if (newImagePath != oldImagePath) {
       if (newImagePath != null) {

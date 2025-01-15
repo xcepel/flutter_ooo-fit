@@ -17,8 +17,10 @@ class AuthService {
         password: password,
       );
       return null;
+    } on FirebaseAuthException catch (e) {
+      return _handleAuthError(e);
     } catch (e) {
-      return "Sign in wasn't successful. Try again";
+      return "An unexpected error occurred. Try again.";
     }
   }
 
@@ -33,12 +35,35 @@ class AuthService {
       );
 
       return null;
+    } on FirebaseAuthException catch (e) {
+      return _handleAuthError(e);
     } catch (e) {
-      return "Account wasn't created. Try again";
+      return "An unexpected error occurred. Try again.";
     }
   }
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+  }
+
+  String _handleAuthError(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'invalid-email':
+        return "The email address is not valid.";
+      case 'user-disabled':
+        return "This user account has been disabled.";
+      case 'invalid-credential':
+      case 'user-not-found':
+      case 'wrong-password':
+        return "You provided incorrect email or password. Please try again.";
+      case 'email-already-in-use':
+        return "This email is already registered.";
+      case 'weak-password':
+        return "The password is too weak. Try a stronger one.";
+      case 'operation-not-allowed':
+        return "This operation is not allowed. Please contact support.";
+      default:
+        return "An authentication error occurred. Try again.";
+    }
   }
 }
