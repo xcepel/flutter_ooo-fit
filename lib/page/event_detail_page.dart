@@ -4,6 +4,7 @@ import 'package:ooo_fit/model/event.dart';
 import 'package:ooo_fit/model/outfit.dart';
 import 'package:ooo_fit/model/style.dart';
 import 'package:ooo_fit/page/event_edit_page.dart';
+import 'package:ooo_fit/page/outfit_detail_page.dart';
 import 'package:ooo_fit/service/event_service.dart';
 import 'package:ooo_fit/utils/constants.dart';
 import 'package:ooo_fit/utils/date_time_formater.dart';
@@ -64,7 +65,7 @@ class EventDetailPage extends StatelessWidget {
               SizedBox(height: 10),
               _buildEventDetailRow(
                 "Date",
-                DateTimeFormatter(event.eventDatetime).formatDate(),
+                DateTimeFormatter(event.eventDatetime).formatDateTime(),
               ),
               SizedBox(height: 10),
               _buildEventDetailRow(
@@ -86,7 +87,7 @@ class EventDetailPage extends StatelessWidget {
     return outfit != null
         ? Center(
             child: PageNavigationTile(
-              dstPage: null,
+              dstPage: OutfitDetailPage(outfitId: outfit.id),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width / 2,
                 child: OutfitListItem(outfit: outfit),

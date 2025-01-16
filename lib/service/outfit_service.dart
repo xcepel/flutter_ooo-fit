@@ -101,6 +101,23 @@ class OutfitService extends EntityService<Outfit> {
     return null;
   }
 
+  Future<String?> updateLastWornOutfit({
+    required Outfit outfit,
+    required DateTime lastWorn,
+  }) async {
+    final Outfit updatedOutfit = outfit.copyWith(
+      lastWorn: lastWorn,
+    );
+
+    try {
+      await repository.setOrAdd(outfit.id, updatedOutfit);
+    } catch (e) {
+      return errorStoreMessage;
+    }
+
+    return null;
+  }
+
   @override
   Future<String?> delete(Outfit entity) async {
     final Outfit newOutfit = entity.copyWith(

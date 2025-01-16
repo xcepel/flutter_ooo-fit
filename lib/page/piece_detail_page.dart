@@ -83,7 +83,7 @@ class PieceDetailPage extends StatelessWidget {
                 value: "",
                 style: TextStyle(fontSize: 20),
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               LoadingStreamBuilder<
                   (List<Outfit>, Map<String, Style>, Map<String, Piece>)>(
                 stream: _outfitService.getPieceOutfitsWithStylesAndPiecesStream(

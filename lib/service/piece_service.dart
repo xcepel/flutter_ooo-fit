@@ -79,6 +79,23 @@ class PieceService extends EntityService<Piece> {
     return null;
   }
 
+  Future<String?> updateLastWornPiece({
+    required Piece piece,
+    required DateTime lastWorn,
+  }) async {
+    final Piece updatedPiece = piece.copyWith(
+      lastWorn: lastWorn,
+    );
+
+    try {
+      await repository.setOrAdd(piece.id, updatedPiece);
+    } catch (e) {
+      return errorStoreMessage;
+    }
+
+    return null;
+  }
+
   @override
   Future<String?> delete(Piece entity) async {
     final Piece newPiece = entity.copyWith(

@@ -26,17 +26,23 @@ class StyleDataRow extends StatelessWidget {
       }).toList(),
     );
   }
-}
 
-Widget _dotText(Style style) {
-  return Expanded(
-    child: Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        StyleDot(size: 15, color: style.color),
-        SizedBox(width: 8),
-        Text(style.name),
-      ],
-    ),
-  );
+  Widget _dotText(Style style) {
+    return Flexible(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          StyleDot(size: 15, color: style.color),
+          SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              style.name,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
